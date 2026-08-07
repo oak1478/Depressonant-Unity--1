@@ -1,0 +1,47 @@
+# โฟลเดอร์ระบบและไฟล์ชั่วคราว
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# ไฟล์แคชและหน่วยความจำ
+/[Mm]emory[Cc]aptures/
+.crashlytics/
+
+# ไฟล์ที่สร้างจากระบบปฏิบัติการ
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ไฟล์การตั้งค่าเอดิเตอร์และเครื่องมือ
+.vs/
+.gradle/
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# ไฟล์แพ็กเกจและไฟล์ไบนารี
+*.apk
+*.aab
+*.unitypackage
+*.app
+sysinfo.txt
+
+# บังคับรวมไฟล์เมตาเพื่อรักษาการอ้างอิง
+!/[Aa]ssets/**/*.meta

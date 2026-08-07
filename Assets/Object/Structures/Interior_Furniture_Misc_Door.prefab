@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3305611835994482344
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -67.08
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000001814376
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 44.28
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      propertyPath: m_Name
+      value: Interior_Furniture_Misc_Door
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2809271358089567203}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6931237463464253237}
+  m_SourcePrefab: {fileID: 100100000, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+--- !u!1 &6670752726041322272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: b813e1ebfa9a0c3419b2fa50337b2a0a, type: 3}
+  m_PrefabInstance: {fileID: 3305611835994482344}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2809271358089567203
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670752726041322272}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 2.8, z: 0.3}
+  m_Center: {x: 0, y: 1.4, z: 0.05}
+--- !u!114 &6931237463464253237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670752726041322272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e7967e1c1a8c548a0d4de3d609ac48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BedroomInteractable
+  promptMessage: "\u0E42\u0E15\u0E49\u0E15\u0E2D\u0E1A"
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
