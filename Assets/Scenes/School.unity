@@ -79043,6 +79043,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC_Vipar
       objectReference: {fileID: 0}
+    - target: {fileID: 2199897478060703443, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: activeDays.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199897478060703443, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: 'activeDays.Array.data[0]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199897478060703443, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: 'activeDays.Array.data[1]'
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199897478060703443, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: 'activeDays.Array.data[2]'
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928254384209367667, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: dialoguesByDay.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928254384209367667, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayTitle
+      value: DAY 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928254384209367667, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].dayTitle
+      value: DAY 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928254384209367667, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: dialoguesByDay.Array.data[2].dayTitle
+      value: DAY 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928254384209367667, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayNumber
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928254384209367667, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].dayNumber
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928254384209367667, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
+      propertyPath: dialoguesByDay.Array.data[2].dayNumber
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8345061251178366442, guid: 98ca8c41a6cc9fa499e20161777b6922, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6752777
@@ -79158,6 +79202,62 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1681160999}
     m_Modifications:
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayTitle
+      value: DAY 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].dayTitle
+      value: DAY 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[2].dayTitle
+      value: DAY 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[3].dayTitle
+      value: DAY 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayNumber
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].dayNumber
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[2].dayNumber
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 554555751319790846, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: dialoguesByDay.Array.data[3].dayNumber
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531603191771970668, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: activeDays.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531603191771970668, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: 'activeDays.Array.data[0]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531603191771970668, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: 'activeDays.Array.data[1]'
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531603191771970668, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: 'activeDays.Array.data[2]'
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531603191771970668, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
+      propertyPath: 'activeDays.Array.data[3]'
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4800904174079263205, guid: 4f3b2d2c462acbf4ca1ac5a1106f6dce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.37
@@ -79220,6 +79320,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1681160999}
     m_Modifications:
+    - target: {fileID: 751059920885866961, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 751059920885866961, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayTitle
+      value: DAY 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 751059920885866961, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayNumber
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1666987175048816352, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: activeDays.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1666987175048816352, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: 'activeDays.Array.data[0]'
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2531350327455165909, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
       propertyPath: m_Name
       value: NPC_Momon
@@ -79389,9 +79509,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5492629902076132939, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: activeDays.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5492629902076132939, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: 'activeDays.Array.data[0]'
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5492629902076132939, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: 'activeDays.Array.data[1]'
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5492629902076132939, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: 'activeDays.Array.data[2]'
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7828676309637332465, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
       propertyPath: m_Name
       value: NPC_Shia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025565644113463278, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: dialoguesByDay.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025565644113463278, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayTitle
+      value: DAY 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025565644113463278, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].dayTitle
+      value: DAY 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025565644113463278, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: dialoguesByDay.Array.data[2].dayTitle
+      value: DAY 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025565644113463278, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayNumber
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025565644113463278, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].dayNumber
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025565644113463278, guid: f5b52c0611c257b478934553f85cdac4, type: 3}
+      propertyPath: dialoguesByDay.Array.data[2].dayNumber
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
