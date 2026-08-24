@@ -411,9 +411,33 @@ public class InventoryManager : MonoBehaviour
     {
         foreach (var mapping in itemSpriteDatabase)
         {
-            if (mapping.type == type) return mapping.sprite;
+            if (mapping.type == type && mapping.sprite != null) return mapping.sprite;
         }
-        return null;
+
+        // ⚡ [เพิ่มใหม่] หากยังไม่ได้ลากรูปใส่ใน Inspector ให้สร้าง Sprite สีตามชนิดไอเทมชั่วคราวเพื่อใช้ทดสอบ (ไม่ให้ขึ้นเป็นกล่องขาวโล้นๆ)
+        return CreateFallbackSprite(type);
+    }
+
+    private Sprite CreateFallbackSprite(ItemType type)
+    {
+        Color color = Color.white;
+        switch (type)
+        {
+            case ItemType.Candy: color = new Color(1f, 0.4f, 0.7f); break; // ชมพูลูกอม
+            case ItemType.StrawberryMilk: color = new Color(1f, 0.75f, 0.85f); break; // ชมพูพาสเทลนมสตรอเบอร์รี่
+            case ItemType.Diary: color = new Color(0.65f, 0.4f, 0.2f); break; // น้ำตาลปกไดอารี่
+            case ItemType.Headphone: color = new Color(0.2f, 0.6f, 1f); break; // ฟ้าหูฟัง
+            case ItemType.Armband: color = new Color(1f, 0.85f, 0.2f); break; // เหลืองทองปลอกแขน
+            case ItemType.RainDrawing: color = new Color(0.4f, 0.85f, 0.95f); break; // ฟ้าครามภาพวาดฝน
+        }
+
+        Texture2D tex = new Texture2D(32, 32);
+        Color[] pixels = new Color[32 * 32];
+        for (int i = 0; i < pixels.Length; i++) pixels[i] = color;
+        tex.SetPixels(pixels);
+        tex.Apply();
+
+        return Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
     }
 
     // [เพิ่มใหม่] โหลดคลังเก็บของจาก GameManager กลางระดับโลก
