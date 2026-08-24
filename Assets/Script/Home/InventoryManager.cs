@@ -28,6 +28,16 @@ public class InventoryManager : MonoBehaviour
     [Header("UI สำหรับ Diary")]
     public TextMeshProUGUI diaryStressText; 
 
+    [Header("UI สำหรับเปิดหน้าไดอารี่จริง (Dynamic UI) [เพิ่มใหม่]")]
+    public GameObject diaryPanel;
+    public Image diaryBgImage;
+    public TextMeshProUGUI diaryStoryText;
+    public Color diaryLowStressColor = new Color(0.85f, 1f, 0.85f); // เขียวอ่อนสบายตา
+    public Color diaryMedStressColor = new Color(1f, 0.95f, 0.75f); // เหลืองกังวล
+    public Color diaryHighStressColor = new Color(1f, 0.75f, 0.75f); // แดงเครียดสูง
+    public TMP_FontAsset diaryNormalFont;
+    public TMP_FontAsset diaryShakyFont; 
+
     // [เพิ่มใหม่] ฐานข้อมูลรูปภาพไอเทมเพื่อใช้สเกลแสดงผลเมื่อเปลี่ยนซีน
     [System.Serializable]
     public struct ItemSpriteMapping
@@ -231,11 +241,20 @@ public class InventoryManager : MonoBehaviour
                 break;
 
             case ItemType.Headphone:
+                int currentDay = 1;
+                if (DayManager.Instance != null) currentDay = DayManager.Instance.currentDay;
+
+                if (currentDay < 8)
+                {
+                    Debug.LogWarning("🎧 หูฟังนี้ยังใช้ไม่ได้! (สวมใส่และใช้งานได้ตั้งแต่วันที่ 8 เป็นต้นไป)");
+                    break;
+                }
+
                 if (!hasUsedHeadphoneToday)
                 {
-                    float reduction = stressManager.currentStress * 0.5f;
-                    stressManager.ChangeStress(-reduction);
+                    stressManager.ChangeStress(-10f); // ลดค่าความเครียด 10% (10 หน่วย)
                     hasUsedHeadphoneToday = true;
+                    Debug.Log("🎧 สวมหูฟัง: ลดความเครียดลง 10 หน่วยเรียบร้อย!");
                 }
                 else
                 {
@@ -244,9 +263,19 @@ public class InventoryManager : MonoBehaviour
                 break;
 
             case ItemType.Diary:
+                if (diaryPanel != null)
+                {
+                    OpenDiaryUI();
+                }
+                else
+                {
+                    Debug.Log("📖 ไดอารี่: ระบบเปิดเนื้อเรื่องรายวัน (กรุณาลากไดอารี่ UI มาผูกใน Inspector)");
+                }
+                break;
+
             case ItemType.RainDrawing:
             case ItemType.Armband:
-                Debug.Log("-> ไอเทมประเภทนี้เป็น Passive ติดตัว ไม่ต้องกดใช้งาน");
+                Debug.Log("-> ไอเทมประเภทนี้ส่งผลแบบติดตัว (Passive) หรือทำงานตามเงื่อนไขเนื้อเรื่อง ไม่ต้องกดใช้งาน");
                 break;
         }
 
@@ -390,5 +419,107 @@ public class InventoryManager : MonoBehaviour
     public void ResetDailyItems()
     {
         hasUsedHeadphoneToday = false;
+    }
+
+    // ⚡ [เพิ่มใหม่] ฟังก์ชันเปิดแสดงหน้าต่างไดอารี่ และเปลี่ยนสไตล์ตามความเครียดสะสม (Dynamic UI)
+    public void OpenDiaryUI()
+    {
+        if (diaryPanel == null || stressManager == null) return;
+
+        diaryPanel.SetActive(true);
+        float stress = stressManager.currentStress;
+
+        // ปิดการเดินตัวละครระหว่างอ่านไดอารี่
+        if (playerMovement != null) playerMovement.enabled = false;
+
+        // ⚡ ระบบ Dynamic UI ปรับเปลี่ยนสีพื้นหลังและสไตล์ฟอนต์ตามระดับความเครียด
+        if (stress < 30f)
+        {
+            if (diaryBgImage != null) diaryBgImage.color = diaryLowStressColor;
+            if (diaryStoryText != null)
+            {
+                if (diaryNormalFont != null) diaryStoryText.font = diaryNormalFont;
+                diaryStoryText.fontStyle = FontStyles.Normal;
+            }
+        }
+        else if (stress <= 70f)
+        {
+            if (diaryBgImage != null) diaryBgImage.color = diaryMedStressColor;
+            if (diaryStoryText != null)
+            {
+                if (diaryNormalFont != null) diaryStoryText.font = diaryNormalFont;
+                diaryStoryText.fontStyle = FontStyles.Italic;
+            }
+        }
+        else
+        {
+            if (diaryBgImage != null) diaryBgImage.color = diaryHighStressColor;
+            if (diaryStoryText != null)
+            {
+                if (diaryShakyFont != null) diaryStoryText.font = diaryShakyFont;
+                diaryStoryText.fontStyle = FontStyles.Bold;
+            }
+        }
+
+        // ⚡ อัปเดตเนื้อเรื่องสรุปรายวันตามวันปัจจุบัน
+        int day = 1;
+        if (DayManager.Instance != null) day = DayManager.Instance.currentDay;
+
+        if (diaryStoryText != null)
+        {
+            diaryStoryText.text = GetDiarySummary(day, stress);
+        }
+
+        // ปลดล็อกเมาส์ให้สามารถลากมากดปุ่มปิดไดอารี่ได้
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    // ฟังก์ชันสำหรับผูกกับปุ่มกากบาท [X] ปิดหน้าต่างไดอารี่
+    public void CloseDiaryUI()
+    {
+        if (diaryPanel != null)
+        {
+            diaryPanel.SetActive(false);
+
+            // ปล่อยคืนอิสระให้ระบบเดินตามปกติ (เว้นแต่ว่าหน้ากระเป๋ายังเปิดอยู่)
+            if (inventoryPanel != null && !inventoryPanel.activeSelf)
+            {
+                if (playerMovement != null) playerMovement.enabled = true;
+            }
+        }
+    }
+
+    // ฟังก์ชันสร้างข้อความบันทึกของเนียตามเงื่อนไขวันและความเครียด
+    private string GetDiarySummary(int day, float stress)
+    {
+        string statusText = "";
+        string diaryText = "";
+
+        if (stress > 70f)
+        {
+            statusText = "มันอึดอัด... เหมือนกำลังจะหายใจไม่ออก...";
+            diaryText = day == 1 ? "วันแรกของโรงเรียนทำไมมันน่ากลัวขนาดนี้ ทุกคนกำลังจ้องมองและวิจารณ์ฉันอยู่ใช่ไหม... ฉันอยากกลับบ้าน..." :
+                        day == 8 ? "วันที่แปดแล้ว... ทำไมไม่มีอะไรดีขึ้นเลย หูฟังเสียงเพลงก็เกือบจะไม่ได้ช่วยปลอบประโลมใจฉันแล้ว..." :
+                        "หัวสมองมันขาวโพลนไปหมด... ไม่อยากทำอะไร ไม่อยากเจอใครทั้งนั้น...";
+        }
+        else if (stress > 30f)
+        {
+            statusText = "รู้สึกกังวลอยู่ตลอดเวลา...";
+            diaryText = day == 1 ? "เริ่มวันแรกด้วยความรู้สึกแปลกๆ ทุกคนที่นี่ดูแปลกหน้าไปหมด หวังว่าพรุ่งนี้จะปรับตัวได้นะ..." :
+                        day == 8 ? "วันนี้ลองเอาหูฟังมาฟังเพลงดูบ้าง รู้สึกจิตใจสงบขึ้นมาหน่อยนึง แต่ก็ยังกลัวการไปสบตาคนอื่นอยู่ดี..." :
+                        "วันนี้ผ่านไปได้แบบเหนื่อยๆ มีเรื่องให้กังวลอยู่ตลอดเวลาเลย...";
+        }
+        else
+        {
+            statusText = "วันนี้ค่อนข้างโอเค สงบสุขดี";
+            diaryText = day == 1 ? "วันแรกเริ่มต้นได้ราบรื่นกว่าที่คิด ฉันพยายามตั้งสติและเผชิญหน้ากับมันอย่างค่อยเป็นค่อยไป..." :
+                        day == 8 ? "วันที่แปดแล้ว ฉันเริ่มชินกับบรรยากาศการฟังเพลงเงียบๆ และจัดการความรู้สึกตัวเองได้ดีขึ้นมาก" :
+                        "วันนี้ไม่มีเรื่องแย่ๆ เกิดขึ้นเลย รู้สึกปลอดภัยและอบอุ่นดี...";
+        }
+
+        return $"<b>บันทึกของเนีย - วันที่ {day}</b>\n" +
+               $"<size=80%>สภาวะจิตใจ: {statusText} (Stress: {Mathf.RoundToInt(stress)}%)</size>\n\n" +
+               $"{diaryText}";
     }
 }
