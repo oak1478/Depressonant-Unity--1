@@ -112,10 +112,79 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
+        if (Keyboard.current != null)
         {
-            ToggleInventory();
+            if (Keyboard.current.tabKey.wasPressedThisFrame)
+            {
+                ToggleInventory();
+            }
+
+            // ⚡ [ระบบปุ่มคีย์ลัดสำหรับทดสอบ Playtest]
+            // กด F1 - F6 เพื่อเสกไอเทมแต่ละชิ้นเข้ากระเป๋าเป้ทันที
+            if (Keyboard.current.f1Key.wasPressedThisFrame || Keyboard.current.digit1Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Candy), ItemType.Candy);
+                Debug.Log("🧪 [Test] เสกไอเทม: ลูกอม (Candy) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f2Key.wasPressedThisFrame || Keyboard.current.digit2Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.StrawberryMilk), ItemType.StrawberryMilk);
+                Debug.Log("🧪 [Test] เสกไอเทม: นมสตรอเบอร์รี่ (StrawberryMilk) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f3Key.wasPressedThisFrame || Keyboard.current.digit3Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Diary), ItemType.Diary);
+                Debug.Log("🧪 [Test] เสกไอเทม: ไดอารี่ (Diary) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f4Key.wasPressedThisFrame || Keyboard.current.digit4Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Headphone), ItemType.Headphone);
+                Debug.Log("🧪 [Test] เสกไอเทม: หูฟัง (Headphone) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f5Key.wasPressedThisFrame || Keyboard.current.digit5Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Armband), ItemType.Armband);
+                Debug.Log("🧪 [Test] เสกไอเทม: ปลอกแขน (Armband) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f6Key.wasPressedThisFrame || Keyboard.current.digit6Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.RainDrawing), ItemType.RainDrawing);
+                Debug.Log("🧪 [Test] เสกไอเทม: ภาพวาดของเรน (RainDrawing) เข้ากระเป๋าแล้ว!");
+            }
+
+            // กด F7 เพื่อปรับวันเป็นวันที่ 8 (ใช้ทดสอบหูฟัง)
+            if (Keyboard.current.f7Key.wasPressedThisFrame || Keyboard.current.digit7Key.wasPressedThisFrame)
+            {
+                if (DayManager.Instance != null) DayManager.Instance.currentDay = 8;
+                if (GameManagerSetup.Instance != null) GameManagerSetup.Instance.currentDay = 8;
+                Debug.Log("🧪 [Test] วาร์ปข้ามไป 'วันที่ 8' เรียบร้อย! ตอนนี้สามารถทดสอบกดใช้หูฟังได้แล้ว");
+            }
+
+            // กด F8 / F9 เพื่อปรับค่าความเครียดเพิ่ม/ลด 25% (ใช้ทดสอบการเปลี่ยนสีหน้าไดอารี่ Dynamic UI)
+            if (Keyboard.current.f8Key.wasPressedThisFrame || Keyboard.current.digit8Key.wasPressedThisFrame)
+            {
+                if (stressManager != null) stressManager.ChangeStress(25f);
+                Debug.Log("🧪 [Test] เพิ่มความเครียด +25% เพื่อทดสอบหน้าไดอารี่");
+            }
+            if (Keyboard.current.f9Key.wasPressedThisFrame || Keyboard.current.digit9Key.wasPressedThisFrame)
+            {
+                if (stressManager != null) stressManager.ChangeStress(-25f);
+                Debug.Log("🧪 [Test] ลดความเครียด -25% เพื่อทดสอบหน้าไดอารี่");
+            }
         }
+    }
+
+    // ⚡ [ฟังก์ชันคลิกขวาใน Inspector] เสกไอเทมครบทุกชิ้นเข้ากระเป๋าทันที
+    [ContextMenu("Give All Test Items")]
+    public void GiveAllTestItems()
+    {
+        AddItem(GetSpriteForItemType(ItemType.Diary), ItemType.Diary);
+        AddItem(GetSpriteForItemType(ItemType.Headphone), ItemType.Headphone);
+        AddItem(GetSpriteForItemType(ItemType.Candy), ItemType.Candy);
+        AddItem(GetSpriteForItemType(ItemType.StrawberryMilk), ItemType.StrawberryMilk);
+        AddItem(GetSpriteForItemType(ItemType.Armband), ItemType.Armband);
+        AddItem(GetSpriteForItemType(ItemType.RainDrawing), ItemType.RainDrawing);
+        Debug.Log("🎉 เสกไอเทมทดสอบครบทั้ง 6 ชนิดเข้ากระเป๋าเป้เรียบร้อย!");
     }
 
     public void ToggleInventory()
