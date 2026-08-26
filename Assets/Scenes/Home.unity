@@ -7336,6 +7336,22 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4788375783994851793, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: voiceClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4788375783994851793, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: 'voiceClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 67cfb7f91b11b514e902bbc346d2511a, type: 3}
+    - target: {fileID: 4788375783994851793, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: 'voiceClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e7e98d841bd4cc945b0c015c2460532a, type: 3}
+    - target: {fileID: 4788375783994851793, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: 'voiceClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a5dbdd67adfed5429b13acff98e3f1e, type: 3}
+    - target: {fileID: 4788375783994851793, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
       propertyPath: voiceMappings.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -10354,11 +10370,27 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].introductionStory.Array.data[0].voiceSoundName
+      value: Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].introductionStory.Array.data[1].voiceSoundName
+      value: Cloth
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].introductionStory.Array.data[2].voiceSoundName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
       propertyPath: dialoguesByDay.Array.data[1].introductionStory.Array.data[0].activeSlotIndex
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
       propertyPath: dialoguesByDay.Array.data[1].introductionStory.Array.data[1].activeSlotIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
+      propertyPath: dialoguesByDay.Array.data[1].introductionStory.Array.data[2].activeSlotIndex
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}

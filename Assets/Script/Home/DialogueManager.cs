@@ -6,29 +6,6 @@ using System.Collections;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum VoiceType
-{
-    None,
-    Sigh,
-    Gasp,
-    Laugh,
-    Sad,
-    Angry,
-    Shock,
-    Mumble,
-    Happy,
-    Hmm,
-    SFX_01,
-    SFX_02
-}
-
-[System.Serializable]
-public struct VoiceMapping
-{
-    public VoiceType type;
-    public AudioClip clip;
-}
-
 [System.Serializable]
 public class DialogueLine
 {
@@ -54,8 +31,8 @@ public class DialogueLine
     [Tooltip("Visual action/motion effect for this character portrait")]
     public SpriteAction motionEffect = SpriteAction.None;
 
-    [Tooltip("Voice sound to play when this line starts")]
-    public VoiceType voiceSound = VoiceType.None;
+    [Tooltip("Voice sound name to play when this line starts")]
+    public string voiceSoundName;
 
     // ⚡ สไปรต์สำหรับใช้แสดงผลที่ประมวลผลเสร็จแล้วในช่วงรันไทม์ (ไม่เซฟลงโปรเจกต์)
     [System.NonSerialized] public Sprite resolvedPortraitSprite;
@@ -85,8 +62,8 @@ public class DialogueChoice
     [Tooltip("Visual action/motion effect for this choice portrait")]
     public SpriteAction motionEffect = SpriteAction.None;
 
-    [Tooltip("Voice sound to play when this choice is selected")]
-    public VoiceType voiceSound = VoiceType.None;
+    [Tooltip("Voice sound name to play when this choice is selected")]
+    public string voiceSoundName;
 
     [Tooltip("Next dialogue lines to play after selecting this choice")]
     public List<DialogueLine> nextDialogueLines;
@@ -127,8 +104,8 @@ public class DialogueManager : MonoBehaviour
     [Range(0f, 1f)] public float typingVolume = 0.3f;
     [Range(0f, 1f)] public float voiceVolume = 1f;
     
-    [Tooltip("จับคู่เสียงกับ VoiceType ต่างๆ ที่นี่")]
-    public List<VoiceMapping> voiceMappings = new List<VoiceMapping>();
+    [Tooltip("โยนไฟล์เสียงพากย์ทั้งหมดที่จะใช้ในเกมลงในช่องนี้")]
+    public List<AudioClip> voiceClips = new List<AudioClip>();
 
     private string currentNPCName;
     private List<DialogueLine> currentActiveStory = new List<DialogueLine>();
@@ -325,7 +302,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        PlayVoiceSound(currentLine.voiceSound);
+        PlayVoiceSound(currentLine.voiceSoundName);
         StartCoroutine(TypeText(targetText));
     }
 
@@ -506,7 +483,7 @@ public class DialogueManager : MonoBehaviour
         choiceReplayLine.motionEffect = selected.motionEffect;
         choiceReplayLine.resolvedPortraitSprite = selected.resolvedPortraitSprite;
         choiceReplayLine.stressChange = 0f; 
-        choiceReplayLine.voiceSound = selected.voiceSound;
+        choiceReplayLine.voiceSoundName = selected.voiceSoundName;
 
         List<DialogueLine> combinedStory = new List<DialogueLine>();
         combinedStory.Add(choiceReplayLine);
@@ -571,16 +548,16 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"[Stress System] Calculated stress change: {amount}");
     }
 
-    private void PlayVoiceSound(VoiceType type)
+    private void PlayVoiceSound(string clipName)
     {
-        if (type == VoiceType.None || audioSource == null) return;
+        if (string.IsNullOrEmpty(clipName) || clipName == "None" || audioSource == null) return;
         
-        foreach (var mapping in voiceMappings)
+        foreach (var clip in voiceClips)
         {
-            if (mapping.type == type && mapping.clip != null)
+            if (clip != null && clip.name == clipName)
             {
-                audioSource.PlayOneShot(mapping.clip, voiceVolume);
-                break;
+                audioSource.PlayOneShot(clip, voiceVolume);
+                return;
             }
         }
     }
