@@ -29,9 +29,19 @@ public class MainMenuController : MonoBehaviour
 
     void Awake()
     {
-        // ⚡ [แก้ไข] สร้าง GameObject แยกเฉพาะสำหรับ SaveSystem เพื่อไม่ให้ MainMenu Canvas โดน DontDestroyOnLoad ติดไปด้วย
-        GameObject saveGo = new GameObject("SaveSystem");
-        saveSystem = saveGo.AddComponent<SaveSystem>();
+        // ⚡ ป้องกันบั๊ก MissingReference เมื่อสลับฉากกลับมาเมนูหลัก
+        // เช็คก่อนว่ามี SaveSystem อยู่แล้วหรือไม่ ถ้ามีให้ใช้ตัวเดิม ห้ามสร้างซ้ำ
+        saveSystem = SaveSystem.Instance;
+        if (saveSystem == null)
+        {
+            saveSystem = Object.FindAnyObjectByType<SaveSystem>();
+        }
+
+        if (saveSystem == null)
+        {
+            GameObject saveGo = new GameObject("SaveSystem");
+            saveSystem = saveGo.AddComponent<SaveSystem>();
+        }
     }
 
     void Start()

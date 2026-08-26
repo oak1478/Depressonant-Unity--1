@@ -43,7 +43,7 @@ public class CurtainInteraction : MonoBehaviour
             StressManager stress = Object.FindAnyObjectByType<StressManager>();
             if (stress != null)
             {
-                stress.currentStress = Mathf.Max(0f, stress.currentStress - 5f);
+                stress.ChangeStress(-5f);
                 Debug.Log("[CurtainInteraction] เปิดผ้าม่าน: แสงแดดช่วยบรรเทาความเครียดลง 5%");
             }
         }

@@ -4,8 +4,24 @@ public class PlayerSpawner : MonoBehaviour
 {
     private void Start()
     {
-        // ตรวจสอบว่ามีการบันทึกจุดเกิดปลายทางไว้หรือไม่
-        if (!string.IsNullOrEmpty(SceneTransitionManager.targetSpawnPointName))
+        CharacterController cc = GetComponent<CharacterController>();
+
+        // 1. ตรวจสอบก่อนว่าเป็นการโหลดเกมจากไฟล์เซฟหรือไม่
+        if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.hasLoadedPosition)
+        {
+            if (cc != null) cc.enabled = false;
+            
+            transform.position = GameManagerSetup.Instance.loadedPlayerPosition;
+            
+            if (cc != null) cc.enabled = true;
+            
+            Debug.Log($"[PlayerSpawner] โหลดตำแหน่งตัวละครจากไฟล์เซฟสำเร็จ! ย้ายไปที่พิกัด: {transform.position}");
+            
+            // รีเซ็ตค่าเพื่อไม่ให้โหลดซ้ำซ้อน
+            GameManagerSetup.Instance.hasLoadedPosition = false;
+        }
+        // 2. ถ้าไม่ได้โหลดเซฟ ให้ตรวจสอบว่าเป็นการเปลี่ยนฉากเดินข้ามประตูมาหรือไม่
+        else if (!string.IsNullOrEmpty(SceneTransitionManager.targetSpawnPointName))
         {
             string targetName = SceneTransitionManager.targetSpawnPointName;
             
@@ -14,22 +30,13 @@ public class PlayerSpawner : MonoBehaviour
             
             if (spawnPoint != null)
             {
-                // บังคับปิด CharacterController ก่อนย้ายตำแหน่งชั่วคราวเพื่อป้องกันบั๊กเด้งกลับจุดเดิมของ Unity
-                CharacterController cc = GetComponent<CharacterController>();
-                if (cc != null)
-                {
-                    cc.enabled = false;
-                }
+                if (cc != null) cc.enabled = false;
 
                 // ปรับตำแหน่งและมุมหันของตัวละคร
                 transform.position = spawnPoint.transform.position;
                 transform.rotation = spawnPoint.transform.rotation;
 
-                // เปิดกลับมาใช้งานใหม่
-                if (cc != null)
-                {
-                    cc.enabled = true;
-                }
+                if (cc != null) cc.enabled = true;
 
                 Debug.Log($"[PlayerSpawner] บันทึกจุดเกิดสำเร็จ! ย้ายตัวละครไปยังวัตถุชื่อ: '{targetName}'");
             }

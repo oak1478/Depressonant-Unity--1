@@ -3755,6 +3755,7 @@ MonoBehaviour:
   currentStress: 0
   globalVolume: {fileID: 832575518}
   stressVignetteUI: {fileID: 0}
+  hasArmbandTriggeredToday: 0
 --- !u!4 &524162154
 Transform:
   m_ObjectHideFlags: 0
@@ -4570,6 +4571,7 @@ MonoBehaviour:
   - {fileID: 50930203}
   - {fileID: 972354682}
   - {fileID: 526167495}
+  characterSlots: []
   typingSpeed: 0.05
   playerName: Sensei
 --- !u!4 &652085432
@@ -6607,31 +6609,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCInteraction
   npcDisplayName: Mom
-  playerPortrait: {fileID: 21300000, guid: dc40d366c8466604f921e2d33908ec3d, type: 3}
-  npcPortrait: {fileID: 21300000, guid: cc4e8135b3645e34da0cfafa470adaed, type: 3}
-  introductionStory:
-  - speaker: 1
-    text: "\"\u0E43\u0E19\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E14\u0E01\u0E47\u0E15\u0E37\u0E48\u0E19\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22\""
-    stressChange: 0
-  - speaker: 1
-    text: "\u201C\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E04\u0E37\u0E19\u0E40\u0E25\u0E48\u0E19\u0E40\u0E01\u0E21\u0E2D\u0E35\u0E01\u0E41\u0E25\u0E49\u0E27\u0E40\u0E23\u0E2D\u0E30
-      \u0E40\u0E2E\u0E49\u0E2D~~ \u0E41\u0E25\u0E49\u0E27\u0E41\u0E15\u0E48\u0E40\u0E16\u0E2D\u0E30\u201D"
-    stressChange: 0
-  storyChoices:
-  - choiceButtonText: "\"\u0E2B\u0E19\u0E39\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E40\u0E25\u0E48\u0E19\u0E40\u0E01\u0E21\u0E19\u0E30\u0E04\u0E30
-      \u0E2B\u0E19\u0E39\u0E2D\u0E48\u0E32\u0E19\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D...\""
-    stressChange: 15
-    nextDialogueLines: []
-  - choiceButtonText: "\"...\u0E04\u0E48\u0E30\""
-    stressChange: 0
-    nextDialogueLines: []
-  - choiceButtonText: "\"\u0E41\u0E25\u0E49\u0E27\u0E41\u0E21\u0E48\u0E44\u0E1B\u0E44\u0E2B\u0E19\u0E21\u0E32\u0E2B\u0E23\u0E2D\u0E04\u0E30?\" "
-    stressChange: -15
-    nextDialogueLines: []
-  conclusionStory:
-  - speaker: 1
-    text: "\"\u0E40\u0E2D\u0E32\u0E40\u0E16\u0E2D\u0E30\u0E42\u0E0A\u0E04\u0E14\u0E35\u0E25\u0E30\u0E01\u0E31\u0E19\""
-    stressChange: -5
+  npcProfiles: []
+  dialoguesByDay: []
+  fallbackStoryByDay: []
+  fallbackStory: []
 --- !u!135 &1003677621
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8891,6 +8872,21 @@ MonoBehaviour:
   - {fileID: 1327341554}
   - {fileID: 1323498025}
   - {fileID: 185347516}
+  slotCountTexts: []
+  diaryStressText: {fileID: 0}
+  diaryPanel: {fileID: 0}
+  diaryBgImage: {fileID: 0}
+  diaryStoryText: {fileID: 0}
+  diaryLowStressColor: {r: 0.85, g: 1, b: 0.85, a: 1}
+  diaryMedStressColor: {r: 1, g: 0.95, b: 0.75, a: 1}
+  diaryHighStressColor: {r: 1, g: 0.75, b: 0.75, a: 1}
+  diaryNormalFont: {fileID: 0}
+  diaryShakyFont: {fileID: 0}
+  diaryCoverLowStress: {fileID: 0}
+  diaryCoverMedStress: {fileID: 0}
+  diaryCoverHighStress: {fileID: 0}
+  itemSpriteDatabase: []
+  hasUsedHeadphoneToday: 0
 --- !u!114 &1395284635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9966,7 +9962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823ca33c8641ca342adbcdd2feb82866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  itemType: 0
   itemIcon: {fileID: 21300000, guid: 09484260af008624da40604d1f4ee186, type: 3}
+  uniqueItemID: 
 --- !u!65 &1577280788
 BoxCollider:
   m_ObjectHideFlags: 0

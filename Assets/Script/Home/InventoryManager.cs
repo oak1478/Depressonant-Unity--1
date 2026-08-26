@@ -135,7 +135,11 @@ public class InventoryManager : MonoBehaviour
         {
             if (Keyboard.current.tabKey.wasPressedThisFrame)
             {
-                ToggleInventory();
+                DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+                if (dm == null || !dm.IsDialogueActive())
+                {
+                    ToggleInventory();
+                }
             }
 
             // ⚡ [ระบบปุ่มคีย์ลัดสำหรับทดสอบ Playtest]

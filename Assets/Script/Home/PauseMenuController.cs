@@ -106,8 +106,23 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 1f; // ปลดล็อกเวลาเป็นปกติ
         Debug.Log("[PauseMenuController] กลับมาเล่นเกมต่อ ปลดล็อกเวลาฟิสิกส์เป็นปกติ (Time.timeScale = 1)", this);
 
-        // จัดการเคอร์เซอร์เมาส์ตามโหมดซีน (3D หมุนกล้อง vs 2.5D เดินในเมือง)
-        if (Object.FindAnyObjectByType<FirstPersonController>() != null)
+        // ตรวจสอบว่ามีบทสนทนากำลังเปิดอยู่หรือไม่
+        bool isDialogueActive = false;
+        DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+        if (dm != null && dm.IsDialogueActive())
+        {
+            isDialogueActive = true;
+        }
+
+        // จัดการเคอร์เซอร์เมาส์ตามโหมดซีนและสถานะบทสนทนา
+        if (isDialogueActive)
+        {
+            // ถ้าอยู่ในบทสนทนา ปล่อยเมาส์ให้สามารถคลิกเลือกช้อยส์หรือข้อความได้
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("[PauseMenuController] Resume กลับมาขณะมีบทสนทนาค้างอยู่ เปิดแสดงเคอร์เซอร์เมาส์อิสระ", this);
+        }
+        else if (Object.FindAnyObjectByType<FirstPersonController>() != null)
         {
             // ซีน 3D: ล็อกเมาส์ไว้ตรงกลางหน้าจอตามเดิม
             Cursor.lockState = CursorLockMode.Locked;

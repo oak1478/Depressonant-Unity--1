@@ -22,6 +22,10 @@ public class GameManagerSetup : MonoBehaviour
     public int activeSaveSlot = 1; // ⚡ สล็อตเซฟปัจจุบัน (1-4)
     public float playTime = 0f;    // ⚡ เก็บเวลาเล่นรวมสะสม (หน่วยเป็นวินาที)
 
+    [Header("Player Load State")]
+    public bool hasLoadedPosition = false;
+    public Vector3 loadedPlayerPosition;
+
     [Header("Global Inventory")]
     public List<GlobalInventoryItem> savedInventory = new List<GlobalInventoryItem>(); // ลิสต์เก็บไอเทมในกระเป๋า
 
@@ -101,6 +105,10 @@ public class GameManagerSetup : MonoBehaviour
                 : new List<string>();
             activeSaveSlot = SaveSystem.pendingLoadData.activeSaveSlot;
             playTime = SaveSystem.pendingLoadData.playTime;
+
+            // ⚡ โหลดพิกัด
+            hasLoadedPosition = true;
+            loadedPlayerPosition = new Vector3(SaveSystem.pendingLoadData.playerX, SaveSystem.pendingLoadData.playerY, SaveSystem.pendingLoadData.playerZ);
 
             Debug.Log($"[GameManagerSetup] โหลดข้อมูลเซฟ (Slot {activeSaveSlot}) สำเร็จในช่วง Awake!");
             SaveSystem.pendingLoadData = null; // ล้างข้อมูลออก

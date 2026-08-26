@@ -109,6 +109,10 @@ public class SaveSystem : MonoBehaviour
             GameManagerSetup.Instance.activeSaveSlot = slotIndex; // ซิงค์เลขสล็อตกลับไปด้วย
             GameManagerSetup.Instance.playTime = data.playTime;
             
+            // ⚡ โหลดพิกัด
+            GameManagerSetup.Instance.hasLoadedPosition = true;
+            GameManagerSetup.Instance.loadedPlayerPosition = new Vector3(data.playerX, data.playerY, data.playerZ);
+            
             Debug.Log($"[SaveSystem] อัปเดตข้อมูลกลางสำเร็จ (Slot {slotIndex})! วันที่: {GameManagerSetup.Instance.currentDay} | ความเครียด: {GameManagerSetup.Instance.currentStress}%");
         }
         else
