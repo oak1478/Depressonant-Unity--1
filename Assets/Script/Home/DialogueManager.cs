@@ -3,7 +3,31 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+
+public enum VoiceType
+{
+    None,
+    Sigh,
+    Gasp,
+    Laugh,
+    Sad,
+    Angry,
+    Shock,
+    Mumble,
+    Happy,
+    Hmm,
+    SFX_01,
+    SFX_02
+}
+
+[System.Serializable]
+public struct VoiceMapping
+{
+    public VoiceType type;
+    public AudioClip clip;
+}
 
 [System.Serializable]
 public class DialogueLine
@@ -29,6 +53,9 @@ public class DialogueLine
 
     [Tooltip("Visual action/motion effect for this character portrait")]
     public SpriteAction motionEffect = SpriteAction.None;
+
+    [Tooltip("Voice sound to play when this line starts")]
+    public VoiceType voiceSound = VoiceType.None;
 
     // ⚡ สไปรต์สำหรับใช้แสดงผลที่ประมวลผลเสร็จแล้วในช่วงรันไทม์ (ไม่เซฟลงโปรเจกต์)
     [System.NonSerialized] public Sprite resolvedPortraitSprite;
@@ -58,6 +85,9 @@ public class DialogueChoice
     [Tooltip("Visual action/motion effect for this choice portrait")]
     public SpriteAction motionEffect = SpriteAction.None;
 
+    [Tooltip("Voice sound to play when this choice is selected")]
+    public VoiceType voiceSound = VoiceType.None;
+
     [Tooltip("Next dialogue lines to play after selecting this choice")]
     public List<DialogueLine> nextDialogueLines;
 
@@ -83,6 +113,22 @@ public class DialogueManager : MonoBehaviour
     [Header("⚙️ Settings")]
     public float typingSpeed = 0.03f;
     public string playerName = "Sensei";
+
+    [Header("🎵 Audio Settings")]
+    public AudioSource audioSource;
+    
+    [Tooltip("ลากไฟล์เสียงพิมพ์ดีดติ๊กๆ มาใส่ตรงนี้")]
+    public AudioClip typingSound;
+    
+    [Tooltip("ความถี่ของเสียงพิมพ์ (เช่น 3 = เล่นเสียงทุกๆ 3 ตัวอักษร)")]
+    [Range(1, 10)]
+    public int typingSoundFrequency = 3;
+    
+    [Range(0f, 1f)] public float typingVolume = 0.3f;
+    [Range(0f, 1f)] public float voiceVolume = 1f;
+    
+    [Tooltip("จับคู่เสียงกับ VoiceType ต่างๆ ที่นี่")]
+    public List<VoiceMapping> voiceMappings = new List<VoiceMapping>();
 
     private string currentNPCName;
     private List<DialogueLine> currentActiveStory = new List<DialogueLine>();
@@ -279,6 +325,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
+        PlayVoiceSound(currentLine.voiceSound);
         StartCoroutine(TypeText(targetText));
     }
 
@@ -286,7 +333,20 @@ public class DialogueManager : MonoBehaviour
     {
         isTyping = true;
         bodyText.text = "";
-        foreach (char letter in text.ToCharArray()) { bodyText.text += letter; yield return new WaitForSecondsRealtime(typingSpeed); }
+        int charCount = 0;
+        foreach (char letter in text.ToCharArray()) 
+        { 
+            bodyText.text += letter; 
+            charCount++;
+            
+            // ⚡ เล่นเสียงพิมพ์ตามจังหวะที่กำหนด
+            if (audioSource != null && typingSound != null && charCount % typingSoundFrequency == 0)
+            {
+                audioSource.PlayOneShot(typingSound, typingVolume);
+            }
+            
+            yield return new WaitForSecondsRealtime(typingSpeed); 
+        }
         isTyping = false;
     }
 
@@ -446,6 +506,7 @@ public class DialogueManager : MonoBehaviour
         choiceReplayLine.motionEffect = selected.motionEffect;
         choiceReplayLine.resolvedPortraitSprite = selected.resolvedPortraitSprite;
         choiceReplayLine.stressChange = 0f; 
+        choiceReplayLine.voiceSound = selected.voiceSound;
 
         List<DialogueLine> combinedStory = new List<DialogueLine>();
         combinedStory.Add(choiceReplayLine);
@@ -508,5 +569,19 @@ public class DialogueManager : MonoBehaviour
         }
 
         Debug.Log($"[Stress System] Calculated stress change: {amount}");
+    }
+
+    private void PlayVoiceSound(VoiceType type)
+    {
+        if (type == VoiceType.None || audioSource == null) return;
+        
+        foreach (var mapping in voiceMappings)
+        {
+            if (mapping.type == type && mapping.clip != null)
+            {
+                audioSource.PlayOneShot(mapping.clip, voiceVolume);
+                break;
+            }
+        }
     }
 }
