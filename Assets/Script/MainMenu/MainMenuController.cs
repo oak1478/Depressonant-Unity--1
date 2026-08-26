@@ -25,7 +25,16 @@ public class MainMenuController : MonoBehaviour
     [Tooltip("ลาก TMP Text ของสล็อต 1 ถึง 4 ที่ใช้แสดงรายละเอียดมาใส่เรียงตามลำดับ")]
     public TextMeshProUGUI[] slotTexts = new TextMeshProUGUI[4];
 
+    [Header("Menu Audio Settings (ระบบเสียงเมนูหลัก) [เพิ่มใหม่]")]
+    [Tooltip("ลากไฟล์เสียงตอนกดคลิกปุ่มมาใส่ (เช่น select_1 หรือ click_double_on)")]
+    public AudioClip buttonClickSound;
+    [Tooltip("ลากไฟล์เสียงตอนเลื่อนเมาส์ไปชี้ปุ่ม (Hover) มาใส่ (เช่น select_2 หรือ pop_1)")]
+    public AudioClip buttonHoverSound;
+    [Tooltip("ลากไฟล์เสียงตอนกดย้อนกลับ (Back / Cancel) มาใส่ (เช่น cancel หรือ select_3)")]
+    public AudioClip backClickSound;
+
     private SaveSystem saveSystem;
+    private AudioSource audioSource;
 
     void Awake()
     {
@@ -42,12 +51,74 @@ public class MainMenuController : MonoBehaviour
             GameObject saveGo = new GameObject("SaveSystem");
             saveSystem = saveGo.AddComponent<SaveSystem>();
         }
+
+        // ตั้งค่า AudioSource ประจำหน้าเมนู
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        audioSource.spatialBlend = 0f; // 2D UI sound
+        audioSource.playOnAwake = false;
     }
 
     void Start()
     {
         // เริ่มต้นแสดงผลหน้าแรกสุด และปิดหน้าอื่นๆ ทั้งหมด
         ShowMainMenu();
+
+        // ⚡ [เพิ่มใหม่] ผูกเสียงคลิกและเสียง Hover เมาส์ให้กับปุ่มทั้งหมดในหน้าเมนูอัตโนมัติ
+        HookAllButtonSounds();
+    }
+
+    // ฟังก์ชันช่วยผูกเสียงให้กับปุ่ม UI ทั้งหมดอัตโนมัติ
+    private void HookAllButtonSounds()
+    {
+        Button[] allButtons = GetComponentsInChildren<Button>(true);
+        foreach (var btn in allButtons)
+        {
+            if (btn == null) continue;
+
+            // ผูกเสียงคลิก
+            btn.onClick.AddListener(() => PlayButtonClick());
+
+            // ผูกเสียง Hover ชี้เมาส์
+            UnityEngine.EventSystems.EventTrigger trigger = btn.gameObject.GetComponent<UnityEngine.EventSystems.EventTrigger>();
+            if (trigger == null) trigger = btn.gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+
+            var entry = new UnityEngine.EventSystems.EventTrigger.Entry();
+            entry.eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter;
+            entry.callback.AddListener((data) => { PlayButtonHover(); });
+            trigger.triggers.Add(entry);
+        }
+    }
+
+    public void PlayButtonClick()
+    {
+        if (buttonClickSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(buttonClickSound);
+        }
+    }
+
+    public void PlayButtonHover()
+    {
+        if (buttonHoverSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(buttonHoverSound);
+        }
+    }
+
+    public void PlayBackClick()
+    {
+        if (backClickSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(backClickSound);
+        }
+        else
+        {
+            PlayButtonClick();
+        }
     }
 
     // --- ฟังก์ชันควบคุมการแสดงผลของหน้าจอ (Panel Triggers) ---

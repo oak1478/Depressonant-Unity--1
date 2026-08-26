@@ -46,6 +46,20 @@ public class InventoryManager : MonoBehaviour
     [Tooltip("ลากรูปปกไดอารี่ตอนความเครียดสูง (> 70%) มาใส่")]
     public Sprite diaryCoverHighStress; 
 
+    [Header("ระบบเสียง SFX ประจำกระเป๋าและไอเทม (Audio SFX) [เพิ่มใหม่]")]
+    [Tooltip("เสียงรูดซิปเปิดกระเป๋า (เช่น zipper_up)")]
+    public AudioClip bagOpenSound;
+    [Tooltip("เสียงรูดซิปปิดกระเป๋า (เช่น zipper_down)")]
+    public AudioClip bagCloseSound;
+    [Tooltip("เสียงเคี้ยวลูกอม (เช่น 392883...hard-candy-bone-crunch)")]
+    public AudioClip candyEatSound;
+    [Tooltip("เสียงดื่มนมสตรอเบอร์รี่ (เช่น 56271...water_gulp)")]
+    public AudioClip milkDrinkSound;
+    [Tooltip("เสียงเปิดอ่านไดอารี่ / พลิกหน้ากระดาษ (เช่น page_turn)")]
+    public AudioClip diaryOpenSound;
+    [Tooltip("เสียงปิดหน้าต่างไดอารี่ (เช่น book_close)")]
+    public AudioClip diaryCloseSound;
+
     // [เพิ่มใหม่] ฐานข้อมูลรูปภาพไอเทมเพื่อใช้สเกลแสดงผลเมื่อเปลี่ยนซีน
     [System.Serializable]
     public struct ItemSpriteMapping
@@ -58,6 +72,7 @@ public class InventoryManager : MonoBehaviour
 
     private PlayerMovement playerMovement; 
     private StressManager stressManager;
+    private AudioSource audioSource;
 
     [HideInInspector] public bool hasUsedHeadphoneToday = false;
     private bool isDiaryOpenOnGUI = false;
@@ -68,6 +83,13 @@ public class InventoryManager : MonoBehaviour
         {
             Instance = this;
         }
+        else if (Instance != this)
+        {
+            // ⚡ ป้องกันกระเป๋าเป้ซ้ำซ้อน: ถ้ามี InventoryManager ตัวหลักอยู่แล้ว ให้ทำลายตัวที่เกิดซ้ำทิ้งทันที!
+            Debug.LogWarning($"⚠️ [InventoryManager] ตรวจพบกระเป๋าเป้ซ้ำซ้อนในฉาก ({gameObject.name})! ระบบทำการลบตัวซ้ำทิ้งอัตโนมัติเพื่อป้องกัน UI ซ้อนกัน");
+            Destroy(gameObject);
+            return;
+        }
     }
 
     // ⚡ วางทับฟังก์ชัน Start เดิม เพื่อเพิ่มระบบเช็คปุ่มแบบละเอียด
@@ -76,6 +98,28 @@ public class InventoryManager : MonoBehaviour
         inventoryPanel.SetActive(false);
         playerMovement = FindAnyObjectByType<PlayerMovement>();
         stressManager = FindAnyObjectByType<StressManager>();
+
+        // ตั้งค่าระบบเสียง SFX ประจำกระเป๋า
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        audioSource.spatialBlend = 0f; // 2D UI sound
+        audioSource.playOnAwake = false;
+
+        // ⚡ [เพิ่มใหม่] โหลดเสียงและรูปภาพไอเทมทั้งหมดอัตโนมัติหากยังไม่ได้ลากใส่ใน Inspector
+        AutoLoadSFXAndSpritesIfMissing();
+
+        // ⚡ [เพิ่มใหม่] สแกนหาไอเทมบนพื้นทั้งหมดในฉาก เพื่อดึงรูปภาพที่คุณลากใส่ไว้ใน PickupItem มาจดจำอัตโนมัติ!
+        PickupItem[] groundItems = Object.FindObjectsByType<PickupItem>(FindObjectsSortMode.None);
+        foreach (var groundItem in groundItems)
+        {
+            if (groundItem != null && groundItem.itemIcon != null && groundItem.itemType != ItemType.None)
+            {
+                RegisterSpriteIfMissing(groundItem.itemType, groundItem.itemIcon);
+            }
+        }
 
         // ⚡ [แก้ไข] เช็คประเภทซีนห้องนอน 3D เพื่อตั้งค่าเมาส์ตอนเกิดเฟรมแรกให้ถูกต้อง ไม่แย่งล็อกเมาส์กันเอง
         bool is3DScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Bedroom_3D";
@@ -115,16 +159,6 @@ public class InventoryManager : MonoBehaviour
 
         // [เพิ่มใหม่] โหลดไอเทมข้ามฉอกจาก GameManager เข้ามาแสดงผลใน UI
         LoadFromGlobal();
-
-        // ⚡ [เพิ่มใหม่] สแกนหาไอเทมบนพื้นทั้งหมดในฉาก เพื่อดึงรูปภาพที่คุณลากใส่ไว้ใน PickupItem มาจดจำอัตโนมัติ!
-        PickupItem[] groundItems = Object.FindObjectsByType<PickupItem>(FindObjectsSortMode.None);
-        foreach (var groundItem in groundItems)
-        {
-            if (groundItem != null && groundItem.itemIcon != null && groundItem.itemType != ItemType.None)
-            {
-                RegisterSpriteIfMissing(groundItem.itemType, groundItem.itemIcon);
-            }
-        }
 
         if (diaryStressText != null) diaryStressText.gameObject.SetActive(false);
     }
@@ -227,6 +261,16 @@ public class InventoryManager : MonoBehaviour
             bool isActive = !inventoryPanel.activeSelf;
             inventoryPanel.SetActive(isActive);
 
+            // ⚡ เล่นเสียงรูดซิปกระเป๋า
+            if (isActive)
+            {
+                PlaySFX(bagOpenSound);
+            }
+            else
+            {
+                PlaySFX(bagCloseSound);
+            }
+
             // ⚡ [เพิ่มใหม่] ค้นหาสคริปต์เดินและจัดการความเครียดของฉากปัจจุบันใหม่ทุกครั้งเพื่อป้องกันลิงก์อ้างอิงพังเวลาข้ามฉาก
             playerMovement = Object.FindAnyObjectByType<PlayerMovement>();
             stressManager = Object.FindAnyObjectByType<StressManager>();
@@ -261,6 +305,15 @@ public class InventoryManager : MonoBehaviour
                     diaryStressText.gameObject.SetActive(false); 
                 }
             }
+        }
+    }
+
+    // ⚡ [เพิ่มใหม่] ฟังก์ชันสำหรับปุ่มกากบาท [X] บนหน้ากระเป๋าเป้ สั่งปิดกระเป๋าโดยตรง
+    public void CloseInventory()
+    {
+        if (inventoryPanel != null && inventoryPanel.activeSelf)
+        {
+            ToggleInventory();
         }
     }
 
@@ -344,11 +397,13 @@ public class InventoryManager : MonoBehaviour
         switch (type)
         {
             case ItemType.Candy:
+                PlaySFX(candyEatSound);
                 stressManager.ChangeStress(-3f); 
                 ConsumeItem(slotIndex);          
                 break;
 
             case ItemType.StrawberryMilk:
+                PlaySFX(milkDrinkSound);
                 stressManager.ChangeStress(-5f); 
                 ConsumeItem(slotIndex);          
                 break;
@@ -376,6 +431,7 @@ public class InventoryManager : MonoBehaviour
                 break;
 
             case ItemType.Diary:
+                PlaySFX(diaryOpenSound);
                 if (diaryPanel != null)
                 {
                     OpenDiaryUI();
@@ -475,6 +531,36 @@ public class InventoryManager : MonoBehaviour
         mapping.type = type;
         mapping.sprite = sprite;
         itemSpriteDatabase.Add(mapping);
+    }
+
+    // ⚡ [เพิ่มใหม่] โหลดไฟล์เสียง SFX และ Sprite ไอเทมทั้งหมดอัตโนมัติหากยังว่างอยู่
+    private void AutoLoadSFXAndSpritesIfMissing()
+    {
+        AudioClip[] clips = Resources.FindObjectsOfTypeAll<AudioClip>();
+        foreach (var c in clips)
+        {
+            if (c == null) continue;
+            string lower = c.name.ToLower();
+            if (bagOpenSound == null && lower.Contains("zipper_up")) bagOpenSound = c;
+            if (bagCloseSound == null && lower.Contains("zipper_down")) bagCloseSound = c;
+            if (candyEatSound == null && (lower.Contains("candy") || lower.Contains("crunch"))) candyEatSound = c;
+            if (milkDrinkSound == null && (lower.Contains("gulp") || lower.Contains("drink"))) milkDrinkSound = c;
+            if (diaryOpenSound == null && lower.Contains("page_turn")) diaryOpenSound = c;
+            if (diaryCloseSound == null && lower.Contains("book_close")) diaryCloseSound = c;
+        }
+
+        Sprite[] allSprites = Resources.FindObjectsOfTypeAll<Sprite>();
+        foreach (var s in allSprites)
+        {
+            if (s == null) continue;
+            string lower = s.name.ToLower();
+            if (lower.Contains("candy")) RegisterSpriteIfMissing(ItemType.Candy, s);
+            if (lower.Contains("milk") || lower.Contains("strawberry")) RegisterSpriteIfMissing(ItemType.StrawberryMilk, s);
+            if (lower.Contains("diary") || lower.Contains("book")) RegisterSpriteIfMissing(ItemType.Diary, s);
+            if (lower.Contains("headphone")) RegisterSpriteIfMissing(ItemType.Headphone, s);
+            if (lower.Contains("armband")) RegisterSpriteIfMissing(ItemType.Armband, s);
+            if (lower.Contains("rain") || lower.Contains("drawing")) RegisterSpriteIfMissing(ItemType.RainDrawing, s);
+        }
     }
 
     // ⚡ [เพิ่มใหม่] ฟังก์ชันเลือกรูปปกไดอารี่ตามระดับความเครียดสะสม (Dynamic Covers)
@@ -675,15 +761,29 @@ public class InventoryManager : MonoBehaviour
     // ฟังก์ชันสำหรับผูกกับปุ่มกากบาท [X] ปิดหน้าต่างไดอารี่
     public void CloseDiaryUI()
     {
+        // เล่นเสียงปิดสมุดไดอารี่
+        PlaySFX(diaryCloseSound);
+
+        isDiaryOpenOnGUI = false;
+
         if (diaryPanel != null)
         {
             diaryPanel.SetActive(false);
+        }
 
-            // ปล่อยคืนอิสระให้ระบบเดินตามปกติ (เว้นแต่ว่าหน้ากระเป๋ายังเปิดอยู่)
-            if (inventoryPanel != null && !inventoryPanel.activeSelf)
-            {
-                if (playerMovement != null) playerMovement.enabled = true;
-            }
+        // ปล่อยคืนอิสระให้ระบบเดินตามปกติ (เว้นแต่ว่าหน้ากระเป๋ายังเปิดอยู่)
+        if (inventoryPanel != null && !inventoryPanel.activeSelf)
+        {
+            if (playerMovement != null) playerMovement.enabled = true;
+        }
+    }
+
+    // ⚡ ฟังก์ชันช่วยเล่นเสียง SFX
+    public void PlaySFX(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 
@@ -740,15 +840,10 @@ public class InventoryManager : MonoBehaviour
         Rect winRect = new Rect((Screen.width - winWidth) / 2, (Screen.height - winHeight) / 2, winWidth, winHeight);
 
         // วาดพื้นหลังไดอารี่ตามสีความเครียด
-        Texture2D bgTex = new Texture2D(1, 1);
-        bgTex.SetPixel(0, 0, new Color(bgColor.r, bgColor.g, bgColor.b, 0.95f));
-        bgTex.Apply();
-
-        GUIStyle winStyle = new GUIStyle(GUI.skin.box);
-        winStyle.normal.background = bgTex;
-        winStyle.padding = new RectOffset(20, 20, 20, 20);
-
-        GUI.Box(winRect, GUIContent.none, winStyle);
+        Color oldColor = GUI.color;
+        GUI.color = new Color(bgColor.r, bgColor.g, bgColor.b, 0.95f);
+        GUI.DrawTexture(winRect, Texture2D.whiteTexture);
+        GUI.color = oldColor;
 
         GUILayout.BeginArea(winRect);
         
@@ -809,6 +904,7 @@ public class InventoryManager : MonoBehaviour
         btnStyle.fontStyle = FontStyle.Bold;
         if (GUILayout.Button("✖ ปิดไดอารี่", btnStyle, GUILayout.Height(40)))
         {
+            PlaySFX(diaryCloseSound);
             isDiaryOpenOnGUI = false;
         }
 

@@ -478,6 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TriggerSceneWarp
   targetSceneName: OutSide
   targetSpawnPointName: Player_Spawn_Point
+  doorOpenSound: {fileID: 8300000, guid: eb30089e568c1df4ba88b13bdf3a5108, type: 3}
 --- !u!65 &86814108
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1062,6 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomWarp
   targetSpawnPoint: {fileID: 1753317186}
+  doorOpenSound: {fileID: 0}
 --- !u!65 &213768662
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1504,6 +1506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomWarp
   targetSpawnPoint: {fileID: 642218124}
+  doorOpenSound: {fileID: 0}
 --- !u!65 &330284028
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2902,6 +2905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomWarp
   targetSpawnPoint: {fileID: 69947420}
+  doorOpenSound: {fileID: 0}
 --- !u!65 &654848140
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3053,6 +3057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomWarp
   targetSpawnPoint: {fileID: 378175395}
+  doorOpenSound: {fileID: 0}
 --- !u!65 &659840955
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3266,6 +3271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomWarp
   targetSpawnPoint: {fileID: 1830960782}
+  doorOpenSound: {fileID: 0}
 --- !u!65 &706124837
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4908,6 +4914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TriggerSceneWarp
   targetSceneName: Bedroom_3D
   targetSpawnPointName: Player_Spawn_Point
+  doorOpenSound: {fileID: 8300000, guid: eb30089e568c1df4ba88b13bdf3a5108, type: 3}
 --- !u!4 &1318012048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b0be235ff8b88ea498e74ac6303519ba, type: 3}
@@ -5783,6 +5790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomWarp
   targetSpawnPoint: {fileID: 129305694}
+  doorOpenSound: {fileID: 0}
 --- !u!65 &1558865232
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5991,6 +5999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomWarp
   targetSpawnPoint: {fileID: 2137260424}
+  doorOpenSound: {fileID: 0}
 --- !u!65 &1586279522
 BoxCollider:
   m_ObjectHideFlags: 0
