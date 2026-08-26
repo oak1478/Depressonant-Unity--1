@@ -2,9 +2,19 @@ using UnityEngine;
 
 public class DayManager : MonoBehaviour
 {
+    public static DayManager Instance;
+
     [Header("ข้อมูลวันปัจจุบัน")]
     [Range(1, 15)]
     public int currentDay = 1;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {

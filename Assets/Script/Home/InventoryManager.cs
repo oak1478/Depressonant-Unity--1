@@ -28,6 +28,24 @@ public class InventoryManager : MonoBehaviour
     [Header("UI สำหรับ Diary")]
     public TextMeshProUGUI diaryStressText; 
 
+    [Header("UI สำหรับเปิดหน้าไดอารี่จริง (Dynamic UI) [เพิ่มใหม่]")]
+    public GameObject diaryPanel;
+    public Image diaryBgImage;
+    public TextMeshProUGUI diaryStoryText;
+    public Color diaryLowStressColor = new Color(0.85f, 1f, 0.85f); // เขียวอ่อนสบายตา
+    public Color diaryMedStressColor = new Color(1f, 0.95f, 0.75f); // เหลืองกังวล
+    public Color diaryHighStressColor = new Color(1f, 0.75f, 0.75f); // แดงเครียดสูง
+    public TMP_FontAsset diaryNormalFont;
+    public TMP_FontAsset diaryShakyFont; 
+
+    [Header("รูปภาพปกไดอารี่ตามระดับความเครียด (Dynamic Covers) [เพิ่มใหม่]")]
+    [Tooltip("ลากรูปปกไดอารี่ตอนความเครียดต่ำ (< 30%) มาใส่")]
+    public Sprite diaryCoverLowStress;
+    [Tooltip("ลากรูปปกไดอารี่ตอนความเครียดปานกลาง (30% - 70%) มาใส่")]
+    public Sprite diaryCoverMedStress;
+    [Tooltip("ลากรูปปกไดอารี่ตอนความเครียดสูง (> 70%) มาใส่")]
+    public Sprite diaryCoverHighStress; 
+
     // [เพิ่มใหม่] ฐานข้อมูลรูปภาพไอเทมเพื่อใช้สเกลแสดงผลเมื่อเปลี่ยนซีน
     [System.Serializable]
     public struct ItemSpriteMapping
@@ -42,6 +60,7 @@ public class InventoryManager : MonoBehaviour
     private StressManager stressManager;
 
     [HideInInspector] public bool hasUsedHeadphoneToday = false;
+    private bool isDiaryOpenOnGUI = false;
 
     void Awake()
     {
@@ -97,15 +116,104 @@ public class InventoryManager : MonoBehaviour
         // [เพิ่มใหม่] โหลดไอเทมข้ามฉอกจาก GameManager เข้ามาแสดงผลใน UI
         LoadFromGlobal();
 
+        // ⚡ [เพิ่มใหม่] สแกนหาไอเทมบนพื้นทั้งหมดในฉาก เพื่อดึงรูปภาพที่คุณลากใส่ไว้ใน PickupItem มาจดจำอัตโนมัติ!
+        PickupItem[] groundItems = Object.FindObjectsByType<PickupItem>(FindObjectsSortMode.None);
+        foreach (var groundItem in groundItems)
+        {
+            if (groundItem != null && groundItem.itemIcon != null && groundItem.itemType != ItemType.None)
+            {
+                RegisterSpriteIfMissing(groundItem.itemType, groundItem.itemIcon);
+            }
+        }
+
         if (diaryStressText != null) diaryStressText.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
+        if (Keyboard.current != null)
         {
-            ToggleInventory();
+            if (Keyboard.current.tabKey.wasPressedThisFrame)
+            {
+                ToggleInventory();
+            }
+
+            // ⚡ [ระบบปุ่มคีย์ลัดสำหรับทดสอบ Playtest]
+            // กด F1 - F6 เพื่อเสกไอเทมแต่ละชิ้นเข้ากระเป๋าเป้ทันที
+            if (Keyboard.current.f1Key.wasPressedThisFrame || Keyboard.current.digit1Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Candy), ItemType.Candy);
+                Debug.Log("🧪 [Test] เสกไอเทม: ลูกอม (Candy) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f2Key.wasPressedThisFrame || Keyboard.current.digit2Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.StrawberryMilk), ItemType.StrawberryMilk);
+                Debug.Log("🧪 [Test] เสกไอเทม: นมสตรอเบอร์รี่ (StrawberryMilk) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f3Key.wasPressedThisFrame || Keyboard.current.digit3Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Diary), ItemType.Diary);
+                Debug.Log("🧪 [Test] เสกไอเทม: ไดอารี่ (Diary) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f4Key.wasPressedThisFrame || Keyboard.current.digit4Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Headphone), ItemType.Headphone);
+                Debug.Log("🧪 [Test] เสกไอเทม: หูฟัง (Headphone) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f5Key.wasPressedThisFrame || Keyboard.current.digit5Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.Armband), ItemType.Armband);
+                Debug.Log("🧪 [Test] เสกไอเทม: ปลอกแขน (Armband) เข้ากระเป๋าแล้ว!");
+            }
+            if (Keyboard.current.f6Key.wasPressedThisFrame || Keyboard.current.digit6Key.wasPressedThisFrame)
+            {
+                AddItem(GetSpriteForItemType(ItemType.RainDrawing), ItemType.RainDrawing);
+                Debug.Log("🧪 [Test] เสกไอเทม: ภาพวาดของเรน (RainDrawing) เข้ากระเป๋าแล้ว!");
+            }
+
+            // กด F7 เพื่อปรับวันเป็นวันที่ 8 (ใช้ทดสอบหูฟัง)
+            if (Keyboard.current.f7Key.wasPressedThisFrame || Keyboard.current.digit7Key.wasPressedThisFrame)
+            {
+                if (DayManager.Instance != null) DayManager.Instance.currentDay = 8;
+                if (GameManagerSetup.Instance != null) GameManagerSetup.Instance.currentDay = 8;
+                Debug.Log("🧪 [Test] วาร์ปข้ามไป 'วันที่ 8' เรียบร้อย! ตอนนี้สามารถทดสอบกดใช้หูฟังได้แล้ว");
+            }
+
+            // กด F8 / F9 เพื่อปรับค่าความเครียดเพิ่ม/ลด 25% (ใช้ทดสอบการเปลี่ยนสีหน้าไดอารี่ Dynamic UI)
+            if (Keyboard.current.f8Key.wasPressedThisFrame || Keyboard.current.digit8Key.wasPressedThisFrame)
+            {
+                if (stressManager != null) stressManager.ChangeStress(25f);
+                Debug.Log("🧪 [Test] เพิ่มความเครียด +25% เพื่อทดสอบหน้าไดอารี่");
+            }
+            if (Keyboard.current.f9Key.wasPressedThisFrame || Keyboard.current.digit9Key.wasPressedThisFrame)
+            {
+                if (stressManager != null) stressManager.ChangeStress(-25f);
+                Debug.Log("🧪 [Test] ลดความเครียด -25% เพื่อทดสอบหน้าไดอารี่");
+            }
         }
+
+        // ⚡ [เพิ่มใหม่] อัปเดตรูปปกไดอารี่ในกระเป๋าเป้ตามค่าความเครียดแบบเรียลไทม์ (Dynamic Cover)
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (itemSlots[i].enabled && slotItemTypes[i] == ItemType.Diary)
+            {
+                Sprite dynamicCover = GetDynamicDiarySprite();
+                if (dynamicCover != null) itemSlots[i].sprite = dynamicCover;
+            }
+        }
+    }
+
+    // ⚡ [ฟังก์ชันคลิกขวาใน Inspector] เสกไอเทมครบทุกชิ้นเข้ากระเป๋าทันที
+    [ContextMenu("Give All Test Items")]
+    public void GiveAllTestItems()
+    {
+        AddItem(GetSpriteForItemType(ItemType.Diary), ItemType.Diary);
+        AddItem(GetSpriteForItemType(ItemType.Headphone), ItemType.Headphone);
+        AddItem(GetSpriteForItemType(ItemType.Candy), ItemType.Candy);
+        AddItem(GetSpriteForItemType(ItemType.StrawberryMilk), ItemType.StrawberryMilk);
+        AddItem(GetSpriteForItemType(ItemType.Armband), ItemType.Armband);
+        AddItem(GetSpriteForItemType(ItemType.RainDrawing), ItemType.RainDrawing);
+        Debug.Log("🎉 เสกไอเทมทดสอบครบทั้ง 6 ชนิดเข้ากระเป๋าเป้เรียบร้อย!");
     }
 
     public void ToggleInventory()
@@ -155,6 +263,17 @@ public class InventoryManager : MonoBehaviour
     // ⚡ [ปรับปรุงใหม่] ฟังก์ชันเพิ่มไอเทม รองรับระบบเก็บซ้อนกัน (Stacking)
     public bool AddItem(Sprite itemSprite, ItemType type)
     {
+        // ถ้ามี Sprite ส่งเข้ามา ให้จดจำเข้าฐานข้อมูลทันที
+        if (itemSprite != null)
+        {
+            RegisterSpriteIfMissing(type, itemSprite);
+        }
+        else
+        {
+            // ถ้าไม่มี Sprite ให้ดึงจากฐานข้อมูลที่เคยสแกนไว้
+            itemSprite = GetSpriteForItemType(type);
+        }
+
         // เช็คก่อนว่าเป็นไอเทมประเภทที่ซ้อนกันได้ไหม (Candy และ StrawberryMilk)
         bool isStackable = (type == ItemType.Candy || type == ItemType.StrawberryMilk);
 
@@ -231,11 +350,20 @@ public class InventoryManager : MonoBehaviour
                 break;
 
             case ItemType.Headphone:
+                int currentDay = 1;
+                if (DayManager.Instance != null) currentDay = DayManager.Instance.currentDay;
+
+                if (currentDay < 8)
+                {
+                    Debug.LogWarning("🎧 หูฟังนี้ยังใช้ไม่ได้! (สวมใส่และใช้งานได้ตั้งแต่วันที่ 8 เป็นต้นไป)");
+                    break;
+                }
+
                 if (!hasUsedHeadphoneToday)
                 {
-                    float reduction = stressManager.currentStress * 0.5f;
-                    stressManager.ChangeStress(-reduction);
+                    stressManager.ChangeStress(-10f); // ลดค่าความเครียด 10% (10 หน่วย)
                     hasUsedHeadphoneToday = true;
+                    Debug.Log("🎧 สวมหูฟัง: ลดความเครียดลง 10 หน่วยเรียบร้อย!");
                 }
                 else
                 {
@@ -244,9 +372,21 @@ public class InventoryManager : MonoBehaviour
                 break;
 
             case ItemType.Diary:
+                if (diaryPanel != null)
+                {
+                    OpenDiaryUI();
+                }
+                else
+                {
+                    // ⚡ หากยังไม่ได้สร้าง UI ใน Canvas ระบบจะเปิดหน้าต่างไดอารี่ OnGUI ให้ทดสอบได้ทันที!
+                    isDiaryOpenOnGUI = true;
+                    Debug.Log("📖 ไดอารี่: เปิดหน้าต่างบันทึกไดอารี่จำลอง (Dynamic UI) ขึ้นมาบนหน้าจอเรียบร้อย!");
+                }
+                break;
+
             case ItemType.RainDrawing:
             case ItemType.Armband:
-                Debug.Log("-> ไอเทมประเภทนี้เป็น Passive ติดตัว ไม่ต้องกดใช้งาน");
+                Debug.Log("-> ไอเทมประเภทนี้ส่งผลแบบติดตัว (Passive) หรือทำงานตามเงื่อนไขเนื้อเรื่อง ไม่ต้องกดใช้งาน");
                 break;
         }
 
@@ -308,14 +448,90 @@ public class InventoryManager : MonoBehaviour
         SaveToGlobal(); // [เพิ่มใหม่] ซิงค์คลังข้ามซีน
     }
 
+    // ⚡ [เพิ่มใหม่] ฟังก์ชันจดจำ Sprite ของไอเทมเข้าฐานข้อมูลอัตโนมัติ
+    public void RegisterSpriteIfMissing(ItemType type, Sprite sprite)
+    {
+        if (sprite == null || type == ItemType.None) return;
+
+        for (int i = 0; i < itemSpriteDatabase.Count; i++)
+        {
+            if (itemSpriteDatabase[i].type == type)
+            {
+                if (itemSpriteDatabase[i].sprite == null)
+                {
+                    var entry = itemSpriteDatabase[i];
+                    entry.sprite = sprite;
+                    itemSpriteDatabase[i] = entry;
+                }
+                return;
+            }
+        }
+
+        ItemSpriteMapping mapping = new ItemSpriteMapping();
+        mapping.type = type;
+        mapping.sprite = sprite;
+        itemSpriteDatabase.Add(mapping);
+    }
+
+    // ⚡ [เพิ่มใหม่] ฟังก์ชันเลือกรูปปกไดอารี่ตามระดับความเครียดสะสม (Dynamic Covers)
+    public Sprite GetDynamicDiarySprite()
+    {
+        float stress = stressManager != null ? stressManager.currentStress : 0f;
+
+        if (stress > 70f && diaryCoverHighStress != null)
+        {
+            return diaryCoverHighStress;
+        }
+        else if (stress > 30f && diaryCoverMedStress != null)
+        {
+            return diaryCoverMedStress;
+        }
+        else if (diaryCoverLowStress != null)
+        {
+            return diaryCoverLowStress;
+        }
+
+        // หากยังไม่ได้ใส่รูปปกแยกตามความเครียด ให้ค้นหารูป Diary ปกติจากฐานข้อมูล
+        foreach (var mapping in itemSpriteDatabase)
+        {
+            if (mapping.type == ItemType.Diary && mapping.sprite != null) return mapping.sprite;
+        }
+
+        return CreateFallbackSprite(ItemType.Diary);
+    }
+
     // [เพิ่มใหม่] แปลงสไปรต์สำหรับโหลดไอเทมข้ามซีน
     private Sprite GetSpriteForItemType(ItemType type)
     {
         foreach (var mapping in itemSpriteDatabase)
         {
-            if (mapping.type == type) return mapping.sprite;
+            if (mapping.type == type && mapping.sprite != null) return mapping.sprite;
         }
-        return null;
+
+        // ⚡ [เพิ่มใหม่] หากยังไม่ได้ลากรูปใส่ใน Inspector ให้สร้าง Sprite สีตามชนิดไอเทมชั่วคราวเพื่อใช้ทดสอบ (ไม่ให้ขึ้นเป็นกล่องขาวโล้นๆ)
+        return CreateFallbackSprite(type);
+    }
+
+    private Sprite CreateFallbackSprite(ItemType type)
+    {
+        Color color = Color.white;
+        switch (type)
+        {
+            case ItemType.Candy: color = new Color(1f, 0.4f, 0.7f); break; // ชมพูลูกอม
+            case ItemType.StrawberryMilk: color = new Color(1f, 0.75f, 0.85f); break; // ชมพูพาสเทลนมสตรอเบอร์รี่
+            case ItemType.Diary: color = new Color(0.65f, 0.4f, 0.2f); break; // น้ำตาลปกไดอารี่
+            case ItemType.Headphone: color = new Color(0.2f, 0.6f, 1f); break; // ฟ้าหูฟัง
+            case ItemType.Armband: color = new Color(1f, 0.85f, 0.2f); break; // เหลืองทองปลอกแขน
+            case ItemType.RainDrawing: color = new Color(0.4f, 0.85f, 0.95f); break; // ฟ้าครามภาพวาดฝน
+        }
+
+        Texture2D tex = new Texture2D(32, 32);
+        Color[] pixels = new Color[32 * 32];
+        for (int i = 0; i < pixels.Length; i++) pixels[i] = color;
+        tex.SetPixels(pixels);
+        tex.Apply();
+
+        return Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f));
     }
 
     // [เพิ่มใหม่] โหลดคลังเก็บของจาก GameManager กลางระดับโลก
@@ -390,5 +606,208 @@ public class InventoryManager : MonoBehaviour
     public void ResetDailyItems()
     {
         hasUsedHeadphoneToday = false;
+    }
+
+    // ⚡ [เพิ่มใหม่] ฟังก์ชันเปิดแสดงหน้าต่างไดอารี่ และเปลี่ยนสไตล์ตามความเครียดสะสม (Dynamic UI)
+    public void OpenDiaryUI()
+    {
+        if (diaryPanel == null || stressManager == null) return;
+
+        diaryPanel.SetActive(true);
+        float stress = stressManager.currentStress;
+
+        // ปิดการเดินตัวละครระหว่างอ่านไดอารี่
+        if (playerMovement != null) playerMovement.enabled = false;
+
+        // ⚡ ระบบ Dynamic UI ปรับเปลี่ยนสีพื้นหลังและสไตล์ฟอนต์ตามระดับความเครียด
+        if (diaryBgImage != null)
+        {
+            Sprite dynamicCover = GetDynamicDiarySprite();
+            if (dynamicCover != null) diaryBgImage.sprite = dynamicCover;
+        }
+
+        if (stress < 30f)
+        {
+            if (diaryBgImage != null) diaryBgImage.color = diaryLowStressColor;
+            if (diaryStoryText != null)
+            {
+                if (diaryNormalFont != null) diaryStoryText.font = diaryNormalFont;
+                diaryStoryText.fontStyle = FontStyles.Normal;
+            }
+        }
+        else if (stress <= 70f)
+        {
+            if (diaryBgImage != null) diaryBgImage.color = diaryMedStressColor;
+            if (diaryStoryText != null)
+            {
+                if (diaryNormalFont != null) diaryStoryText.font = diaryNormalFont;
+                diaryStoryText.fontStyle = FontStyles.Italic;
+            }
+        }
+        else
+        {
+            if (diaryBgImage != null) diaryBgImage.color = diaryHighStressColor;
+            if (diaryStoryText != null)
+            {
+                if (diaryShakyFont != null) diaryStoryText.font = diaryShakyFont;
+                diaryStoryText.fontStyle = FontStyles.Bold;
+            }
+        }
+
+        // ⚡ อัปเดตเนื้อเรื่องสรุปรายวันตามวันปัจจุบัน
+        int day = 1;
+        if (DayManager.Instance != null) day = DayManager.Instance.currentDay;
+
+        if (diaryStoryText != null)
+        {
+            diaryStoryText.text = GetDiarySummary(day, stress);
+        }
+
+        // ปลดล็อกเมาส์ให้สามารถลากมากดปุ่มปิดไดอารี่ได้
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    // ฟังก์ชันสำหรับผูกกับปุ่มกากบาท [X] ปิดหน้าต่างไดอารี่
+    public void CloseDiaryUI()
+    {
+        if (diaryPanel != null)
+        {
+            diaryPanel.SetActive(false);
+
+            // ปล่อยคืนอิสระให้ระบบเดินตามปกติ (เว้นแต่ว่าหน้ากระเป๋ายังเปิดอยู่)
+            if (inventoryPanel != null && !inventoryPanel.activeSelf)
+            {
+                if (playerMovement != null) playerMovement.enabled = true;
+            }
+        }
+    }
+
+    // ฟังก์ชันสร้างข้อความบันทึกของเนียตามเงื่อนไขวันและความเครียด
+    private string GetDiarySummary(int day, float stress)
+    {
+        string statusText = "";
+        string diaryText = "";
+
+        if (stress > 70f)
+        {
+            statusText = "มันอึดอัด... เหมือนกำลังจะหายใจไม่ออก...";
+            diaryText = day == 1 ? "วันแรกของโรงเรียนทำไมมันน่ากลัวขนาดนี้ ทุกคนกำลังจ้องมองและวิจารณ์ฉันอยู่ใช่ไหม... ฉันอยากกลับบ้าน..." :
+                        day == 8 ? "วันที่แปดแล้ว... ทำไมไม่มีอะไรดีขึ้นเลย หูฟังเสียงเพลงก็เกือบจะไม่ได้ช่วยปลอบประโลมใจฉันแล้ว..." :
+                        "หัวสมองมันขาวโพลนไปหมด... ไม่อยากทำอะไร ไม่อยากเจอใครทั้งนั้น...";
+        }
+        else if (stress > 30f)
+        {
+            statusText = "รู้สึกกังวลอยู่ตลอดเวลา...";
+            diaryText = day == 1 ? "เริ่มวันแรกด้วยความรู้สึกแปลกๆ ทุกคนที่นี่ดูแปลกหน้าไปหมด หวังว่าพรุ่งนี้จะปรับตัวได้นะ..." :
+                        day == 8 ? "วันนี้ลองเอาหูฟังมาฟังเพลงดูบ้าง รู้สึกจิตใจสงบขึ้นมาหน่อยนึง แต่ก็ยังกลัวการไปสบตาคนอื่นอยู่ดี..." :
+                        "วันนี้ผ่านไปได้แบบเหนื่อยๆ มีเรื่องให้กังวลอยู่ตลอดเวลาเลย...";
+        }
+        else
+        {
+            statusText = "วันนี้ค่อนข้างโอเค สงบสุขดี";
+            diaryText = day == 1 ? "วันแรกเริ่มต้นได้ราบรื่นกว่าที่คิด ฉันพยายามตั้งสติและเผชิญหน้ากับมันอย่างค่อยเป็นค่อยไป..." :
+                        day == 8 ? "วันที่แปดแล้ว ฉันเริ่มชินกับบรรยากาศการฟังเพลงเงียบๆ และจัดการความรู้สึกตัวเองได้ดีขึ้นมาก" :
+                        "วันนี้ไม่มีเรื่องแย่ๆ เกิดขึ้นเลย รู้สึกปลอดภัยและอบอุ่นดี...";
+        }
+
+        return $"<b>บันทึกของเนีย - วันที่ {day}</b>\n" +
+               $"<size=80%>สภาวะจิตใจ: {statusText} (Stress: {Mathf.RoundToInt(stress)}%)</size>\n\n" +
+               $"{diaryText}";
+    }
+
+    // ⚡ [ระบบหน้าต่างจำลองอัตโนมัติ] เปิดหน้าต่างไดอารี่ Dynamic UI ให้ทดสอบได้ทันทีในหน้า Game View
+    private void OnGUI()
+    {
+        if (!isDiaryOpenOnGUI) return;
+
+        float stress = stressManager != null ? stressManager.currentStress : 0f;
+        int day = 1;
+        if (DayManager.Instance != null) day = DayManager.Instance.currentDay;
+        else if (GameManagerSetup.Instance != null) day = GameManagerSetup.Instance.currentDay;
+
+        // คำนวณขนาดและสีกรอบตามความเครียดสะสม (Dynamic UI)
+        Color bgColor = diaryLowStressColor;
+        if (stress > 70f) bgColor = diaryHighStressColor;
+        else if (stress > 30f) bgColor = diaryMedStressColor;
+
+        float winWidth = Mathf.Min(600, Screen.width * 0.85f);
+        float winHeight = Mathf.Min(450, Screen.height * 0.85f);
+        Rect winRect = new Rect((Screen.width - winWidth) / 2, (Screen.height - winHeight) / 2, winWidth, winHeight);
+
+        // วาดพื้นหลังไดอารี่ตามสีความเครียด
+        Texture2D bgTex = new Texture2D(1, 1);
+        bgTex.SetPixel(0, 0, new Color(bgColor.r, bgColor.g, bgColor.b, 0.95f));
+        bgTex.Apply();
+
+        GUIStyle winStyle = new GUIStyle(GUI.skin.box);
+        winStyle.normal.background = bgTex;
+        winStyle.padding = new RectOffset(20, 20, 20, 20);
+
+        GUI.Box(winRect, GUIContent.none, winStyle);
+
+        GUILayout.BeginArea(winRect);
+        
+        // หัวข้อ
+        GUIStyle titleStyle = new GUIStyle(GUI.skin.label);
+        titleStyle.fontSize = 22;
+        titleStyle.fontStyle = FontStyle.Bold;
+        titleStyle.normal.textColor = Color.black;
+        titleStyle.alignment = TextAnchor.MiddleCenter;
+        GUILayout.Label($"📖 บันทึกของเนีย - วันที่ {day}", titleStyle);
+
+        // สถานะความเครียด
+        GUIStyle statusStyle = new GUIStyle(GUI.skin.label);
+        statusStyle.fontSize = 15;
+        statusStyle.fontStyle = FontStyle.Italic;
+        statusStyle.normal.textColor = stress > 70f ? Color.red : (stress > 30f ? new Color(0.6f, 0.4f, 0f) : new Color(0f, 0.5f, 0f));
+        statusStyle.alignment = TextAnchor.MiddleCenter;
+        GUILayout.Label($"สภาวะจิตใจ: {(stress > 70f ? "ทรมานเหลือเกิน..." : (stress > 30f ? "รู้สึกกังวลอยู่ตลอดเวลา..." : "วันนี้ค่อนข้างโอเค สงบสุขดี"))} (Stress: {Mathf.RoundToInt(stress)}%)", statusStyle);
+
+        GUILayout.Space(15);
+
+        // เนื้อหาบันทึก
+        GUIStyle storyStyle = new GUIStyle(GUI.skin.label);
+        storyStyle.fontSize = 16;
+        storyStyle.wordWrap = true;
+        storyStyle.normal.textColor = Color.black;
+        if (stress > 70f) storyStyle.fontStyle = FontStyle.Bold;
+        else if (stress > 30f) storyStyle.fontStyle = FontStyle.Italic;
+        else storyStyle.fontStyle = FontStyle.Normal;
+
+        string summary = "";
+        if (stress > 70f)
+        {
+            summary = day == 1 ? "วันแรกของโรงเรียนทำไมมันน่ากลัวขนาดนี้ ทุกคนกำลังจ้องมองและวิจารณ์ฉันอยู่ใช่ไหม... ฉันอยากกลับบ้าน..." :
+                      day == 8 ? "วันที่แปดแล้ว... ทำไมไม่มีอะไรดีขึ้นเลย หูฟังเสียงเพลงก็เกือบจะไม่ได้ช่วยปลอบประโลมใจฉันแล้ว..." :
+                      "หัวสมองมันขาวโพลนไปหมด... ไม่อยากทำอะไร ไม่อยากเจอใครทั้งนั้น...";
+        }
+        else if (stress > 30f)
+        {
+            summary = day == 1 ? "เริ่มวันแรกด้วยความรู้สึกแปลกๆ ทุกคนที่นี่ดูแปลกหน้าไปหมด หวังว่าพรุ่งนี้จะปรับตัวได้นะ..." :
+                      day == 8 ? "วันนี้ลองเอาหูฟังมาฟังเพลงดูบ้าง รู้สึกจิตใจสงบขึ้นมาหน่อยนึง แต่ก็ยังกลัวการไปสบตาคนอื่นอยู่ดี..." :
+                      "วันนี้ผ่านไปได้แบบเหนื่อยๆ มีเรื่องให้กังวลอยู่ตลอดเวลาเลย...";
+        }
+        else
+        {
+            summary = day == 1 ? "วันแรกเริ่มต้นได้ราบรื่นกว่าที่คิด ฉันพยายามตั้งสติและเผชิญหน้ากับมันอย่างค่อยเป็นค่อยไป..." :
+                      day == 8 ? "วันที่แปดแล้ว ฉันเริ่มชินกับบรรยากาศการฟังเพลงเงียบๆ และจัดการความรู้สึกตัวเองได้ดีขึ้นมาก" :
+                      "วันนี้ไม่มีเรื่องแย่ๆ เกิดขึ้นเลย รู้สึกปลอดภัยและอบอุ่นดี...";
+        }
+
+        GUILayout.Label(summary, storyStyle);
+
+        GUILayout.FlexibleSpace();
+
+        // ปุ่มปิด
+        GUIStyle btnStyle = new GUIStyle(GUI.skin.button);
+        btnStyle.fontSize = 16;
+        btnStyle.fontStyle = FontStyle.Bold;
+        if (GUILayout.Button("✖ ปิดไดอารี่", btnStyle, GUILayout.Height(40)))
+        {
+            isDiaryOpenOnGUI = false;
+        }
+
+        GUILayout.EndArea();
     }
 }
