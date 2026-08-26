@@ -12,11 +12,22 @@ public class TriggerSceneWarp : MonoBehaviour
     [Header("ชื่อวัตถุในฉากใหม่ที่จะใช้เป็นจุดเกิด")]
     [SerializeField] private string targetSpawnPointName = "Player_Spawn_Point";
 
+    [Header("Audio Settings")]
+    [Tooltip("ลากไฟล์เสียงเปิดประตูมาใส่ (เช่น door_open)")]
+    [SerializeField] private AudioClip doorOpenSound;
+
     private void OnTriggerEnter(Collider other)
     {
         // ตรวจสอบว่าผู้เล่นเดินมาชน
         if (other.CompareTag("Player"))
         {
+            // เล่นเสียงเปิดประตูแบบข้ามฉาก (ดึงเสียงอัตโนมัติหากยังไม่ได้ลากใส่)
+            AudioClip soundToPlay = GetDoorSound();
+            if (soundToPlay != null)
+            {
+                BedroomInteractable.PlayPersistentSound(soundToPlay);
+            }
+
             // ⚡ [เพิ่มใหม่] ออโต้เซฟสถานะก่อนเปลี่ยนฉาก
             if (SaveSystem.Instance != null)
             {
@@ -34,6 +45,22 @@ public class TriggerSceneWarp : MonoBehaviour
             // โหลดฉากและส่งข้อมูลจุดเกิด
             SceneTransitionManager.LoadSceneWithSpawn(targetSceneName, targetSpawnPointName);
         }
+    }
+
+    private AudioClip GetDoorSound()
+    {
+        if (doorOpenSound != null) return doorOpenSound;
+
+        AudioClip[] clips = Resources.FindObjectsOfTypeAll<AudioClip>();
+        foreach (var c in clips)
+        {
+            if (c != null && (c.name.ToLower().Contains("door_open") || c.name.ToLower().Contains("door")))
+            {
+                doorOpenSound = c;
+                return c;
+            }
+        }
+        return null;
     }
 }
 

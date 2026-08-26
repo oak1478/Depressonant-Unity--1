@@ -6,8 +6,13 @@ public class CurtainInteraction : MonoBehaviour
     [Tooltip("ลากแสงแดดจากหน้าต่าง (เช่น Area Light, Directional Light หรือเมชแสงแดด) ที่ต้องการเปิด/ปิดเมื่อรูดม่าน")]
     [SerializeField] private GameObject windowLight;
 
+    [Header("Audio Settings")]
+    [Tooltip("ลากไฟล์เสียงรูดผ้าม่านมาใส่ (เช่น curtain-closing-323254)")]
+    [SerializeField] private AudioClip curtainSound;
+
     private bool isCurtainOpen = false;
     private BedroomInteractable interactable;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -15,6 +20,14 @@ public class CurtainInteraction : MonoBehaviour
         if (interactable == null)
         {
             interactable = GetComponentInParent<BedroomInteractable>();
+        }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.spatialBlend = 1f; // 3D sound
+            audioSource.playOnAwake = false;
         }
 
         // เซตสถานะแสงแดดเริ่มต้นตามม่าน
@@ -30,6 +43,12 @@ public class CurtainInteraction : MonoBehaviour
     public void ToggleCurtain()
     {
         isCurtainOpen = !isCurtainOpen;
+
+        // เล่นเสียงรูดผ้าม่าน
+        if (curtainSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(curtainSound);
+        }
 
         // เปิดหรือปิดแสงแดดหน้าต่าง
         if (windowLight != null)

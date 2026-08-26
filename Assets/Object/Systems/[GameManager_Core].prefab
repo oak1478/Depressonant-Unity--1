@@ -1983,6 +1983,12 @@ MonoBehaviour:
   - {fileID: 6520229105716853555}
   typingSpeed: 0.05
   playerName: Nia
+  audioSource: {fileID: 0}
+  typingSound: {fileID: 0}
+  typingSoundFrequency: 3
+  typingVolume: 0.3
+  voiceVolume: 1
+  voiceClips: []
 --- !u!1 &2984551133207894506
 GameObject:
   m_ObjectHideFlags: 0
@@ -3976,6 +3982,8 @@ MonoBehaviour:
   consecutiveMaxStressDays: 0
   activeSaveSlot: 1
   playTime: 0
+  hasLoadedPosition: 0
+  loadedPlayerPosition: {x: 0, y: 0, z: 0}
   savedInventory: []
   pickedUpItemIDs: []
 --- !u!114 &4801519333941386792
@@ -4125,19 +4133,36 @@ MonoBehaviour:
   - {fileID: 1966415149527249522}
   - {fileID: 7722408355609257833}
   diaryStressText: {fileID: 0}
+  diaryPanel: {fileID: 0}
+  diaryBgImage: {fileID: 0}
+  diaryStoryText: {fileID: 0}
+  diaryLowStressColor: {r: 0.85, g: 1, b: 0.85, a: 1}
+  diaryMedStressColor: {r: 1, g: 0.95, b: 0.75, a: 1}
+  diaryHighStressColor: {r: 1, g: 0.75, b: 0.75, a: 1}
+  diaryNormalFont: {fileID: 0}
+  diaryShakyFont: {fileID: 0}
+  diaryCoverLowStress: {fileID: 0}
+  diaryCoverMedStress: {fileID: 0}
+  diaryCoverHighStress: {fileID: 0}
+  bagOpenSound: {fileID: 8300000, guid: 472170c2a7be12242869c96f6435ddfe, type: 3}
+  bagCloseSound: {fileID: 8300000, guid: 95b027ae757f88f4f990ce2ac630f9a5, type: 3}
+  candyEatSound: {fileID: 8300000, guid: 7e2f5da3fbce702498bac9ac5b5852b1, type: 3}
+  milkDrinkSound: {fileID: 8300000, guid: ec545e2a97892da4b8a566521518dd0f, type: 3}
+  diaryOpenSound: {fileID: 8300000, guid: b1b49aafecfe6b24b9843040b3324433, type: 3}
+  diaryCloseSound: {fileID: 8300000, guid: a0816f9857a16e747bb29a7ae7c949cc, type: 3}
   itemSpriteDatabase:
   - type: 1
-    sprite: {fileID: 21300000, guid: 4c2eb5c68c3c0ac4a92fce0caf2d1941, type: 3}
+    sprite: {fileID: 2143737418, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
   - type: 2
-    sprite: {fileID: 21300000, guid: 3b29009620d41054d8d7915c3a4c0b60, type: 3}
+    sprite: {fileID: 1162861893, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
   - type: 3
-    sprite: {fileID: 21300000, guid: 4a1f03ab53a37b448aa47cd22b4a96b5, type: 3}
+    sprite: {fileID: -1404484970, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
   - type: 4
-    sprite: {fileID: 21300000, guid: f4eaf60110497404dbbdaf9885e45c1b, type: 3}
+    sprite: {fileID: -1265025506, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
   - type: 5
-    sprite: {fileID: 21300000, guid: c766df04c3cf31743a3e78529efdd228, type: 3}
+    sprite: {fileID: -537537908, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
   - type: 6
-    sprite: {fileID: 21300000, guid: 8a00d5621fa96ba4a918c8491cff6dc2, type: 3}
+    sprite: {fileID: 1686348646, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
   hasUsedHeadphoneToday: 0
 --- !u!1 &5514476467050159235
 GameObject:
@@ -6112,6 +6137,8 @@ MonoBehaviour:
   currentStress: 99
   globalVolume: {fileID: 4985347652000117837}
   stressVignetteUI: {fileID: 0}
+  heartbeatRegularSound: {fileID: 8300000, guid: 05b1e21f447d7b74583d50ff1bffe46d, type: 3}
+  heartbeatPanicSound: {fileID: 8300000, guid: 73b2f3daa75c92a4a9fe7d5e3a7d8c9e, type: 3}
   hasArmbandTriggeredToday: 0
 --- !u!1 &7281422683448066336
 GameObject:

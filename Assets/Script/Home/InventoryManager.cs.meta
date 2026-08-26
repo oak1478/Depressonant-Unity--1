@@ -1,2 +1,27 @@
 fileFormatVersion: 2
 guid: 4c15c3fa69408ab429d3070944ba338a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - inventoryPanel: {instanceID: 0}
+  - diaryStressText: {instanceID: 0}
+  - diaryPanel: {instanceID: 0}
+  - diaryBgImage: {instanceID: 0}
+  - diaryStoryText: {instanceID: 0}
+  - diaryNormalFont: {instanceID: 0}
+  - diaryShakyFont: {instanceID: 0}
+  - diaryCoverLowStress: {instanceID: 0}
+  - diaryCoverMedStress: {instanceID: 0}
+  - diaryCoverHighStress: {instanceID: 0}
+  - bagOpenSound: {fileID: 8300000, guid: 472170c2a7be12242869c96f6435ddfe, type: 3}
+  - bagCloseSound: {fileID: 8300000, guid: 95b027ae757f88f4f990ce2ac630f9a5, type: 3}
+  - candyEatSound: {fileID: 8300000, guid: 7e2f5da3fbce702498bac9ac5b5852b1, type: 3}
+  - milkDrinkSound: {fileID: 8300000, guid: ec545e2a97892da4b8a566521518dd0f, type: 3}
+  - diaryOpenSound: {fileID: 8300000, guid: b1b49aafecfe6b24b9843040b3324433, type: 3}
+  - diaryCloseSound: {fileID: 8300000, guid: a0816f9857a16e747bb29a7ae7c949cc, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

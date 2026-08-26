@@ -7,7 +7,12 @@ public class MirrorInteraction : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject dialoguePanel;
 
+    [Header("Audio Settings")]
+    [Tooltip("ลากไฟล์เสียงสะท้อนจิตใจหลอนๆ ตอนส่องกระจกมาใส่ (เช่น 867822...incoherent_additive-glitch)")]
+    [SerializeField] private AudioClip mirrorReflectionSound;
+
     private StressManager stressManager;
+    private AudioSource audioSource;
     private string reflectionMessage = "";
     private float messageDisplayTime = 4.0f;
     private float timer = 0f;
@@ -16,6 +21,14 @@ public class MirrorInteraction : MonoBehaviour
     {
         // ค้นหา StressManager ในฉาก
         stressManager = Object.FindAnyObjectByType<StressManager>();
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.spatialBlend = 1f; // 3D sound
+            audioSource.playOnAwake = false;
+        }
     }
 
     private void Update()
@@ -33,6 +46,12 @@ public class MirrorInteraction : MonoBehaviour
     // ฟังก์ชันหลักเมื่อกดโต้ตอบกับกระจก (เรียกใช้จาก BedroomInteractable)
     public void LookInMirror()
     {
+        // เล่นเสียงสะท้อนจิตใจหลอนๆ ตอนส่องกระจก
+        if (mirrorReflectionSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(mirrorReflectionSound);
+        }
+
         // ⚡ [เพิ่มใหม่] แจ้งระบบ Tutorial เมื่อส่องกระจกสำเร็จ
         if (TutorialManager.Instance != null)
         {
@@ -80,16 +99,18 @@ public class MirrorInteraction : MonoBehaviour
     {
         if (dialoguePanel != null || timer <= 0f) return;
 
-        GUIStyle style = new GUIStyle();
+        Rect labelRect = new Rect(Screen.width / 2 - 300, Screen.height - 150, 600, 50);
+
+        Color oldColor = GUI.color;
+        GUI.color = new Color(0f, 0f, 0f, 0.75f);
+        GUI.DrawTexture(labelRect, Texture2D.whiteTexture);
+        GUI.color = oldColor;
+
+        GUIStyle style = new GUIStyle(GUI.skin.label);
         style.alignment = TextAnchor.MiddleCenter;
         style.fontSize = 18;
         style.normal.textColor = Color.yellow;
 
-        Texture2D background = new Texture2D(1, 1);
-        background.SetPixel(0, 0, new Color(0, 0, 0, 0.7f));
-        background.Apply();
-        style.normal.background = background;
-
-        GUI.Label(new Rect(Screen.width / 2 - 300, Screen.height - 150, 600, 50), reflectionMessage, style);
+        GUI.Label(labelRect, reflectionMessage, style);
     }
 }

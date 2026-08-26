@@ -12,9 +12,32 @@ public class BedroomInteractable : MonoBehaviour
     [Tooltip("เหตุการณ์ที่จะเกิดขึ้นเมื่อผู้เล่นกดปุ่มโต้ตอบ (ปุ่ม F)")]
     public UnityEvent onInteract;
 
+    [Header("Audio Settings (ระบบเสียงโต้ตอบ) [เพิ่มใหม่]")]
+    [Tooltip("ลากไฟล์เสียงเวลาโต้ตอบ/เปิดประตู/เตียง มาใส่ (เช่น door_open)")]
+    public AudioClip interactSound;
+
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null && interactSound != null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.spatialBlend = 1f; // 3D sound
+            audioSource.playOnAwake = false;
+        }
+    }
+
     // ฟังก์ชันโต้ตอบ
     public void Interact()
     {
+        // ⚡ เล่นเสียงโต้ตอบแบบข้ามฉากได้ (ป้องกันเสียงดับทันทีตอนโหลดฉากใหม่)
+        if (interactSound != null)
+        {
+            PlayPersistentSound(interactSound);
+        }
+
         // ⚡ [เพิ่มใหม่] แจ้งระบบ Tutorial เมื่อโต้ตอบกับกระจกหรือประตู
         if (TutorialManager.Instance != null)
         {
@@ -63,5 +86,19 @@ public class BedroomInteractable : MonoBehaviour
         {
             Debug.LogError("[BedroomInteractable] รูปแบบข้อความไม่ถูกต้อง! กรุณาใช้รูปแบบ: 'ชื่อฉาก, ชื่อจุดเกิด' เช่น 'Home, Interior_Furniture_Misc_Door (7)'");
         }
+    }
+
+    // ⚡ [ระบบเสียงข้ามฉาก] เล่นเสียงโดยไม่โดนตัดทิ้งเมื่อเปลี่ยนฉาก (DontDestroyOnLoad)
+    public static void PlayPersistentSound(AudioClip clip)
+    {
+        if (clip == null) return;
+        GameObject audioGo = new GameObject("PersistentSFX_" + clip.name);
+        AudioSource source = audioGo.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.spatialBlend = 0f;
+        source.volume = 1f;
+        source.Play();
+        DontDestroyOnLoad(audioGo);
+        Destroy(audioGo, clip.length + 0.2f);
     }
 }

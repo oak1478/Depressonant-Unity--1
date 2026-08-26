@@ -3757,6 +3757,9 @@ MonoBehaviour:
   - {fileID: 184607327}
   - {fileID: 650130479}
   - {fileID: 1671135492}
+  buttonClickSound: {fileID: 8300000, guid: 45f11d60da3774849a8d3eb278f98961, type: 3}
+  buttonHoverSound: {fileID: 8300000, guid: 45f11d60da3774849a8d3eb278f98961, type: 3}
+  backClickSound: {fileID: 8300000, guid: 45f11d60da3774849a8d3eb278f98961, type: 3}
 --- !u!114 &1416162407
 MonoBehaviour:
   m_ObjectHideFlags: 0
