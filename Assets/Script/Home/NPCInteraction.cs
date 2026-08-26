@@ -500,6 +500,7 @@ public class DialogueLineDrawer : PropertyDrawer
         SerializedProperty otherProp = property.FindPropertyRelative("otherName");
         SerializedProperty slotProp = property.FindPropertyRelative("activeSlotIndex");
         SerializedProperty motionProp = property.FindPropertyRelative("motionEffect");
+        SerializedProperty voiceProp = property.FindPropertyRelative("voiceSoundName");
 
         float y = position.y;
         float spacing = 2f;
@@ -599,6 +600,48 @@ public class DialogueLineDrawer : PropertyDrawer
             EditorGUI.PropertyField(motionRect, motionProp);
             y += fieldHeight + spacing;
 
+            // 8. เสียงพากย์ (Voice Sound)
+            DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+            List<string> voiceOptions = new List<string> { "None" };
+            if (dm != null && dm.voiceClips != null)
+            {
+                foreach (var c in dm.voiceClips)
+                {
+                    if (c != null && !string.IsNullOrEmpty(c.name))
+                        voiceOptions.Add(c.name);
+                }
+            }
+
+            int selectedVoiceIndex = voiceOptions.IndexOf(voiceProp.stringValue);
+            if (selectedVoiceIndex < 0) selectedVoiceIndex = 0;
+
+            Rect voiceRect = new Rect(position.x, y, position.width - 25f, fieldHeight);
+            Rect playBtnRect = new Rect(position.x + position.width - 22f, y, 22f, fieldHeight);
+
+            EditorGUI.BeginChangeCheck();
+            int newVoiceIndex = EditorGUI.Popup(voiceRect, "Voice Sound", selectedVoiceIndex, voiceOptions.ToArray());
+            if (EditorGUI.EndChangeCheck())
+            {
+                voiceProp.stringValue = newVoiceIndex == 0 ? "" : voiceOptions[newVoiceIndex];
+                
+                if (newVoiceIndex > 0 && dm != null && dm.voiceClips != null)
+                {
+                    AudioClip selectedClip = dm.voiceClips.Find(c => c != null && c.name == voiceOptions[newVoiceIndex]);
+                    if (selectedClip != null) EditorAudioUtility.PlayClip(selectedClip);
+                }
+            }
+            
+            if (GUI.Button(playBtnRect, "▶"))
+            {
+                int currentIndex = voiceOptions.IndexOf(voiceProp.stringValue);
+                if (currentIndex > 0 && dm != null && dm.voiceClips != null)
+                {
+                    AudioClip selectedClip = dm.voiceClips.Find(c => c != null && c.name == voiceOptions[currentIndex]);
+                    if (selectedClip != null) EditorAudioUtility.PlayClip(selectedClip);
+                }
+            }
+            y += fieldHeight + spacing;
+
             EditorGUI.indentLevel--;
         }
 
@@ -610,7 +653,7 @@ public class DialogueLineDrawer : PropertyDrawer
         float baseHeight = 18f;
         if (property.isExpanded)
         {
-            return baseHeight + 18f + 50f + (5 * 20f) + 20f;
+            return baseHeight + 18f + 50f + (6 * 20f) + 20f;
         }
         return baseHeight;
     }
@@ -632,6 +675,7 @@ public class DialogueChoiceDrawer : PropertyDrawer
         SerializedProperty otherProp = property.FindPropertyRelative("otherName");
         SerializedProperty slotProp = property.FindPropertyRelative("activeSlotIndex");
         SerializedProperty motionProp = property.FindPropertyRelative("motionEffect");
+        SerializedProperty voiceProp = property.FindPropertyRelative("voiceSoundName");
         SerializedProperty nextProp = property.FindPropertyRelative("nextDialogueLines");
 
         float y = position.y;
@@ -731,7 +775,49 @@ public class DialogueChoiceDrawer : PropertyDrawer
             EditorGUI.PropertyField(motionRect, motionProp);
             y += fieldHeight + spacing;
 
-            // 8. กล่องลิสต์ประโยคที่จะพูดต่อหลังเลือกช้อยส์นี้
+            // 8. เสียงพากย์ (Voice Sound)
+            DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+            List<string> voiceOptions = new List<string> { "None" };
+            if (dm != null && dm.voiceClips != null)
+            {
+                foreach (var c in dm.voiceClips)
+                {
+                    if (c != null && !string.IsNullOrEmpty(c.name))
+                        voiceOptions.Add(c.name);
+                }
+            }
+
+            int selectedVoiceIndex = voiceOptions.IndexOf(voiceProp.stringValue);
+            if (selectedVoiceIndex < 0) selectedVoiceIndex = 0;
+
+            Rect voiceRect = new Rect(position.x, y, position.width - 25f, fieldHeight);
+            Rect playBtnRect = new Rect(position.x + position.width - 22f, y, 22f, fieldHeight);
+
+            EditorGUI.BeginChangeCheck();
+            int newVoiceIndex = EditorGUI.Popup(voiceRect, "Voice Sound", selectedVoiceIndex, voiceOptions.ToArray());
+            if (EditorGUI.EndChangeCheck())
+            {
+                voiceProp.stringValue = newVoiceIndex == 0 ? "" : voiceOptions[newVoiceIndex];
+                
+                if (newVoiceIndex > 0 && dm != null && dm.voiceClips != null)
+                {
+                    AudioClip selectedClip = dm.voiceClips.Find(c => c != null && c.name == voiceOptions[newVoiceIndex]);
+                    if (selectedClip != null) EditorAudioUtility.PlayClip(selectedClip);
+                }
+            }
+            
+            if (GUI.Button(playBtnRect, "▶"))
+            {
+                int currentIndex = voiceOptions.IndexOf(voiceProp.stringValue);
+                if (currentIndex > 0 && dm != null && dm.voiceClips != null)
+                {
+                    AudioClip selectedClip = dm.voiceClips.Find(c => c != null && c.name == voiceOptions[currentIndex]);
+                    if (selectedClip != null) EditorAudioUtility.PlayClip(selectedClip);
+                }
+            }
+            y += fieldHeight + spacing;
+
+            // 9. กล่องลิสต์ประโยคที่จะพูดต่อหลังเลือกช้อยส์นี้
             float nextHeight = EditorGUI.GetPropertyHeight(nextProp, true);
             Rect nextRect = new Rect(position.x, y, position.width, nextHeight);
             EditorGUI.PropertyField(nextRect, nextProp, true);
@@ -750,9 +836,34 @@ public class DialogueChoiceDrawer : PropertyDrawer
         {
             SerializedProperty nextProp = property.FindPropertyRelative("nextDialogueLines");
             float nextHeight = EditorGUI.GetPropertyHeight(nextProp, true);
-            return baseHeight + (7 * 20f) + nextHeight + 10f;
+            return baseHeight + (8 * 20f) + nextHeight + 10f;
         }
         return baseHeight;
+    }
+}
+
+public static class EditorAudioUtility
+{
+    private static AudioSource previewSource;
+
+    public static void PlayClip(AudioClip clip)
+    {
+        if (clip == null) return;
+
+        // ถ้ายังไม่มีลำโพงซ่อน ให้สร้างขึ้นมา 1 ตัว
+        if (previewSource == null)
+        {
+            GameObject go = UnityEditor.EditorUtility.CreateGameObjectWithHideFlags(
+                "AudioPreviewWorker", 
+                HideFlags.HideAndDontSave, 
+                typeof(AudioSource)
+            );
+            previewSource = go.GetComponent<AudioSource>();
+            previewSource.spatialBlend = 0f; // 2D Sound
+        }
+
+        previewSource.clip = clip;
+        previewSource.Play();
     }
 }
 #endif
