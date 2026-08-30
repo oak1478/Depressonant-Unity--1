@@ -80,7 +80,7 @@ public class NPCInteraction : MonoBehaviour
     public List<DialogueLine> fallbackStory = new List<DialogueLine>();
 
     private bool isPlayerClose = false;
-    private int lastTalkedDay = 0;
+    [HideInInspector] public int lastTalkedDay = 0;
 
     void Update()
     {
