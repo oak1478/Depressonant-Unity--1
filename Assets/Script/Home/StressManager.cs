@@ -16,6 +16,14 @@ public class StressManager : MonoBehaviour
     private ChromaticAberration chromatic;
     private LensDistortion distortion;
 
+    [Header("Flash Effect")]
+    public Image flashVignetteUI;
+    public Color damageFlashColor = new Color(1f, 0f, 0f, 0.5f); // สีแดงโปร่งแสงตอนเครียดเพิ่ม
+    public Color healFlashColor = new Color(0f, 1f, 0.5f, 0.5f); // สีเขียวโปร่งแสงตอนเครียดลด
+    public float flashDuration = 1f; // ระยะเวลาในการแฟลชและจางหาย
+    
+    private Coroutine flashCoroutine;
+
     // ⚡ [ระบบใหม่] ตัวแปรสำหรับคุม Armband (ปลอกแขน)
     [HideInInspector] public bool hasArmbandTriggeredToday = false;
 
@@ -101,6 +109,18 @@ public class StressManager : MonoBehaviour
     // [เพิ่มใหม่] ฟังก์ชันสำหรับเปลี่ยนแปลงค่าความเครียด (จำกัดที่ 0 - 100)
     public void ChangeStress(float amount)
     {
+        if (amount == 0) return;
+
+        // ⚡ เรียกใช้งานแฟลชหน้าจอ
+        if (amount > 0)
+        {
+            TriggerFlash(damageFlashColor);
+        }
+        else if (amount < 0)
+        {
+            TriggerFlash(healFlashColor);
+        }
+
         // ตรวจสอบความสามารถของ Armband: ถ้าค่าความเครียดกำลังจะ "เพิ่มขึ้น" (amount เป็นบวก)
         if (amount > 0 && InventoryManager.Instance != null && InventoryManager.Instance.HasItem(ItemType.Armband))
         {
@@ -123,6 +143,44 @@ public class StressManager : MonoBehaviour
             currentStress = Mathf.Clamp(currentStress + amount, 0f, 100f);
         }
         Debug.Log("ค่าความเครียดปัจจุบัน: " + currentStress);
+    }
+
+    private void TriggerFlash(Color flashColor)
+    {
+        // หากไม่ได้ลาก UI มาใส่ไว้ จะไม่เกิดอะไรขึ้น (ป้องกัน Error)
+        if (flashVignetteUI == null) return;
+
+        // ถ้ายำลังกะพริบอยู่ก่อนแล้ว ให้หยุดของเก่าก่อน
+        if (flashCoroutine != null)
+        {
+            StopCoroutine(flashCoroutine);
+        }
+
+        flashCoroutine = StartCoroutine(FlashRoutine(flashColor));
+    }
+
+    private System.Collections.IEnumerator FlashRoutine(Color flashColor)
+    {
+        // ตั้งสีสว่างสุดทันทีที่โดนดาเมจ/ฮีล
+        flashVignetteUI.color = flashColor;
+        
+        float timer = 0f;
+
+        // ค่อยๆ หรี่แสงลงจนกว่าจะครบเวลา flashDuration
+        while (timer < flashDuration)
+        {
+            timer += Time.unscaledDeltaTime; // ⚡ ใช้ unscaledDeltaTime เพื่อไม่ให้หยุดเวลาคุยกับ NPC (ตอน Time.timeScale = 0)
+            float normalizedTime = timer / flashDuration;
+            
+            // เลิร์ป (Lerp) สีจากสีเต็มๆ ไปเป็นสีใส
+            flashVignetteUI.color = Color.Lerp(flashColor, Color.clear, normalizedTime);
+            
+            yield return null; // รอเฟรมถัดไป
+        }
+
+        // ทำให้แน่ใจว่าสีเคลียร์หมดจดเมื่อจบเวลา
+        flashVignetteUI.color = Color.clear;
+        flashCoroutine = null;
     }
 
     // ⚡ เรียกฟังก์ชันนี้ตอนข้ามวัน (จากเตียง) เพื่อรีเซ็ตค่าปลอกแขน
