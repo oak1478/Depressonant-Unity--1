@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
