@@ -7174,6 +7174,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[6].type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[0].sprite
+      value: 
+      objectReference: {fileID: 2143737418, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[1].sprite
+      value: 
+      objectReference: {fileID: 1162861893, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[2].sprite
+      value: 
+      objectReference: {fileID: -1404484970, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[3].sprite
+      value: 
+      objectReference: {fileID: -1265025506, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[4].sprite
+      value: 
+      objectReference: {fileID: -537537908, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[5].sprite
+      value: 
+      objectReference: {fileID: 1686348646, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+    - target: {fileID: 208106865575654119, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
+      propertyPath: itemSpriteDatabase.Array.data[6].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8a00d5621fa96ba4a918c8491cff6dc2, type: 3}
     - target: {fileID: 5055866883162553104, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.21917
