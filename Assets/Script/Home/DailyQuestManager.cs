@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 
@@ -16,6 +16,9 @@ public class DailyQuestManager : MonoBehaviour
 
     [Tooltip("ลาก Prefab ของแถว NPC แต่ละแถวมาใส่")]
     public GameObject npcRowPrefab;
+
+    [Tooltip("ลาก TitleText หรือ QuestPanel มาใส่ เพื่อซ่อนเมื่อคุยครบแล้ว (ใส่หรือไม่ใส่ก็ได้)")]
+    public GameObject titleObjectToHide;
 
     [Header("Refresh Settings")]
     [Tooltip("อัปเดตรายชื่อทุกกี่วินาที (ตั้ง 1 ก็เพียงพอ ไม่ต้องทุกเฟรม)")]
@@ -89,17 +92,39 @@ public class DailyQuestManager : MonoBehaviour
         }
         activeRows.Clear();
 
-        // สร้างแถวใหม่ตามจำนวน NPC ที่พบ (ไม่เกิน 6 คน)
-        for (int i = 0; i < Mathf.Min(availableNPCs.Count, 6); i++)
+        if (availableNPCs.Count == 0)
         {
+            // ซ่อน TitleText หรือตัวแผง Panel ถ้ายัดมา
+            if (titleObjectToHide != null) titleObjectToHide.SetActive(false);
+
+            // สร้างแถวแจ้งเตือนว่าคุยครบแล้ว
             GameObject row = Instantiate(npcRowPrefab, npcListContainer);
             activeRows.Add(row);
-
-            // หา TextMeshPro ในแถวแล้วกำหนดชื่อ
             TextMeshProUGUI label = row.GetComponentInChildren<TextMeshProUGUI>();
             if (label != null)
             {
-                label.text = availableNPCs[i];
+                label.text = "พูดคุยครบแล้ว!";
+                label.fontStyle = FontStyles.Italic;
+                label.color = Color.gray; // ทำให้สีดูจางลงนิดนึง
+            }
+        }
+        else
+        {
+            // เปิด TitleText กลับมาเมื่อมีคนให้คุย
+            if (titleObjectToHide != null) titleObjectToHide.SetActive(true);
+
+            // สร้างแถวใหม่ตามจำนวน NPC ที่พบ (ไม่เกิน 6 คน)
+            for (int i = 0; i < Mathf.Min(availableNPCs.Count, 6); i++)
+            {
+                GameObject row = Instantiate(npcRowPrefab, npcListContainer);
+                activeRows.Add(row);
+
+                // หา TextMeshPro ในแถวแล้วกำหนดชื่อ
+                TextMeshProUGUI label = row.GetComponentInChildren<TextMeshProUGUI>();
+                if (label != null)
+                {
+                    label.text = "- " + availableNPCs[i];
+                }
             }
         }
     }
