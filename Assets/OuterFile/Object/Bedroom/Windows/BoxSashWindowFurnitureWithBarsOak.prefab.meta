@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7bf3d6538165c5f4e88099b10f7c4c9a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 133820
+  packageName: WindowsAndDoorsPack01
+  packageVersion: 2.0
+  assetPath: Assets/WindowAndDoorsPack01/Mesh/Prefabs/BoxSashWindowFurnitureWithBarsOak.prefab
+  uploadId: 715535

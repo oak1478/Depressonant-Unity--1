@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Events;
@@ -42,7 +42,7 @@ public class FullBedroomFurnisherTool : MonoBehaviour
         GameObject furnGroup = new GameObject("Furnished_Bedroom_Set");
         Undo.RegisterCreatedObjectUndo(furnGroup, "Furnish Full Bedroom");
 
-        string urpPath = "Assets/BasicBedroomPack-Mavi3D/Prefabs/URP/";
+        string urpPath = "Assets/OuterFile/Object/Bedroom/Prefabs/";
 
         // 3. วางเตียงใหม่ (Bed) พร้อมตัวชนสูง
         GameObject bedPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(urpPath + "Bed.prefab");
