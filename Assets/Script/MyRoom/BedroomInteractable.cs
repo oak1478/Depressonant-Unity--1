@@ -10,7 +10,7 @@ public class BedroomInteractable : MonoBehaviour
 
     [Header("Interaction Event")]
     [Tooltip("เหตุการณ์ที่จะเกิดขึ้นเมื่อผู้เล่นกดปุ่มโต้ตอบ (ปุ่ม F)")]
-    public UnityEvent onInteract;
+    public UnityEvent onInteract = new UnityEvent();
 
     [Header("Audio Settings (ระบบเสียงโต้ตอบ) [เพิ่มใหม่]")]
     [Tooltip("ลากไฟล์เสียงเวลาโต้ตอบ/เปิดประตู/เตียง มาใส่ (เช่น door_open)")]

@@ -775,6 +775,20 @@ public class InventoryManager : MonoBehaviour
         if (inventoryPanel != null && !inventoryPanel.activeSelf)
         {
             if (playerMovement != null) playerMovement.enabled = true;
+
+            FirstPersonController fpController = Object.FindAnyObjectByType<FirstPersonController>();
+            if (fpController != null) fpController.enabled = true;
+
+            FirstPersonInteractor fpInteractor = Object.FindAnyObjectByType<FirstPersonInteractor>();
+            if (fpInteractor != null) fpInteractor.enabled = true;
+
+            bool is3DScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Bedroom_3D"
+                          || Object.FindAnyObjectByType<FirstPersonController>(FindObjectsInactive.Include) != null;
+            if (is3DScene)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
     }
 

@@ -114,6 +114,10 @@ public class PauseMenuController : MonoBehaviour
             isDialogueActive = true;
         }
 
+        // ตรวจสอบว่าเป็นซีน 3D หรือไม่
+        bool is3DScene = SceneManager.GetActiveScene().name == "Bedroom_3D" 
+                      || Object.FindAnyObjectByType<FirstPersonController>(FindObjectsInactive.Include) != null;
+
         // จัดการเคอร์เซอร์เมาส์ตามโหมดซีนและสถานะบทสนทนา
         if (isDialogueActive)
         {
@@ -122,7 +126,7 @@ public class PauseMenuController : MonoBehaviour
             Cursor.visible = true;
             Debug.Log("[PauseMenuController] Resume กลับมาขณะมีบทสนทนาค้างอยู่ เปิดแสดงเคอร์เซอร์เมาส์อิสระ", this);
         }
-        else if (Object.FindAnyObjectByType<FirstPersonController>() != null)
+        else if (is3DScene)
         {
             // ซีน 3D: ล็อกเมาส์ไว้ตรงกลางหน้าจอตามเดิม
             Cursor.lockState = CursorLockMode.Locked;

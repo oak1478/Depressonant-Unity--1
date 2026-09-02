@@ -48,8 +48,28 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
-        // ⚡ [แก้ไขเพิ่มเติม] หากเคอร์เซอร์ไม่ได้ล็อกอยู่ (เช่น เปิดเมนู ESC หรือเปิดกระเป๋าของ) ให้ห้ามขยับและหันมุมมองกล้อง
-        if (Cursor.lockState != CursorLockMode.Locked) return;
+        // ⚡ [แก้ไขเพิ่มเติม] หากเคอร์เซอร์ไม่ได้ล็อกอยู่ ให้ตรวจจับว่าคลิกเมาส์กลับเข้าเกมหรือไม่ (หากไม่มีเมนูหรือบทสนทนาเปิดอยู่)
+        if (Cursor.lockState != CursorLockMode.Locked)
+        {
+            if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && Time.timeScale > 0f)
+            {
+                DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+                InventoryManager inv = Object.FindAnyObjectByType<InventoryManager>();
+                PauseMenuController pm = Object.FindAnyObjectByType<PauseMenuController>();
+
+                bool isDialogueOpen = dm != null && dm.IsDialogueActive();
+                bool isInventoryOpen = inv != null && inv.inventoryPanel != null && inv.inventoryPanel.activeSelf;
+                bool isPauseMenuOpen = pm != null && pm.pauseMenuPanel != null && pm.pauseMenuPanel.activeSelf;
+
+                if (!isDialogueOpen && !isInventoryOpen && !isPauseMenuOpen)
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    Debug.Log("[FirstPersonController] คลิกหน้าจอเพื่อล็อกเมาส์กลับเข้าสู่มุมมองบุคคลที่หนึ่ง", this);
+                }
+            }
+            return;
+        }
 
         HandleMovement();
         HandleRotation();
@@ -109,9 +129,10 @@ public class FirstPersonController : MonoBehaviour
             mouseDelta = Mouse.current.delta.ReadValue();
         }
 
-        // คำนวณความเร็วในการหัน (คูณด้วย 0.05f เพื่อปรับให้ความไวเมาส์รู้สึกเป็นธรรมชาติในทุกระดับเฟรมเรต)
-        float mouseX = mouseDelta.x * lookSpeed * 0.05f;
-        float mouseY = mouseDelta.y * lookSpeed * 0.05f;
+        // คำนวณความเร็วในการหัน (คูณด้วย MouseSensitivity จากหน้าต่าง Settings และคูณด้วย 0.05f เพื่อความนุ่มนวล)
+        float mouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 1.0f);
+        float mouseX = mouseDelta.x * lookSpeed * mouseSensitivity * 0.05f;
+        float mouseY = mouseDelta.y * lookSpeed * mouseSensitivity * 0.05f;
 
         // ควบคุมการก้มและเงยหน้าของกล้อง
         verticalRotation -= mouseY;

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b8a95e107dda5674d9acd90e153037c4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 133820
+  packageName: WindowsAndDoorsPack01
+  packageVersion: 2.0
+  assetPath: Assets/WindowAndDoorsPack01/Materials/RoundWindow01.mat
+  uploadId: 715535

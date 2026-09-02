@@ -43,7 +43,8 @@ public class FirstPersonInteractor : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactRange, interactableLayers))
         {
-            currentInteractable = hit.collider.GetComponent<BedroomInteractable>();
+            // ⚡ ค้นหาทั้งบนวัตถุที่ชน และวัตถุพ่อแม่ (Parent) เพื่อรองรับ Prefab ที่มีชิ้นส่วนลูก เช่น เตียง, หน้าต่าง, กระจก
+            currentInteractable = hit.collider.GetComponentInParent<BedroomInteractable>();
         }
 
         // จัดการเปิด/ปิด UI แสดงปุ่มกดโต้ตอบ
@@ -54,7 +55,7 @@ public class FirstPersonInteractor : MonoBehaviour
         {
             if (currentInteractable != null)
             {
-                Debug.Log($"[FirstPersonInteractor] กำลังโต้ตอบกับ: {hit.collider.name}");
+                Debug.Log($"[FirstPersonInteractor] กำลังโต้ตอบกับ: {currentInteractable.name}");
                 currentInteractable.Interact();
             }
             else
@@ -62,7 +63,7 @@ public class FirstPersonInteractor : MonoBehaviour
                 // โค้ดตรวจสอบเหตุผลว่าทำไมไม่ทำงานเวลาผู้เล่นกดปุ่ม F
                 if (Physics.Raycast(ray, out hit, interactRange, interactableLayers))
                 {
-                    Debug.LogWarning($"[FirstPersonInteractor] เล็งไปที่วัตถุ '{hit.collider.name}' แต่ไม่พบสคริปต์ BedroomInteractable อยู่ในวัตถุนี้! (กรุณาเช็คว่าลากใส่ถูกตัวลูก default หรือยัง)", hit.collider.gameObject);
+                    Debug.LogWarning($"[FirstPersonInteractor] เล็งไปที่วัตถุ '{hit.collider.name}' แต่ไม่พบสคริปต์ BedroomInteractable อยู่ในวัตถุหรือตัวแม่!", hit.collider.gameObject);
                 }
                 else
                 {
@@ -98,7 +99,7 @@ public class FirstPersonInteractor : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactRange, interactableLayers))
         {
-            BedroomInteractable interactable = hit.collider.GetComponent<BedroomInteractable>();
+            BedroomInteractable interactable = hit.collider.GetComponentInParent<BedroomInteractable>();
             if (interactable != null)
             {
                 GUIStyle style = new GUIStyle();
