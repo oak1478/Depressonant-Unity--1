@@ -79303,7 +79303,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7386497212922360316, guid: a1c1363f80cfeb14b9441b2e0b0d3614, type: 3}
       propertyPath: m_Name
-      value: NPC_Prak
+      value: NPC_Park
+      objectReference: {fileID: 0}
+    - target: {fileID: 8378680734077072855, guid: a1c1363f80cfeb14b9441b2e0b0d3614, type: 3}
+      propertyPath: npcDisplayName
+      value: Park
+      objectReference: {fileID: 0}
+    - target: {fileID: 8378680734077072855, guid: a1c1363f80cfeb14b9441b2e0b0d3614, type: 3}
+      propertyPath: npcProfiles.Array.data[1].npcName
+      value: Park
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

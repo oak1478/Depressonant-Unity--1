@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76ba26fa336cb8e41ba63d5acedec903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCAppearanceController
-  activeDays: 0100000002000000
+  activeDays: 010000000200000011000000
 --- !u!114 &1287053990042361047
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ public class DayManager : MonoBehaviour
     public static DayManager Instance;
 
     [Header("ข้อมูลวันปัจจุบัน")]
-    [Range(1, 15)]
+    [Range(1, 20)]
     public int currentDay = 1;
 
     private void Awake()
@@ -30,7 +30,7 @@ public class DayManager : MonoBehaviour
 
     public void GoToNextDay()
     {
-        if (currentDay < 15)
+        if (currentDay < 17)
         {
             // ⚡ [เพิ่มใหม่] ตรวจสอบเงื่อนไขความเครียดสะสมต่อเนื่องก่อนข้ามวัน
             if (GameManagerSetup.Instance != null)
@@ -61,8 +61,8 @@ public class DayManager : MonoBehaviour
                 GameManagerSetup.Instance.currentDay = currentDay;
             }
 
-            // ⚡ [เพิ่มใหม่] หากข้ามวันมาจนถึงวันที่ 15 ให้ทำระบบตัดสินฉากจบปกติ
-            if (currentDay >= 15)
+            // ⚡ หากข้ามวันมาจนถึงวันที่ 17 ให้ทำระบบตัดสินฉากจบปกติ
+            if (currentDay >= 17)
             {
                 TriggerEnding();
                 return;
@@ -146,18 +146,18 @@ public class DayManager : MonoBehaviour
 
         if (finalStress <= 30f && hasRainDrawing)
         {
-            Debug.Log("🎉 Ending A: The Existence (ความเครียดต่ำกว่า 30% และมีภาพวาดเรน)");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_A");
+            Debug.Log("🎉 Good Ending: The Sun After the Storm (ความเครียดต่ำกว่า 30% และมีภาพวาดเรน)");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Good");
         }
         else if (finalStress <= 70f)
         {
-            Debug.Log("🎭 Ending B: Fading Away (ความเครียด 31-70% หรือ ความเครียดต่ำกว่า 30% แต่ไม่มีภาพวาดเรน)");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_B");
+            Debug.Log("🎭 Normal Ending: สมดุลชีวิตใหม่ (ความเครียด 31-70% หรือ ความเครียดต่ำกว่า 30% แต่ไม่มีภาพวาดเรน)");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Normal");
         }
         else
         {
-            Debug.Log("🥀 Ending C: Bad or Die (ความเครียด 71-100%)");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_C");
+            Debug.Log("🥀 Bad Ending: ความมืดมิด (ความเครียด 71-100%)");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Bad");
         }
     }
 }

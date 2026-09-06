@@ -138,12 +138,34 @@ public class NPCInteraction : MonoBehaviour
             lastTalkedDay = today;
 
             DailyDialogue todaysDialogue = null;
+            string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+            // ⚡ ตรวจสอบบทสนทนาที่เจาะจงตามซีนฉากจบก่อน (เช่น Ending_Good, Ending_Bad, Ending_Normal)
             foreach (var dialog in dialoguesByDay)
             {
-                if (dialog.dayNumber == today)
+                if (dialog.dayNumber == today && !string.IsNullOrEmpty(dialog.dayTitle))
                 {
-                    todaysDialogue = dialog;
-                    break;
+                    if (currentSceneName.Equals(dialog.dayTitle, System.StringComparison.OrdinalIgnoreCase) ||
+                        (currentSceneName.IndexOf("Good", System.StringComparison.OrdinalIgnoreCase) >= 0 && dialog.dayTitle.IndexOf("Good", System.StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (currentSceneName.IndexOf("Bad", System.StringComparison.OrdinalIgnoreCase) >= 0 && dialog.dayTitle.IndexOf("Bad", System.StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (currentSceneName.IndexOf("Normal", System.StringComparison.OrdinalIgnoreCase) >= 0 && dialog.dayTitle.IndexOf("Normal", System.StringComparison.OrdinalIgnoreCase) >= 0))
+                    {
+                        todaysDialogue = dialog;
+                        break;
+                    }
+                }
+            }
+
+            // ถ้าไม่พบบทเฉพาะซีน ให้เลือกตาม dayNumber ปกติ
+            if (todaysDialogue == null)
+            {
+                foreach (var dialog in dialoguesByDay)
+                {
+                    if (dialog.dayNumber == today)
+                    {
+                        todaysDialogue = dialog;
+                        break;
+                    }
                 }
             }
 
@@ -189,15 +211,36 @@ public class NPCInteraction : MonoBehaviour
         return fallbackStory;
     }
 
+    public static bool IsSpeakerMatch(string profileName, string speakerName)
+    {
+        if (string.IsNullOrEmpty(profileName) || string.IsNullOrEmpty(speakerName)) return false;
+        if (profileName.Equals(speakerName, System.StringComparison.OrdinalIgnoreCase)) return true;
+
+        if ((profileName.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase)) ||
+            (profileName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Park", System.StringComparison.OrdinalIgnoreCase))) return true;
+
+        if ((profileName.Equals("Rain", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Rein", System.StringComparison.OrdinalIgnoreCase)) ||
+            (profileName.Equals("Rein", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Rain", System.StringComparison.OrdinalIgnoreCase))) return true;
+
+        if ((profileName.Equals("Mom", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("แม่", System.StringComparison.OrdinalIgnoreCase)) ||
+            (profileName.Equals("แม่", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Mom", System.StringComparison.OrdinalIgnoreCase))) return true;
+
+        if ((profileName.Equals("Dad", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("พ่อ", System.StringComparison.OrdinalIgnoreCase)) ||
+            (profileName.Equals("พ่อ", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Dad", System.StringComparison.OrdinalIgnoreCase))) return true;
+
+        if ((profileName.Equals("Nia", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("เนีย", System.StringComparison.OrdinalIgnoreCase)) ||
+            (profileName.Equals("เนีย", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Nia", System.StringComparison.OrdinalIgnoreCase))) return true;
+
+        return false;
+    }
+
     public Sprite GetNPCPortrait(string speakerName, string portraitName)
     {
         if (string.IsNullOrEmpty(speakerName) || string.IsNullOrEmpty(portraitName)) return null;
 
         foreach (var profile in npcProfiles)
         {
-            if (profile != null && (profile.npcName.Equals(speakerName, System.StringComparison.OrdinalIgnoreCase) ||
-                (profile.npcName.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase)) ||
-                (profile.npcName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Park", System.StringComparison.OrdinalIgnoreCase))))
+            if (profile != null && IsSpeakerMatch(profile.npcName, speakerName))
             {
                 foreach (var portrait in profile.portraits)
                 {
@@ -571,9 +614,7 @@ public class DialogueLineDrawer : PropertyDrawer
             {
                 foreach (var profile in npc.npcProfiles)
                 {
-                    if (profile != null && (profile.npcName == currentSpeaker ||
-                        (profile.npcName.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Prak", System.StringComparison.OrdinalIgnoreCase)) ||
-                        (profile.npcName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Park", System.StringComparison.OrdinalIgnoreCase))) && profile.portraits != null)
+                    if (profile != null && NPCInteraction.IsSpeakerMatch(profile.npcName, currentSpeaker) && profile.portraits != null)
                     {
                         foreach (var port in profile.portraits)
                         {
@@ -775,9 +816,7 @@ public class DialogueChoiceDrawer : PropertyDrawer
             {
                 foreach (var profile in npc.npcProfiles)
                 {
-                    if (profile != null && (profile.npcName == currentSpeaker ||
-                        (profile.npcName.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Prak", System.StringComparison.OrdinalIgnoreCase)) ||
-                        (profile.npcName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Park", System.StringComparison.OrdinalIgnoreCase))) && profile.portraits != null)
+                    if (profile != null && NPCInteraction.IsSpeakerMatch(profile.npcName, currentSpeaker) && profile.portraits != null)
                     {
                         foreach (var port in profile.portraits)
                         {

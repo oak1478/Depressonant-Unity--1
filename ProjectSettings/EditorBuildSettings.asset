@@ -15,13 +15,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Bedroom_3D.unity
     guid: 5c7d400e6833f9644b3e8b5ee42b619f
   - enabled: 1
-    path: Assets/Scenes/Ending/Ending_A.unity
+    path: Assets/Scenes/Ending/Ending_Normal.unity
     guid: 76b89cc016b09094d880412e8bd76511
   - enabled: 1
-    path: Assets/Scenes/Ending/Ending_B.unity
+    path: Assets/Scenes/Ending/Ending_Bad.unity
     guid: 97c790c04d592c648b34abdd4dc756a8
   - enabled: 1
-    path: Assets/Scenes/Ending/Ending_C.unity
+    path: Assets/Scenes/Ending/Ending_Good.unity
     guid: acaef1c0870f89e4ea9f60401f5676dc
   - enabled: 1
     path: Assets/Scenes/Ending/GameOver_Stress.unity
