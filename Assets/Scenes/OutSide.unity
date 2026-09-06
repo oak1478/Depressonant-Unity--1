@@ -89198,9 +89198,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 56318606}
     m_Modifications:
+    - target: {fileID: 1081942960280970523, guid: ed1a950e6a0767c41bb7b9dcfd95202d, type: 3}
+      propertyPath: activeDays.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1081942960280970523, guid: ed1a950e6a0767c41bb7b9dcfd95202d, type: 3}
+      propertyPath: 'activeDays.Array.data[0]'
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3595735871952307631, guid: ed1a950e6a0767c41bb7b9dcfd95202d, type: 3}
       propertyPath: m_Name
       value: NPC_Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046482694224239396, guid: ed1a950e6a0767c41bb7b9dcfd95202d, type: 3}
+      propertyPath: dialoguesByDay.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4939773011039692340, guid: ed1a950e6a0767c41bb7b9dcfd95202d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -89280,6 +89292,392 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 56318606}
     m_Modifications:
+    - target: {fileID: 231057541038479422, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: activeDays.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 231057541038479422, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: 'activeDays.Array.data[0]'
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayTitle
+      value: DAY 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayNumber
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].conclusionStory.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].conclusionStory.Array.data[0].text
+      value: "(\u0E04\u0E19\u0E41\u0E01\u0E48\u0E2D\u0E30\u0E44\u0E23\u0E40\u0E19\u0E35\u0E48\u0E22!)"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[0].text
+      value: "\u0E2D\u0E49\u0E32\u0E27 \u0E40\u0E19\u0E35\u0E22! \u0E15\u0E37\u0E48\u0E19\u0E2A\u0E32\u0E22\u0E40\u0E0A\u0E35\u0E22\u0E27\u0E19\u0E30\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[1].text
+      value: "\u0E40\u0E2D\u0E4A\u0E30!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[2].text
+      value: "\u0E2B\u0E23\u0E37\u0E2D\u0E27\u0E48\u0E32\u0E09\u0E31\u0E19\u0E08\u0E33\u0E1C\u0E34\u0E14
+        \u0E2B\u0E19\u0E39\u0E40\u0E23\u0E19\u0E23\u0E36\u0E40\u0E1B\u0E25\u0E48\u0E32\u0E19\u0E30?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[3].text
+      value: "\u0E1B\u0E49\u0E32\u0E1E\u0E39\u0E14\u0E2D\u0E30\u0E44\u0E23\u0E19\u0E48\u0E30\u0E1B\u0E49\u0E32\u0E08\u0E34\u0E19
+        ?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[4].text
+      value: "\u0E41\u0E15\u0E48\u0E01\u0E47\u0E2A\u0E27\u0E31\u0E2A\u0E14\u0E35\u0E04\u0E48\u0E30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[5].text
+      value: "\u0E2E\u0E30\u0E2E\u0E32\u0E2E\u0E32 \u0E2A\u0E07\u0E2A\u0E31\u0E22\u0E09\u0E31\u0E19\u0E08\u0E30\u0E41\u0E01\u0E48\u0E41\u0E25\u0E49\u0E27\u0E08\u0E23\u0E34\u0E07\u0E46"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].conclusionStory.Array.data[0].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].conclusionStory.Array.data[0].portraitName
+      value: bad1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[0].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[1].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[2].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[3].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[4].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[5].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].choiceButtonText
+      value: "\u0E2B\u0E19\u0E39\u0E21\u0E35\u0E19\u0E49\u0E2D\u0E07\u0E2A\u0E32\u0E27\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E23\u0E19\u0E44\u0E07\u0E04\u0E48\u0E30
+        \u0E1B\u0E49\u0E32\u0E25\u0E37\u0E21\u0E41\u0E25\u0E49\u0E27\u0E2B\u0E23\u0E2D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].choiceButtonText
+      value: "\u0E16\u0E49\u0E32\u0E44\u0E21\u0E48\u0E21\u0E35\u0E2D\u0E30\u0E44\u0E23\u0E41\u0E25\u0E49\u0E27\u0E2B\u0E19\u0E39\u0E02\u0E2D\u0E15\u0E31\u0E27\u0E01\u0E48\u0E2D\u0E19\u0E19\u0E30\u0E04\u0E48\u0E30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].choiceButtonText
+      value: "\u0E1B\u0E49\u0E32\u0E25\u0E37\u0E21\u0E2B\u0E19\u0E39\u0E44\u0E14\u0E49\u0E44\u0E07"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[0].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[1].motionEffect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[1].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[2].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[3].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[4].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[5].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].conclusionStory.Array.data[0].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[0].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[1].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[2].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[3].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[4].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[5].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].nextDialogueLines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[0].text
+      value: "\u0E07\u0E31\u0E49\u0E19\u0E2B\u0E23\u0E2D \u0E09\u0E31\u0E19\u0E04\u0E07\u0E40\u0E2B\u0E47\u0E19\u0E19\u0E49\u0E2D\u0E07\u0E40\u0E23\u0E19\u0E19\u0E31\u0E49\u0E19\u0E1A\u0E48\u0E2D\u0E22\u0E01\u0E27\u0E48\u0E32\u0E41\u0E01\u0E25\u0E30\u0E19\u0E30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[1].text
+      value: "\u0E01\u0E47\u0E41\u0E01\u0E19\u0E30 \u0E40\u0E19\u0E35\u0E22"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[2].text
+      value: "\u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E2B\u0E21\u0E01\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E39\u0E48\u0E43\u0E19\u0E1A\u0E49\u0E32\u0E19
+        \u0E44\u0E21\u0E48\u0E2D\u0E2D\u0E01\u0E21\u0E32\u0E2D\u0E32\u0E1A\u0E41\u0E2A\u0E07\u0E43\u0E2B\u0E49\u0E40\u0E2B\u0E47\u0E19\u0E40\u0E25\u0E22\u0E19\u0E34
+        \u0E08\u0E19\u0E09\u0E31\u0E19\u0E25\u0E37\u0E21\u0E41\u0E01\u0E44\u0E1B\u0E25\u0E30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[3].text
+      value: "\u0E16\u0E49\u0E32\u0E44\u0E21\u0E48\u0E21\u0E35\u0E2D\u0E30\u0E44\u0E23\u0E41\u0E25\u0E49\u0E27\u0E2B\u0E19\u0E39\u0E02\u0E2D\u0E15\u0E31\u0E27\u0E01\u0E48\u0E2D\u0E19\u0E19\u0E30\u0E04\u0E48\u0E30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[4].text
+      value: "\u0E1A\u0E4A\u0E32\u0E22\u0E1A\u0E32\u0E22\u0E08\u0E49\u0E30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].nextDialogueLines.Array.data[0].text
+      value: "\u0E1A\u0E4A\u0E32\u0E22\u0E1A\u0E32\u0E22\u0E08\u0E49\u0E30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[0].text
+      value: "\u0E1A\u0E49\u0E32\u0E19\u0E2D\u0E22\u0E39\u0E48\u0E43\u0E01\u0E25\u0E49\u0E01\u0E31\u0E19\u0E41\u0E17\u0E49
+        \u0E46"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[1].text
+      value: "\u0E1E\u0E39\u0E14\u0E07\u0E35\u0E49\u0E01\u0E31\u0E1A\u0E1C\u0E39\u0E49\u0E43\u0E2B\u0E0D\u0E48\u0E44\u0E14\u0E49\u0E2B\u0E23\u0E2D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[2].text
+      value: "\u0E44\u0E2D\u0E40\u0E14\u0E47\u0E01\u0E19\u0E35\u0E48!!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[3].text
+      value: "\u0E02\u0E2D\u0E42\u0E17\u0E29\u0E04\u0E48\u0E30 !!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[0].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[1].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[2].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[3].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[4].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].nextDialogueLines.Array.data[0].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[0].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[1].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[2].speakerName
+      value: Jin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[3].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[0].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[1].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[2].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[2].stressChange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[3].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[4].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].nextDialogueLines.Array.data[0].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[0].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[1].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[2].motionEffect
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[2].portraitName
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[2].stressChange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[3].portraitName
+      value: bad1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[0].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[1].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[2].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[3].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[0].nextDialogueLines.Array.data[4].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[1].nextDialogueLines.Array.data[0].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[0].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[1].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[2].activeSlotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394120123608294190, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].storyChoices.Array.data[2].nextDialogueLines.Array.data[3].activeSlotIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3098673621829569786, guid: 11503781e05c43c4eb2475c4fa334912, type: 3}
       propertyPath: m_Name
       value: NPC_Ben

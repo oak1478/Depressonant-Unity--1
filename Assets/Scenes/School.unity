@@ -79549,6 +79549,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC_Momon
       objectReference: {fileID: 0}
+    - target: {fileID: 7031110804936892037, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031110804936892037, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].dayTitle
+      value: DAY 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031110804936892037, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031110804936892037, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[0].speakerName
+      value: Nia
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031110804936892037, guid: 13049c2f344ad93468638237cd7df50a, type: 3}
+      propertyPath: dialoguesByDay.Array.data[0].introductionStory.Array.data[0].activeSlotIndex
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
