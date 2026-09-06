@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 
@@ -20,6 +21,10 @@ public class DailyQuestManager : MonoBehaviour
     [Tooltip("ลาก TitleText หรือ QuestPanel มาใส่ เพื่อซ่อนเมื่อคุยครบแล้ว (ใส่หรือไม่ใส่ก็ได้)")]
     public GameObject titleObjectToHide;
 
+    [Header("UI Visibility (ซ่อน/แสดง อัตโนมัติ)")]
+    [Tooltip("ลาก QuestPanel หรือ QuestCanvas มาใส่ (หากเว้นว่างไว้ ระบบจะค้นหา Canvas จากตัวมันเองให้อัตโนมัติ)")]
+    public GameObject questUIRoot;
+
     [Header("Refresh Settings")]
     [Tooltip("อัปเดตรายชื่อทุกกี่วินาที (ตั้ง 1 ก็เพียงพอ ไม่ต้องทุกเฟรม)")]
     public float refreshInterval = 1f;
@@ -28,10 +33,41 @@ public class DailyQuestManager : MonoBehaviour
 
     // เก็บแถวที่สร้างไว้เพื่อ destroy เมื่อ refresh
     private List<GameObject> activeRows = new List<GameObject>();
+    private Canvas cachedCanvas;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
+
+        cachedCanvas = GetComponentInParent<Canvas>();
+
+        // ปิดการดักคลิกเมาส์ (Raycast) ทั้งหมดของ Canvas เควสโดยอัตโนมัติ
+        // เพราะ Canvas นี้เป็นเพียง HUD แสดงข้อความ ไม่จำเป็นต้องรับคลิกเมาส์
+        // และป้องกันไม่ให้บังปุ่มตัวเลือกบทสนทนา (Choice Buttons)
+        GraphicRaycaster raycaster = GetComponentInParent<GraphicRaycaster>();
+        if (raycaster != null)
+        {
+            raycaster.enabled = false;
+        }
+    }
+
+    /// <summary>
+    /// สั่งซ่อนหรือแสดงหน้าต่างเควส (เรียกจาก DialogueManager ตอนเริ่ม/จบบทสนทนา)
+    /// </summary>
+    public void SetVisible(bool isVisible)
+    {
+        if (questUIRoot != null)
+        {
+            questUIRoot.SetActive(isVisible);
+        }
+        else if (cachedCanvas != null)
+        {
+            cachedCanvas.enabled = isVisible;
+        }
+        else
+        {
+            gameObject.SetActive(isVisible);
+        }
     }
 
     private void Start()
