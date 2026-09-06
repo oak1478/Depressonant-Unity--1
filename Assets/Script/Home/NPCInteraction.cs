@@ -195,7 +195,9 @@ public class NPCInteraction : MonoBehaviour
 
         foreach (var profile in npcProfiles)
         {
-            if (profile != null && profile.npcName.Equals(speakerName, System.StringComparison.OrdinalIgnoreCase))
+            if (profile != null && (profile.npcName.Equals(speakerName, System.StringComparison.OrdinalIgnoreCase) ||
+                (profile.npcName.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase)) ||
+                (profile.npcName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && speakerName.Equals("Park", System.StringComparison.OrdinalIgnoreCase))))
             {
                 foreach (var portrait in profile.portraits)
                 {
@@ -534,6 +536,23 @@ public class DialogueLineDrawer : PropertyDrawer
                 }
             }
 
+            // Fallback: รองรับชื่อเดิม หรือกรณี Park <-> Prak alias เพื่อไม่ให้ชื่อผู้พูดหายไป
+            if (!string.IsNullOrEmpty(speakerProp.stringValue))
+            {
+                if (speakerProp.stringValue.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && speakerOptions.Contains("Park"))
+                {
+                    speakerProp.stringValue = "Park";
+                }
+                else if (speakerProp.stringValue.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && speakerOptions.Contains("Prak"))
+                {
+                    speakerProp.stringValue = "Prak";
+                }
+                else if (!speakerOptions.Contains(speakerProp.stringValue))
+                {
+                    speakerOptions.Add(speakerProp.stringValue);
+                }
+            }
+
             int selectedSpeakerIndex = speakerOptions.IndexOf(speakerProp.stringValue);
             if (selectedSpeakerIndex < 0) selectedSpeakerIndex = 0;
 
@@ -552,7 +571,9 @@ public class DialogueLineDrawer : PropertyDrawer
             {
                 foreach (var profile in npc.npcProfiles)
                 {
-                    if (profile != null && profile.npcName == currentSpeaker && profile.portraits != null)
+                    if (profile != null && (profile.npcName == currentSpeaker ||
+                        (profile.npcName.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Prak", System.StringComparison.OrdinalIgnoreCase)) ||
+                        (profile.npcName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Park", System.StringComparison.OrdinalIgnoreCase))) && profile.portraits != null)
                     {
                         foreach (var port in profile.portraits)
                         {
@@ -561,6 +582,11 @@ public class DialogueLineDrawer : PropertyDrawer
                         }
                     }
                 }
+            }
+
+            if (!string.IsNullOrEmpty(portraitProp.stringValue) && !portraitOptions.Contains(portraitProp.stringValue))
+            {
+                portraitOptions.Add(portraitProp.stringValue);
             }
 
             int selectedPortraitIndex = portraitOptions.IndexOf(portraitProp.stringValue);
@@ -714,6 +740,23 @@ public class DialogueChoiceDrawer : PropertyDrawer
                 }
             }
 
+            // Fallback: รองรับชื่อเดิม หรือกรณี Park <-> Prak alias เพื่อไม่ให้ชื่อผู้พูดหายไป
+            if (!string.IsNullOrEmpty(speakerProp.stringValue))
+            {
+                if (speakerProp.stringValue.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && speakerOptions.Contains("Park"))
+                {
+                    speakerProp.stringValue = "Park";
+                }
+                else if (speakerProp.stringValue.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && speakerOptions.Contains("Prak"))
+                {
+                    speakerProp.stringValue = "Prak";
+                }
+                else if (!speakerOptions.Contains(speakerProp.stringValue))
+                {
+                    speakerOptions.Add(speakerProp.stringValue);
+                }
+            }
+
             int selectedSpeakerIndex = speakerOptions.IndexOf(speakerProp.stringValue);
             if (selectedSpeakerIndex < 0) selectedSpeakerIndex = 0;
 
@@ -732,7 +775,9 @@ public class DialogueChoiceDrawer : PropertyDrawer
             {
                 foreach (var profile in npc.npcProfiles)
                 {
-                    if (profile != null && profile.npcName == currentSpeaker && profile.portraits != null)
+                    if (profile != null && (profile.npcName == currentSpeaker ||
+                        (profile.npcName.Equals("Park", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Prak", System.StringComparison.OrdinalIgnoreCase)) ||
+                        (profile.npcName.Equals("Prak", System.StringComparison.OrdinalIgnoreCase) && currentSpeaker.Equals("Park", System.StringComparison.OrdinalIgnoreCase))) && profile.portraits != null)
                     {
                         foreach (var port in profile.portraits)
                         {
@@ -741,6 +786,11 @@ public class DialogueChoiceDrawer : PropertyDrawer
                         }
                     }
                 }
+            }
+
+            if (!string.IsNullOrEmpty(portraitProp.stringValue) && !portraitOptions.Contains(portraitProp.stringValue))
+            {
+                portraitOptions.Add(portraitProp.stringValue);
             }
 
             int selectedPortraitIndex = portraitOptions.IndexOf(portraitProp.stringValue);
