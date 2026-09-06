@@ -166,6 +166,12 @@ public class DialogueManager : MonoBehaviour
         if (choicePanel != null) choicePanel.SetActive(false);
         if (dialogueCanvas != null) dialogueCanvas.SetActive(true);
 
+        // ⚡ ซ่อนหน้าต่างเควสรายวันเมื่อเริ่มบทสนทนา
+        if (DailyQuestManager.Instance != null)
+        {
+            DailyQuestManager.Instance.SetVisible(false);
+        }
+
         Time.timeScale = 0f; 
 
         Cursor.visible = true;
@@ -528,6 +534,13 @@ public class DialogueManager : MonoBehaviour
         if (TutorialManager.Instance != null)
         {
             TutorialManager.Instance.OnDialogueFinished();
+        }
+
+        // ⚡ แสดงหน้าต่างเควสรายวันกลับมาและรีเฟรชสถานะทันทีเมื่อจบบทสนทนา
+        if (DailyQuestManager.Instance != null)
+        {
+            DailyQuestManager.Instance.SetVisible(true);
+            DailyQuestManager.Instance.RefreshQuestList();
         }
     }
 
