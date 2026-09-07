@@ -72,7 +72,16 @@ public class PlayerSpawner : MonoBehaviour
         if (cc != null) cc.enabled = false;
 
         playerObj.transform.position = targetPosition;
-        playerObj.transform.rotation = targetRotation;
+
+        // สำหรับตัวละคร 2.5D Sprite (มี PlayerMovement) บังคับให้คง Rotation ตรง ไม่ให้บิดเบี้ยวหรือบางลง
+        if (playerObj.GetComponent<PlayerMovement>() != null)
+        {
+            playerObj.transform.rotation = Quaternion.identity;
+        }
+        else
+        {
+            playerObj.transform.rotation = targetRotation;
+        }
 
         Physics.SyncTransforms();
 

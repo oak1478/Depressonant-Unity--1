@@ -100,14 +100,31 @@ public class GameManagerSetup : MonoBehaviour
         Debug.Log("[GameManagerSetup] รีเซ็ตรายชื่อ NPC ที่พูดคุยแล้วสำหรับวันใหม่");
     }
 
+    public void ResetGameSession()
+    {
+        currentStress = 0f;
+        currentDay = 1;
+        consecutiveMaxStressDays = 0;
+        activeSaveSlot = 1;
+        playTime = 0f;
+        hasLoadedPosition = false;
+        loadedPlayerPosition = Vector3.zero;
+
+        savedInventory.Clear();
+        pickedUpItemIDs.Clear();
+        talkedNPCsToday.Clear();
+
+        Debug.Log("[GameManagerSetup] รีเซ็ตสถานะข้อมูลเกมทั้งหมดเรียบร้อย");
+    }
+
     void Awake()
     {
-        // ⚡ ป้องกันไม่ให้มี GameManager ซ้ำซ้อนกันในซีน
+        // ป้องกันไม่ให้มี GameManager ซ้ำซ้อนกันในซีน
         if (Instance == null)
         {
             Instance = this;
             
-            // สั่งให้วัตถุนี้ (รวมถึงวัตถุลูก) อมตะ ข้ามซีนได้ไม่โดนทำลาย!
+            // สั่งให้วัตถุนี้ (รวมถึงวัตถุลูก) ข้ามซีนได้ไม่โดนทำลาย
             DontDestroyOnLoad(gameObject); 
 
             // แปะ SaveSystem เข้ากับ GameManager อัตโนมัติเพื่อให้สั่งเซฟได้จากทุกที่
@@ -116,7 +133,7 @@ public class GameManagerSetup : MonoBehaviour
                 gameObject.AddComponent<SaveSystem>();
             }
 
-            // ⚡ [เพิ่มใหม่] โหลดค่าจากหน่วยความจำชั่วคราว (Pending Data) ทันทีใน Awake เพื่อแก้ปัญหา Race Conditions
+            // โหลดค่าจากหน่วยความจำชั่วคราว (Pending Data) ทันทีใน Awake เพื่อแก้ปัญหา Race Conditions
             UnpackPendingSaveData();
         }
         else
@@ -138,7 +155,14 @@ public class GameManagerSetup : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu") return;
+        if (scene.name == "MainMenu")
+        {
+            ResetDailyNPCTalk();
+            return;
+        }
+
+        // ตรวจสอบและสร้าง EventSystem อัตโนมัติหากฉากนั้นไม่มี เพื่อให้ UI และการใช้ไอเทมทำงานได้ 100%
+        EnsureEventSystem();
 
         // หากมีข้อมูลเซฟรออยู่ใน Pending Data ให้อัปเดตข้อมูลกลางทันที
         UnpackPendingSaveData();
@@ -148,6 +172,21 @@ public class GameManagerSetup : MonoBehaviour
         Cursor.visible = !is3DScene;
         Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
         Debug.Log($"[Cursor Sync] โหลดฉาก '{scene.name}' สำเร็จ! ตั้งค่าเมาส์เริ่มต้น: visible={Cursor.visible}, lockState={Cursor.lockState}");
+    }
+
+    private void EnsureEventSystem()
+    {
+        if (UnityEngine.EventSystems.EventSystem.current == null)
+        {
+            var existing = Object.FindAnyObjectByType<UnityEngine.EventSystems.EventSystem>();
+            if (existing == null)
+            {
+                GameObject esObj = new GameObject("EventSystem_Auto");
+                esObj.AddComponent<UnityEngine.EventSystems.EventSystem>();
+                esObj.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+                Debug.Log("[GameManagerSetup] ตรวจไม่พบ EventSystem ในฉาก ได้สร้าง EventSystem_Auto ให้อัตโนมัติ");
+            }
+        }
     }
 
     public void UnpackPendingSaveData()
@@ -163,9 +202,7 @@ public class GameManagerSetup : MonoBehaviour
             pickedUpItemIDs = SaveSystem.pendingLoadData.pickedUpItemIDs != null 
                 ? new List<string>(SaveSystem.pendingLoadData.pickedUpItemIDs) 
                 : new List<string>();
-            talkedNPCsToday = SaveSystem.pendingLoadData.talkedNPCsToday != null
-                ? new List<string>(SaveSystem.pendingLoadData.talkedNPCsToday)
-                : new List<string>();
+            talkedNPCsToday = new List<string>(); // เริ่มวันใหม่ ล้างรายชื่อ NPC ที่คุยไปแล้ว
             activeSaveSlot = SaveSystem.pendingLoadData.activeSaveSlot;
             playTime = SaveSystem.pendingLoadData.playTime;
 

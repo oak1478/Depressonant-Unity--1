@@ -33,7 +33,7 @@ public class DialogueLine
     [Tooltip("Voice sound name to play when this line starts")]
     public string voiceSoundName;
 
-    // ⚡ สไปรต์สำหรับใช้แสดงผลที่ประมวลผลเสร็จแล้วในช่วงรันไทม์ (ไม่เซฟลงโปรเจกต์)
+    //  สไปรต์สำหรับใช้แสดงผลที่ประมวลผลเสร็จแล้วในช่วงรันไทม์ (ไม่เซฟลงโปรเจกต์)
     [System.NonSerialized] public Sprite resolvedPortraitSprite;
 }
 
@@ -67,13 +67,13 @@ public class DialogueChoice
     [Tooltip("Next dialogue lines to play after selecting this choice")]
     public List<DialogueLine> nextDialogueLines;
 
-    // ⚡ สไปรต์สำหรับใช้แสดงผลที่ประมวลผลเสร็จแล้วในช่วงรันไทม์ (ไม่เซฟลงโปรเจกต์)
+    //  สไปรต์สำหรับใช้แสดงผลที่ประมวลผลเสร็จแล้วในช่วงรันไทม์ (ไม่เซฟลงโปรเจกต์)
     [System.NonSerialized] public Sprite resolvedPortraitSprite;
 }
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("🖥️ UI References")]
+    [Header("️ UI References")]
     public GameObject dialogueCanvas;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI bodyText;
@@ -82,15 +82,15 @@ public class DialogueManager : MonoBehaviour
     public GameObject choicePanel;
     public TextMeshProUGUI[] choiceButtonsText;
 
-    [Header("🎭 UI Multi-Portraits Slot (Left=1 to Right=7)")]
+    [Header(" UI Multi-Portraits Slot (Left=1 to Right=7)")]
     [Tooltip("Drag 7 Image objects in order from left to right. Position 4 is the center.")]
     public Image[] characterSlots;
 
-    [Header("⚙️ Settings")]
+    [Header("️ Settings")]
     public float typingSpeed = 0.03f;
     public string playerName = "Sensei";
 
-    [Header("🎵 Audio Settings")]
+    [Header(" Audio Settings")]
     public AudioSource audioSource;
     
     [Tooltip("ลากไฟล์เสียงพิมพ์ดีดติ๊กๆ มาใส่ตรงนี้")]
@@ -123,7 +123,7 @@ public class DialogueManager : MonoBehaviour
     private Sprite currentFallbackPlayerImg;
     private Sprite currentFallbackNpcImg;
 
-    // ⚡ ตัวเก็บสถานะเพื่อจดจำว่าใครอยู่ที่สล็อตไหน ป้องกันตัวละครเดียวกันแสดงซ้ำซ้อนหลายตำแหน่ง
+    //  ตัวเก็บสถานะเพื่อจดจำว่าใครอยู่ที่สล็อตไหน ป้องกันตัวละครเดียวกันแสดงซ้ำซ้อนหลายตำแหน่ง
     private string[] slotSpeakers;
 
     void Start() { if (dialogueCanvas != null) dialogueCanvas.SetActive(false); }
@@ -138,7 +138,15 @@ public class DialogueManager : MonoBehaviour
 
             if (advancePressed)
             {
-                if (isTyping) { StopAllCoroutines(); bodyText.text = targetText; isTyping = false; }
+                if (isTyping)
+                {
+                    StopAllCoroutines();
+                    if (bodyText != null && bodyText.textInfo != null)
+                    {
+                        bodyText.maxVisibleCharacters = bodyText.textInfo.characterCount;
+                    }
+                    isTyping = false;
+                }
                 else { AdvanceDialogue(); }
             }
         }
@@ -165,7 +173,7 @@ public class DialogueManager : MonoBehaviour
         if (choicePanel != null) choicePanel.SetActive(false);
         if (dialogueCanvas != null) dialogueCanvas.SetActive(true);
 
-        // ⚡ ซ่อนหน้าต่างเควสรายวันเมื่อเริ่มบทสนทนา
+        //  ซ่อนหน้าต่างเควสรายวันเมื่อเริ่มบทสนทนา
         if (DailyQuestManager.Instance != null)
         {
             DailyQuestManager.Instance.SetVisible(false);
@@ -223,7 +231,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogueStep >= currentActiveStory.Count) return;
 
         DialogueLine currentLine = currentActiveStory[dialogueStep];
-        targetText = currentLine.text;
+        targetText = ThaiTextAdjuster.Adjust(currentLine.text);
 
         ApplyStress(currentLine.stressChange);
 
@@ -233,13 +241,13 @@ public class DialogueManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(currentLine.otherName))
         {
-            nameText.text = currentLine.otherName;
+            nameText.text = ThaiTextAdjuster.Adjust(currentLine.otherName);
         }
         else
         {
             bool isPlayer = currentSpeaker.Equals(playerName, System.StringComparison.OrdinalIgnoreCase) || 
                              currentSpeaker.Equals("Nia", System.StringComparison.OrdinalIgnoreCase);
-            nameText.text = isPlayer ? playerName : currentSpeaker;
+            nameText.text = ThaiTextAdjuster.Adjust(isPlayer ? playerName : currentSpeaker);
         }
 
         // 2. หาสล็อตพิกัดการขึ้นรูปตัวละคร (ตำแหน่ง 1-7 แปลงเป็น Index 0-6, หากเป็น 0 หรือออกนอกขอบเขตให้ดีฟอลต์สล็อต 3)
@@ -329,21 +337,28 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeText(string text)
     {
         isTyping = true;
-        bodyText.text = "";
-        int charCount = 0;
-        foreach (char letter in text.ToCharArray()) 
-        { 
-            bodyText.text += letter; 
-            charCount++;
-            
-            // ⚡ เล่นเสียงพิมพ์ตามจังหวะที่กำหนด
-            if (audioSource != null && typingSound != null && charCount % typingSoundFrequency == 0)
+        bodyText.text = text;
+        bodyText.maxVisibleCharacters = 0;
+        bodyText.ForceMeshUpdate();
+
+        int totalVisibleCharacters = bodyText.textInfo != null ? bodyText.textInfo.characterCount : text.Length;
+        int counter = 0;
+
+        while (counter <= totalVisibleCharacters)
+        {
+            bodyText.maxVisibleCharacters = counter;
+
+            //  เล่นเสียงพิมพ์ตามจังหวะที่กำหนด
+            if (audioSource != null && typingSound != null && counter % typingSoundFrequency == 0 && counter > 0)
             {
                 audioSource.PlayOneShot(typingSound, typingVolume);
             }
-            
-            yield return new WaitForSecondsRealtime(typingSpeed); 
+
+            counter++;
+            yield return new WaitForSecondsRealtime(typingSpeed);
         }
+
+        bodyText.maxVisibleCharacters = totalVisibleCharacters;
         isTyping = false;
     }
 
@@ -373,7 +388,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (i < currentChoicesData.Count && choiceButtonsText[i] != null) 
             {
-                choiceButtonsText[i].text = currentChoicesData[i].choiceButtonText;
+                choiceButtonsText[i].text = ThaiTextAdjuster.Adjust(currentChoicesData[i].choiceButtonText);
                 choiceButtonsText[i].transform.parent.gameObject.SetActive(true);
             } 
             else if (choiceButtonsText[i] != null) 
@@ -545,7 +560,7 @@ public class DialogueManager : MonoBehaviour
         Cursor.visible = !is3DScene;
         Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
 
-        // ⚡ ตรวจสอบหากอยู่ในฉากจบ (Ending_Good, Ending_Bad, Ending_Normal) ให้เข้าสู่หน้าจอดำและขึ้น The End
+        //  ตรวจสอบหากอยู่ในฉากจบ (Ending_Good, Ending_Bad, Ending_Normal) ให้เข้าสู่หน้าจอดำและขึ้น The End
         string activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         if (activeScene.StartsWith("Ending_", System.StringComparison.OrdinalIgnoreCase) && activeScene != "GameOver_Stress")
         {
@@ -566,7 +581,7 @@ public class DialogueManager : MonoBehaviour
             TutorialManager.Instance.OnDialogueFinished();
         }
 
-        // ⚡ แสดงหน้าต่างเควสรายวันกลับมาและรีเฟรชสถานะทันทีเมื่อจบบทสนทนา
+        //  แสดงหน้าต่างเควสรายวันกลับมาและรีเฟรชสถานะทันทีเมื่อจบบทสนทนา
         if (DailyQuestManager.Instance != null)
         {
             DailyQuestManager.Instance.SetVisible(true);

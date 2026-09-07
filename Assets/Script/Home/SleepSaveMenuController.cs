@@ -205,6 +205,19 @@ public class SleepSaveMenuController : MonoBehaviour
     {
         if (isTransitioning) return;
 
+        // ตรวจสอบว่าเป้าหมายเควสประจำวันเสร็จสิ้นแล้วหรือยัง
+        if (DailyQuestManager.Instance != null && !DailyQuestManager.Instance.IsDailyQuestCompleted())
+        {
+            Debug.LogWarning("[SleepSaveMenuController] ยังนอนไม่ได้! ต้องไปพูดคุยให้ครบตามเป้าหมายวันนี้ก่อน");
+            BedInteraction bed = BedInteraction.Instance;
+            if (bed == null) bed = UnityEngine.Object.FindAnyObjectByType<BedInteraction>();
+            if (bed != null)
+            {
+                bed.ShowSleepBlockedWarning("ยังนอนไม่ได้นะ! ต้องไปพูดคุยให้ครบตามเป้าหมายวันนี้ก่อน");
+            }
+            return;
+        }
+
         AutoFindReferences();
 
         if (saveMenuPanel == null)

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem Instance { get; private set; }
-    public static SaveData pendingLoadData = null; // ⚡ [เพิ่มใหม่] บัฟเฟอร์เก็บเซฟไว้ชั่วคราวก่อนย้ายซีน
+    public static SaveData pendingLoadData = null; // บัฟเฟอร์เก็บเซฟไว้ชั่วคราวก่อนย้ายซีน
 
     void Awake()
     {
@@ -16,12 +16,12 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
-            Destroy(this); // ⚡ [แก้ไข] ทำลายเฉพาะคอมโพเนนต์ที่เป็นตัวซ้ำซ้อนเท่านั้น เพื่อไม่ให้ GameObject หลัก (เช่น GameManagerSetup) โดนลบตามไปด้วย
+            Destroy(this); // ทำลายเฉพาะคอมโพเนนต์ที่เป็นตัวซ้ำซ้อนเท่านั้น เพื่อไม่ให้ GameObject หลัก (เช่น GameManagerSetup) โดนลบตามไปด้วย
             return;
         }
     }
 
-    // ⚡ [เพิ่มใหม่] ดึงตำแหน่งไฟล์เซฟตามสล็อตโดยระบุชื่อไฟล์เป็น gamesave_x.json
+    // ดึงตำแหน่งไฟล์เซฟตามสล็อตโดยระบุชื่อไฟล์เป็น gamesave_x.json
     public string GetSaveFilePath(int slotIndex)
     {
         return Application.persistentDataPath + $"/gamesave_{slotIndex}.json";
@@ -109,9 +109,7 @@ public class SaveSystem : MonoBehaviour
             GameManagerSetup.Instance.pickedUpItemIDs = data.pickedUpItemIDs != null 
                 ? new List<string>(data.pickedUpItemIDs) 
                 : new List<string>();
-            GameManagerSetup.Instance.talkedNPCsToday = data.talkedNPCsToday != null
-                ? new List<string>(data.talkedNPCsToday)
-                : new List<string>();
+            GameManagerSetup.Instance.talkedNPCsToday = new List<string>(); // เริ่มวันใหม่ ล้างรายชื่อ NPC ที่คุยไปแล้ว
             GameManagerSetup.Instance.activeSaveSlot = slotIndex; // ซิงค์เลขสล็อตกลับไปด้วย
             GameManagerSetup.Instance.playTime = data.playTime;
             
@@ -120,6 +118,12 @@ public class SaveSystem : MonoBehaviour
             GameManagerSetup.Instance.loadedPlayerPosition = new Vector3(data.playerX, data.playerY, data.playerZ);
             
             Debug.Log($"[SaveSystem] อัปเดตข้อมูลกลางสำเร็จ (Slot {slotIndex})! วันที่: {GameManagerSetup.Instance.currentDay} | ความเครียด: {GameManagerSetup.Instance.currentStress}%");
+        }
+
+        // ล้างรายชื่อ NPC ใน data ด้วย เพื่อไม่ให้ค้างส่งต่อไปยัง pendingLoadData
+        if (data.talkedNPCsToday != null)
+        {
+            data.talkedNPCsToday.Clear();
         }
 
         // บันทึกเซฟไว้ใน Pending Data เสมอ เพื่อเป็นข้อมูลสำรองรับประกันก่อนย้ายซีน

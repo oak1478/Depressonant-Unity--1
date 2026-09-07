@@ -38,7 +38,7 @@ public class MainMenuController : MonoBehaviour
 
     void Awake()
     {
-        // ⚡ ป้องกันบั๊ก MissingReference เมื่อสลับฉากกลับมาเมนูหลัก
+        // ป้องกันบั๊ก MissingReference เมื่อสลับฉากกลับมาเมนูหลัก
         // เช็คก่อนว่ามี SaveSystem อยู่แล้วหรือไม่ ถ้ามีให้ใช้ตัวเดิม ห้ามสร้างซ้ำ
         saveSystem = SaveSystem.Instance;
         if (saveSystem == null)
@@ -64,10 +64,20 @@ public class MainMenuController : MonoBehaviour
 
     void Start()
     {
+        // ซ่อนหน้าต่างเควสและกระเป๋าทันทีเมื่ออยู่ใน MainMenu
+        if (DailyQuestManager.Instance != null)
+        {
+            DailyQuestManager.Instance.SetVisible(false);
+        }
+        if (InventoryManager.Instance != null && InventoryManager.Instance.inventoryPanel != null)
+        {
+            InventoryManager.Instance.inventoryPanel.SetActive(false);
+        }
+
         // เริ่มต้นแสดงผลหน้าแรกสุด และปิดหน้าอื่นๆ ทั้งหมด
         ShowMainMenu();
 
-        // ⚡ [เพิ่มใหม่] ผูกเสียงคลิกและเสียง Hover เมาส์ให้กับปุ่มทั้งหมดในหน้าเมนูอัตโนมัติ
+        // ผูกเสียงคลิกและเสียง Hover เมาส์ให้กับปุ่มทั้งหมดในหน้าเมนูอัตโนมัติ
         HookAllButtonSounds();
     }
 
@@ -160,7 +170,7 @@ public class MainMenuController : MonoBehaviour
 
     // --- ฟังก์ชันหลักเกี่ยวกับระบบเซฟและการเลือกสล็อต ---
 
-    // ⚡ เริ่มเกมใหม่โดยอัตโนมัติ: ค้นหาสล็อตว่างหรือเขียนทับช่องเก่าที่สุด
+    // เริ่มเกมใหม่โดยอัตโนมัติ: ค้นหาสล็อตว่างหรือเขียนทับช่องเก่าที่สุด
     public void StartNewGame()
     {
         int targetSlot = 1;
@@ -254,7 +264,7 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("Bedroom_3D");
     }
 
-    // ⚡ ฟังก์ชันสำหรับอัปเดตตัวหนังสือแสดงข้อมูลเซฟในแต่ละสล็อต 1 - 4
+    // ฟังก์ชันสำหรับอัปเดตตัวหนังสือแสดงข้อมูลเซฟในแต่ละสล็อต 1 - 4
     private void UpdateSlotDetails()
     {
         for (int i = 0; i < 4; i++)

@@ -2,12 +2,23 @@ using UnityEngine;
 
 public class BedInteraction : MonoBehaviour
 {
+    public static BedInteraction Instance { get; private set; }
+
     private bool isPlayerClose = false;
+    private string blockedWarningMessage = "";
+    private float warningDisplayTimer = 0f;
+    private GUIStyle warningStyle;
+    private Texture2D warningBgTex;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
 
     void Update()
     {
         // ถ้าผู้เล่นอยู่ใกล้เตียง แล้วกดปุ่ม E
-        if (isPlayerClose && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
+        if (isPlayerClose && UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
         {
             TriggerSleep();
         }
@@ -19,8 +30,52 @@ public class BedInteraction : MonoBehaviour
         TriggerSleep();
     }
 
+    public void ShowSleepBlockedWarning(string message)
+    {
+        blockedWarningMessage = ThaiTextAdjuster.Adjust(message);
+        warningDisplayTimer = 3.5f;
+    }
+
+    private void OnGUI()
+    {
+        if (warningDisplayTimer > 0f)
+        {
+            warningDisplayTimer -= Time.deltaTime;
+
+            if (warningStyle == null)
+            {
+                warningStyle = new GUIStyle();
+                warningStyle.alignment = TextAnchor.MiddleCenter;
+                warningStyle.fontSize = 20;
+                warningStyle.fontStyle = FontStyle.Bold;
+                warningStyle.normal.textColor = new Color(1f, 0.88f, 0.35f, 1f); // สีเหลืองอบอุ่น
+                
+                warningBgTex = new Texture2D(1, 1);
+                warningBgTex.SetPixel(0, 0, new Color(0.08f, 0.10f, 0.15f, 0.90f)); // พื้นหลังเข้ม
+                warningBgTex.Apply();
+                warningStyle.normal.background = warningBgTex;
+                warningStyle.padding = new RectOffset(20, 20, 10, 10);
+            }
+
+            float width = 560f;
+            float height = 48f;
+            float x = (Screen.width - width) / 2f;
+            float y = Screen.height * 0.72f;
+
+            GUI.Label(new Rect(x, y, width, height), blockedWarningMessage, warningStyle);
+        }
+    }
+
     void TriggerSleep()
     {
+        // ตรวจสอบว่าทำเควสประจำวันครบแล้วหรือยัง หากยังคุยไม่ครบ ไม่อนุญาตให้นอน
+        if (DailyQuestManager.Instance != null && !DailyQuestManager.Instance.IsDailyQuestCompleted())
+        {
+            Debug.LogWarning("[BedInteraction] ยังนอนไม่ได้! ต้องไปพูดคุยให้ครบตามเป้าหมายวันนี้ก่อน");
+            ShowSleepBlockedWarning("ยังนอนไม่ได้นะ! ต้องไปพูดคุยให้ครบตามเป้าหมายวันนี้ก่อน");
+            return;
+        }
+
         // ตรวจสอบว่ามีหน้าต่างเลือกช่องเซฟ (SleepSaveMenuController) หรือไม่
         SleepSaveMenuController saveMenu = SleepSaveMenuController.Instance;
         if (saveMenu == null) saveMenu = Object.FindAnyObjectByType<SleepSaveMenuController>();

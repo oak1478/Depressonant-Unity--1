@@ -28,15 +28,7 @@ public class TriggerSceneWarp : MonoBehaviour
                 BedroomInteractable.PlayPersistentSound(soundToPlay);
             }
 
-            // ⚡ [เพิ่มใหม่] ออโต้เซฟสถานะก่อนเปลี่ยนฉาก
-            if (SaveSystem.Instance != null)
-            {
-                int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-                SaveSystem.Instance.SaveGameFromGlobal(other.transform.position, currentSceneIndex);
-                Debug.Log("[Auto-Save] บันทึกเกมก่อนเปลี่ยนฉากเรียบร้อย!");
-            }
-
-            // ⚡ [เพิ่มใหม่] แจ้งระบบ Tutorial เมื่อเปิด/ข้ามประตูสำเร็จ
+            // แจ้งระบบ Tutorial เมื่อเปิด/ข้ามประตูสำเร็จ
             if (TutorialManager.Instance != null)
             {
                 TutorialManager.Instance.OnDoorOpened();

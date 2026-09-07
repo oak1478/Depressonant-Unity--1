@@ -170,17 +170,35 @@ public class PauseMenuController : MonoBehaviour
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
     }
 
-    // เซฟเกมและออกไปหน้าเมนูหลัก (Exit to Main Menu)
+    // ออกไปหน้าเมนูหลัก (Exit to Main Menu)
     public void ExitSave()
     {
         Time.timeScale = 1f; // ปรับความเร็วเวลากลับเป็นปกติเพื่อให้เปลี่ยนซีนสมบูรณ์
 
-        // ⚡ [เพิ่มใหม่] ปิดแผงหน้าจอเมนูหยุดเกมและเคลียร์สถานะพักเกม เพื่อความสะอาดเรียบร้อยของ UI เมื่อย้ายหรือโหลดซีนใหม่
+        // ปิดแผงหน้าจอเมนูหยุดเกมและเคลียร์สถานะพักเกม
         if (pauseMenuPanel != null)
         {
             pauseMenuPanel.SetActive(false);
         }
         isPaused = false;
+
+        // ซ่อนหน้าต่างเควส
+        if (DailyQuestManager.Instance != null)
+        {
+            DailyQuestManager.Instance.SetVisible(false);
+        }
+
+        // ซ่อนหน้าต่างกระเป๋า (ถ้ามี)
+        if (InventoryManager.Instance != null && InventoryManager.Instance.inventoryPanel != null)
+        {
+            InventoryManager.Instance.inventoryPanel.SetActive(false);
+        }
+
+        // รีเซ็ตสถานะเซสชันเกมเพื่อไม่ให้ข้อมูลเก่าค้างในหน่วยความจำ
+        if (GameManagerSetup.Instance != null)
+        {
+            GameManagerSetup.Instance.ResetGameSession();
+        }
 
         // โหลดฉากเมนูหลัก
         SceneManager.LoadScene("MainMenu");

@@ -109,22 +109,35 @@ public class PlayerMovement : MonoBehaviour
             isFacingRight = false;
         }
 
-        // 🔥 ระบบ Mirror Horizontally (กลับภาพแนวนอนจริงผ่าน Scale X)
+        // ระบบ Mirror Horizontally
         bool shouldMirror = invertMirror ? isFacingRight : !isFacingRight;
-        
-        if (visualTransform != null)
+
+        if (useFlipX && spriteRenderer != null)
         {
-            Vector3 s = visualTransform.localScale;
-            s.x = (shouldMirror ? -1f : 1f) * baseScaleX;
-            visualTransform.localScale = s;
+            spriteRenderer.flipX = shouldMirror;
+            if (visualTransform != null)
+            {
+                Vector3 s = visualTransform.localScale;
+                s.x = baseScaleX;
+                visualTransform.localScale = s;
+            }
+        }
+        else
+        {
+            if (visualTransform != null)
+            {
+                Vector3 s = visualTransform.localScale;
+                s.x = (shouldMirror ? -1f : 1f) * baseScaleX;
+                visualTransform.localScale = s;
+            }
+
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.flipX = false;
+            }
         }
 
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.flipX = false; // ปิดไว้เพื่อไม่ให้ตีกับ Scale
-        }
-
-        // 🔥 ควบคุมแอนิเมชัน และสลับกลับภาพ Idle ทันทีที่หยุดเดิน
+        // ควบคุมแอนิเมชัน และสลับกลับภาพ Idle ทันทีที่หยุดเดิน
         if (isMoving)
         {
             if (animator != null)

@@ -221,6 +221,7 @@ Transform:
   - {fileID: 4895942}
   - {fileID: 600394799}
   - {fileID: 86814106}
+    - {fileID: 86814202}
   m_Father: {fileID: 1475507979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &40169830
@@ -16251,7 +16252,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4596314350876792427, guid: 4878fc57250a1504cb46f91f2769e1f6, type: 3}
       propertyPath: activeDays.Array.size
-      value: 0
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4596314350876792427, guid: 4878fc57250a1504cb46f91f2769e1f6, type: 3}
+      propertyPath: 'activeDays.Array.data[0]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4596314350876792427, guid: 4878fc57250a1504cb46f91f2769e1f6, type: 3}
+      propertyPath: 'activeDays.Array.data[1]'
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4596314350876792427, guid: 4878fc57250a1504cb46f91f2769e1f6, type: 3}
+      propertyPath: 'activeDays.Array.data[2]'
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7075739642254104435, guid: 4878fc57250a1504cb46f91f2769e1f6, type: 3}
       propertyPath: m_Name
@@ -17948,3 +17961,34 @@ SceneRoots:
   - {fileID: 6866122353965825946}
   - {fileID: 289212098155803008}
   - {fileID: 4586678225779491109}
+--- !u!1 &86814201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 86814202}
+  m_Layer: 0
+  m_Name: Spawn_From_OutSide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &86814202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86814201}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.2, y: -0.772, z: 5.006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 37882576}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

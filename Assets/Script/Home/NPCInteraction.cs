@@ -175,9 +175,20 @@ public class NPCInteraction : MonoBehaviour
 
             // 2. เช็คคุยซ้ำในวันเดียวกัน
             bool hasTalkedToday = (today == lastTalkedDay);
-            if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.HasTalkedToNPCToday(npcId))
+            if (GameManagerSetup.Instance != null)
             {
-                hasTalkedToday = true;
+                if (GameManagerSetup.Instance.HasTalkedToNPCToday(npcId))
+                {
+                    hasTalkedToday = true;
+                }
+                else if (string.Equals(npcId, "Ben", System.StringComparison.OrdinalIgnoreCase) && GameManagerSetup.Instance.HasTalkedToNPCToday("Jin"))
+                {
+                    hasTalkedToday = true;
+                }
+                else if (string.Equals(npcId, "Jin", System.StringComparison.OrdinalIgnoreCase) && GameManagerSetup.Instance.HasTalkedToNPCToday("Ben"))
+                {
+                    hasTalkedToday = true;
+                }
             }
 
             if (hasTalkedToday)
@@ -193,6 +204,28 @@ public class NPCInteraction : MonoBehaviour
             if (GameManagerSetup.Instance != null)
             {
                 GameManagerSetup.Instance.RegisterNPCTalkedToday(npcId);
+
+                // หากเป็นคู่ตัวละคร Ben และ Jin ให้ลงทะเบียนเสร็จสิ้นทั้งสองคนพร้อมกัน
+                if (string.Equals(npcId, "Ben", System.StringComparison.OrdinalIgnoreCase) || 
+                    string.Equals(npcId, "Jin", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    GameManagerSetup.Instance.RegisterNPCTalkedToday("Ben");
+                    GameManagerSetup.Instance.RegisterNPCTalkedToday("Jin");
+
+                    NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                    foreach (var otherNpc in allNPCs)
+                    {
+                        if (otherNpc != null)
+                        {
+                            string otherId = otherNpc.GetNPCIdentifier();
+                            if (string.Equals(otherId, "Ben", System.StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(otherId, "Jin", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                otherNpc.lastTalkedDay = today;
+                            }
+                        }
+                    }
+                }
             }
             if (DailyQuestManager.Instance != null)
             {
@@ -206,6 +239,32 @@ public class NPCInteraction : MonoBehaviour
                 {
                     todaysDialogue = dialog;
                     break;
+                }
+            }
+
+            // หากเป็น Ben หรือ Jin แล้วตัวใดตัวหนึ่งไม่มีบทสนทนา ให้ดึงบทสนทนาของอีกฝ่ายมาใช้ร่วมกัน
+            if (todaysDialogue == null && (string.Equals(npcId, "Ben", System.StringComparison.OrdinalIgnoreCase) || string.Equals(npcId, "Jin", System.StringComparison.OrdinalIgnoreCase)))
+            {
+                NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                foreach (var otherNpc in allNPCs)
+                {
+                    if (otherNpc != null && otherNpc != this)
+                    {
+                        string otherId = otherNpc.GetNPCIdentifier();
+                        if (string.Equals(otherId, "Ben", System.StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(otherId, "Jin", System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            foreach (var d in otherNpc.dialoguesByDay)
+                            {
+                                if (d != null && d.dayNumber == today)
+                                {
+                                    todaysDialogue = d;
+                                    break;
+                                }
+                            }
+                            if (todaysDialogue != null) break;
+                        }
+                    }
                 }
             }
 
