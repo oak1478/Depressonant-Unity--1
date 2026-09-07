@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        PlayerSpawner.ApplySpawning(gameObject);
     }
 
     void Update()

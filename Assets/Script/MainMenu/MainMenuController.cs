@@ -208,22 +208,47 @@ public class MainMenuController : MonoBehaviour
             GameManagerSetup.Instance.pickedUpItemIDs.Clear();
             GameManagerSetup.Instance.activeSaveSlot = targetSlot;
             GameManagerSetup.Instance.playTime = 0f;
+            GameManagerSetup.Instance.hasLoadedPosition = false;
+        }
+
+        if (DayManager.Instance != null)
+        {
+            DayManager.Instance.currentDay = 1;
         }
         else
         {
-            // บันทึกบัฟเฟอร์รอ GameManager โหลดในซีนใหม่
+            // บันทึกบัฟเฟอร์รอ GameManager โหลดในซีนใหม่ (กำหนดพิกัดปลอดภัยหน้าประตูห้องนอน)
             SaveData initialData = new SaveData
             {
                 currentDay = 1,
                 currentStress = 0f,
                 activeSaveSlot = targetSlot,
-                playTime = 0f
+                playTime = 0f,
+                playerX = -0.808f,
+                playerY = 1.0f,
+                playerZ = -6.931f,
+                currentSceneIndex = 2
             };
             SaveSystem.pendingLoadData = initialData;
         }
 
-        // 4. บันทึกทับไฟล์เซฟตั้งต้นลงเครื่อง (ซีน index 2 คือ Bedroom_3D)
-        saveSystem.SaveGameFromGlobal(targetSlot, Vector3.zero, 2);
+        // กำหนดจุดเกิดเริ่มต้นที่ประตูห้องนอน
+        SceneTransitionManager.targetSpawnPointName = "Player_Spawn_Point";
+
+        // รีเซ็ตระบบสอนเล่นเมื่อเริ่มเกมใหม่
+        if (TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.ResetTutorial();
+        }
+
+        // เคลียร์ไอเทมตกค้างในกระเป๋าเป้เมื่อเริ่มเกมใหม่
+        if (InventoryManager.Instance != null)
+        {
+            InventoryManager.Instance.LoadFromGlobal();
+        }
+
+        // 4. บันทึกทับไฟล์เซฟตั้งต้นลงเครื่อง (ซีน index 2 คือ Bedroom_3D พิกัดหน้าประตูห้องนอน)
+        saveSystem.SaveGameFromGlobal(targetSlot, new Vector3(-0.808f, 1f, -6.931f), 2);
 
         // 5. โหลดซีนห้องนอนเพื่อเริ่มเล่น
         SceneManager.LoadScene("Bedroom_3D");
@@ -269,14 +294,36 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    // ⚡ ฟังก์ชันสำหรับกดโหลดไฟล์ตามสล็อต (เรียกผ่าน Unity Event หรือปุ่มสล็อต)
+    // ฟังก์ชันสำหรับกดโหลดไฟล์ตามสล็อต (เรียกผ่าน Unity Event หรือปุ่มสล็อต)
     public void LoadSlot(int slotIndex)
     {
+        // เคลียร์ชื่อจุดเกิดของประตู เพื่อให้ตัวเกมใช้พิกัดจากไฟล์เซฟ
+        SceneTransitionManager.targetSpawnPointName = "";
+
         SaveData data = saveSystem.LoadGameToGlobal(slotIndex);
-        if (data != null && data.currentSceneIndex > 0)
+        if (data != null)
         {
-            Debug.Log($"[Load Game] โหลดสล็อตที่: {slotIndex} สำเร็จ! กำลังเข้าซีนรหัส {data.currentSceneIndex}");
-            SceneManager.LoadScene(data.currentSceneIndex);
+            int loadedDay = data.currentDay > 0 ? data.currentDay : 1;
+
+            if (TutorialManager.Instance != null)
+            {
+                TutorialManager.Instance.isTutorialActive = (loadedDay <= 1);
+            }
+
+            if (DayManager.Instance != null)
+            {
+                DayManager.Instance.currentDay = loadedDay;
+            }
+
+            if (data.currentSceneIndex > 0)
+            {
+                Debug.Log($"[Load Game] โหลดสล็อตที่: {slotIndex} สำเร็จ! วันที่: {loadedDay} กำลังเข้าซีนรหัส {data.currentSceneIndex}");
+                SceneManager.LoadScene(data.currentSceneIndex);
+            }
+            else
+            {
+                SceneManager.LoadScene("Bedroom_3D");
+            }
         }
         else
         {

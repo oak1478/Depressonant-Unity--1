@@ -10,6 +10,13 @@ public class SceneTransitionManager : MonoBehaviour
     public static void LoadSceneWithSpawn(string sceneName, string spawnPointName)
     {
         targetSpawnPointName = spawnPointName;
+
+        // รีเซ็ตพิกัดโหลดจากไฟล์เซฟ เพื่อบังคับให้ตัวละครเกิดที่จุดเกิดของประตูเสมอ
+        if (GameManagerSetup.Instance != null)
+        {
+            GameManagerSetup.Instance.hasLoadedPosition = false;
+        }
+
         Debug.Log($"[SceneTransitionManager] กำลังโหลดฉาก '{sceneName}' และบันทึกจุดเกิดปลายทาง: '{spawnPointName}'");
         SceneManager.LoadScene(sceneName);
     }

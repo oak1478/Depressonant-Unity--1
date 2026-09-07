@@ -21,29 +21,63 @@ public class BedInteraction : MonoBehaviour
 
     void TriggerSleep()
     {
+        // ตรวจสอบว่ามีหน้าต่างเลือกช่องเซฟ (SleepSaveMenuController) หรือไม่
+        SleepSaveMenuController saveMenu = SleepSaveMenuController.Instance;
+        if (saveMenu == null) saveMenu = Object.FindAnyObjectByType<SleepSaveMenuController>();
+
+        // หากในฉากยังไม่มี SleepSaveCanvas ให้โหลดขึ้นมาใช้งานอัตโนมัติ
+        if (saveMenu == null)
+        {
+            GameObject prefab = Resources.Load<GameObject>("SleepSaveCanvas");
+#if UNITY_EDITOR
+            if (prefab == null)
+            {
+                prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/SleepSaveCanvas.prefab");
+            }
+#endif
+            if (prefab != null)
+            {
+                GameObject instance = Object.Instantiate(prefab);
+                instance.name = "SleepSaveCanvas";
+                saveMenu = instance.GetComponent<SleepSaveMenuController>();
+            }
+        }
+
+        if (saveMenu != null)
+        {
+            saveMenu.OpenMenu();
+            return;
+        }
+
+        // กรณีฉุกเฉิน (Fallback): ถ้าไม่มีหน้าต่างเลือกช่องเซฟ ให้เซฟและข้ามวันตามปกติ
         DayManager dayManager = Object.FindAnyObjectByType<DayManager>();
         if (dayManager != null)
         {
             dayManager.GoToNextDay(); // สั่งข้ามวัน
             
-            // ⚡ [เพิ่มใหม่] บันทึกเกมลงไฟล์เซฟโดยอัตโนมัติเมื่อข้ามวัน
+            // บันทึกเกมลงไฟล์เซฟโดยอัตโนมัติเมื่อข้ามวัน
             if (SaveSystem.Instance != null)
             {
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
-                Vector3 playerPos = player != null ? player.transform.position : Vector3.zero;
+                if (player == null) player = GameObject.Find("Player");
+                if (player == null)
+                {
+                    CharacterController cc = Object.FindAnyObjectByType<CharacterController>();
+                    if (cc != null) player = cc.gameObject;
+                }
+
+                Vector3 playerPos = player != null ? player.transform.position : new Vector3(-0.808f, 1f, -6.931f);
                 int sceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
 
                 SaveSystem.Instance.SaveGameFromGlobal(playerPos, sceneIndex);
                 Debug.Log("[Auto-Save] บันทึกเกมเมื่อเข้านอนเรียบร้อย!");
             }
 
-            // ⚡ [เพิ่มใหม่] แจ้งระบบ Tutorial เมื่อเข้านอนจบวันที่ 1
             if (TutorialManager.Instance != null)
             {
                 TutorialManager.Instance.OnSleptInBed();
             }
 
-            // ตรงนี้ในอนาคต (Phase 2) เราจะเอาหน้าจอดับ Fade to black มาใส่เพิ่มได้ครับ
             Debug.Log("[BedInteraction] Nia เข้านอนแล้ว... กำลังข้ามไปยังวันถัดไป");
         }
     }

@@ -83,14 +83,19 @@ public class GameManagerSetup : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ⚡ [เพิ่มใหม่] ปลดล็อก/ล็อกเมาส์ตามฉากโดยอัตโนมัติเมื่อเกิดการเปลี่ยนซีน เพื่อป้องกันปัญหาเมาส์ล่องหนหรือค้างคา
+        if (scene.name == "MainMenu") return;
+
+        // หากมีข้อมูลเซฟรออยู่ใน Pending Data ให้อัปเดตข้อมูลกลางทันที
+        UnpackPendingSaveData();
+
+        // ปลดล็อก/ล็อกเมาส์ตามฉากโดยอัตโนมัติเมื่อเกิดการเปลี่ยนซีน เพื่อป้องกันปัญหาเมาส์ล่องหนหรือค้างคา
         bool is3DScene = scene.name == "Bedroom_3D";
         Cursor.visible = !is3DScene;
         Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
-        Debug.Log($"🔌 [Cursor Sync] โหลดฉาก '{scene.name}' สำเร็จ! ตั้งค่าเมาส์เริ่มต้น: visible={Cursor.visible}, lockState={Cursor.lockState}");
+        Debug.Log($"[Cursor Sync] โหลดฉาก '{scene.name}' สำเร็จ! ตั้งค่าเมาส์เริ่มต้น: visible={Cursor.visible}, lockState={Cursor.lockState}");
     }
 
-    void UnpackPendingSaveData()
+    public void UnpackPendingSaveData()
     {
         if (SaveSystem.pendingLoadData != null)
         {
@@ -106,12 +111,26 @@ public class GameManagerSetup : MonoBehaviour
             activeSaveSlot = SaveSystem.pendingLoadData.activeSaveSlot;
             playTime = SaveSystem.pendingLoadData.playTime;
 
-            // ⚡ โหลดพิกัด
-            hasLoadedPosition = true;
-            loadedPlayerPosition = new Vector3(SaveSystem.pendingLoadData.playerX, SaveSystem.pendingLoadData.playerY, SaveSystem.pendingLoadData.playerZ);
+            // โหลดพิกัด (เฉพาะเมื่อมีพิกัดจริงที่ไม่ใช่ 0,0,0)
+            if (SaveSystem.pendingLoadData.playerX != 0 || SaveSystem.pendingLoadData.playerY != 0 || SaveSystem.pendingLoadData.playerZ != 0)
+            {
+                hasLoadedPosition = true;
+                loadedPlayerPosition = new Vector3(SaveSystem.pendingLoadData.playerX, SaveSystem.pendingLoadData.playerY, SaveSystem.pendingLoadData.playerZ);
+            }
+            else
+            {
+                hasLoadedPosition = false;
+            }
 
-            Debug.Log($"[GameManagerSetup] โหลดข้อมูลเซฟ (Slot {activeSaveSlot}) สำเร็จในช่วง Awake!");
+            Debug.Log($"[GameManagerSetup] โหลดข้อมูลเซฟ (Slot {activeSaveSlot}) สำเร็จ! วันที่: {currentDay}");
             SaveSystem.pendingLoadData = null; // ล้างข้อมูลออก
+
+            // ซิงค์ไปยัง DayManager ทันที
+            if (DayManager.Instance != null)
+            {
+                DayManager.Instance.currentDay = currentDay;
+                DayManager.Instance.UpdateAllAppearances();
+            }
         }
     }
 

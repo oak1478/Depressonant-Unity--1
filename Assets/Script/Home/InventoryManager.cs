@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public enum ItemType { None, Candy, StrawberryMilk, Diary, Headphone, RainDrawing, Armband }
 
@@ -92,7 +93,33 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ⚡ วางทับฟังก์ชัน Start เดิม เพื่อเพิ่มระบบเช็คปุ่มแบบละเอียด
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (inventoryPanel != null)
+        {
+            inventoryPanel.SetActive(false);
+        }
+
+        if (scene.name == "MainMenu")
+        {
+            return;
+        }
+
+        playerMovement = Object.FindAnyObjectByType<PlayerMovement>();
+        stressManager = Object.FindAnyObjectByType<StressManager>();
+
+        LoadFromGlobal();
+    }
     void Start()
     {
         inventoryPanel.SetActive(false);

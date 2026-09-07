@@ -980,7 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510ba5a663422c148bd1589739170e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  currentDay: 2
+  currentDay: 1
 --- !u!1 &1500938030225700078
 GameObject:
   m_ObjectHideFlags: 0
@@ -4458,8 +4458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6aecf0c13724ca4f99bfb5f1f35d221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManagerSetup
-  currentStress: 41.2
-  currentDay: 2
+  currentStress: 0
+  currentDay: 1
   consecutiveMaxStressDays: 0
   activeSaveSlot: 1
   playTime: 0
@@ -4479,7 +4479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811138a1ff4e0944b9024612bf0293d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
-  tutorialUI: {fileID: 0}
+  tutorialUI: {fileID: 4896350725858921362}
   currentStep: 0
   isTutorialActive: 1
   wasdRequiredHoldTime: 4

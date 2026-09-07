@@ -94,10 +94,12 @@ public class SaveSystem : MonoBehaviour
         SaveData data = LoadGame(slotIndex);
         if (data == null) return null;
 
+        int targetDay = data.currentDay > 0 ? data.currentDay : 1;
+
         if (GameManagerSetup.Instance != null)
         {
             // อัปเดตข้อมูลกลางของเกม
-            GameManagerSetup.Instance.currentDay = data.currentDay > 0 ? data.currentDay : 1;
+            GameManagerSetup.Instance.currentDay = targetDay;
             GameManagerSetup.Instance.currentStress = data.currentStress;
             GameManagerSetup.Instance.consecutiveMaxStressDays = data.consecutiveMaxStressDays;
             GameManagerSetup.Instance.savedInventory = data.inventoryItems != null 
@@ -109,18 +111,23 @@ public class SaveSystem : MonoBehaviour
             GameManagerSetup.Instance.activeSaveSlot = slotIndex; // ซิงค์เลขสล็อตกลับไปด้วย
             GameManagerSetup.Instance.playTime = data.playTime;
             
-            // ⚡ โหลดพิกัด
+            // โหลดพิกัด
             GameManagerSetup.Instance.hasLoadedPosition = true;
             GameManagerSetup.Instance.loadedPlayerPosition = new Vector3(data.playerX, data.playerY, data.playerZ);
             
             Debug.Log($"[SaveSystem] อัปเดตข้อมูลกลางสำเร็จ (Slot {slotIndex})! วันที่: {GameManagerSetup.Instance.currentDay} | ความเครียด: {GameManagerSetup.Instance.currentStress}%");
         }
-        else
+
+        // บันทึกเซฟไว้ใน Pending Data เสมอ เพื่อเป็นข้อมูลสำรองรับประกันก่อนย้ายซีน
+        pendingLoadData = data;
+        pendingLoadData.activeSaveSlot = slotIndex;
+        pendingLoadData.currentDay = targetDay;
+
+        // ซิงค์ค่าวันไปยัง DayManager และบังคับอัปเดตตัวตนในฉากทันที
+        if (DayManager.Instance != null)
         {
-            // ⚡ [เพิ่มใหม่] เก็บเซฟไว้รอย้ายซีน
-            pendingLoadData = data;
-            pendingLoadData.activeSaveSlot = slotIndex;
-            Debug.Log($"[SaveSystem] บันทึกเซฟไว้ใน Pending Data (Slot {slotIndex}) เพื่อรอสปอนเซอร์ตอนเริ่มซีนถัดไป!");
+            DayManager.Instance.currentDay = targetDay;
+            DayManager.Instance.UpdateAllAppearances();
         }
 
         return data;

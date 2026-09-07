@@ -50,13 +50,72 @@ public class TutorialManager : MonoBehaviour
         }
         else if (_instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this);
+            return;
         }
+
+        EnsureUIReference();
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void Start()
     {
-        // ทำงานเฉพาะวันแรกเท่านั้น (Day 1)
+        EnsureUIReference();
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+    }
+
+    public void EnsureUIReference()
+    {
+        if (tutorialUI == null)
+        {
+            tutorialUI = GetComponentInChildren<TutorialUI>(true);
+        }
+        if (tutorialUI == null)
+        {
+            tutorialUI = Object.FindAnyObjectByType<TutorialUI>(FindObjectsInactive.Include);
+        }
+    }
+
+    /// <summary>
+    /// รีเซ็ตสถานะของระบบสอนเล่นทั้งหมดสำหรับเริ่มเล่นเกมใหม่ (New Game)
+    /// </summary>
+    public void ResetTutorial()
+    {
+        Debug.Log("🔄 [TutorialManager] ทำการรีเซ็ตระบบสอนเล่นสำหรับเริ่มเกมใหม่ (Day 1)");
+        currentStep = TutorialStep.WASD_Movement;
+        isTutorialActive = true;
+        wasdCurrentHoldTime = 0f;
+        hasSwitchedToInventoryUsePrompt = false;
+
+        EnsureUIReference();
+        if (tutorialUI != null)
+        {
+            tutorialUI.SetProgress(0f);
+            tutorialUI.HideTutorial();
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        EnsureUIReference();
+
+        // 1. ถ้าอยู่ในหน้าเมนูหลัก ให้ซ่อนหน้าต่าง Tutorial เสมอ
+        if (scene.name == "MainMenu")
+        {
+            if (tutorialUI != null) tutorialUI.HideTutorial();
+            return;
+        }
+
+        // 2. ทำงานเฉพาะวันแรกเท่านั้น (Day 1) หากเกินวันแรก ให้ปิดระบบสอนทั้งหมด
         if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.currentDay > 1)
         {
             isTutorialActive = false;
@@ -64,15 +123,22 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        // ⚡ หากโหลดเข้าฉากบ้าน (Home) แล้วยังค้างอยู่สเต็ปเปิดประตู ให้ผ่านสเต็ปเปิดประตูอัตโนมัติ
-        string activeScene = SceneManager.GetActiveScene().name;
-        if (currentStep == TutorialStep.Open_Door && activeScene != "Bedroom_3D")
+        // 3. หากระบบสอนปิดอยู่ หรือผ่านครบทุกขั้นตอนแล้ว ให้ซ่อน UI
+        if (!isTutorialActive || currentStep == TutorialStep.Completed)
+        {
+            if (tutorialUI != null) tutorialUI.HideTutorial();
+            return;
+        }
+
+        // 4. หากโหลดเข้าฉากบ้าน (Home) แล้วยังค้างอยู่สเต็ปเปิดประตู ให้ผ่านสเต็ปเปิดประตูอัตโนมัติ
+        if (scene.name == "Home" && currentStep == TutorialStep.Open_Door)
         {
             Debug.Log("🚪 [TutorialManager] ข้ามเข้าฉาก Home สำเร็จ! สั่งผ่านสเต็ปเปิดประตูอัตโนมัติ");
             CompleteStep(TutorialStep.Open_Door);
             return;
         }
 
+        // 5. แสดงผล UI ตามสเต็ปปัจจุบัน
         SetStep(currentStep);
     }
 
@@ -134,6 +200,8 @@ public class TutorialManager : MonoBehaviour
     {
         currentStep = step;
         if (!isTutorialActive) return;
+
+        EnsureUIReference();
 
         switch (step)
         {

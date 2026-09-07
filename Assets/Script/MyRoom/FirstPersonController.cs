@@ -60,8 +60,9 @@ public class FirstPersonController : MonoBehaviour
                 bool isDialogueOpen = dm != null && dm.IsDialogueActive();
                 bool isInventoryOpen = inv != null && inv.inventoryPanel != null && inv.inventoryPanel.activeSelf;
                 bool isPauseMenuOpen = pm != null && pm.pauseMenuPanel != null && pm.pauseMenuPanel.activeSelf;
+                bool isSleepMenuOpen = SleepSaveMenuController.Instance != null && SleepSaveMenuController.Instance.IsMenuOpen;
 
-                if (!isDialogueOpen && !isInventoryOpen && !isPauseMenuOpen)
+                if (!isDialogueOpen && !isInventoryOpen && !isPauseMenuOpen && !isSleepMenuOpen)
                 {
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
