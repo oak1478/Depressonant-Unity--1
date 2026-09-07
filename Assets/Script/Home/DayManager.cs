@@ -91,7 +91,7 @@ public class DayManager : MonoBehaviour
     }
 
     // ⚡ [เพิ่มใหม่] ฟังก์ชันสำหรับอัปเดตตัวตน NPC และไอเทมในฉากทั้งหมดอย่างปลอดภัย
-    private void UpdateAllAppearances()
+    public void UpdateAllAppearances()
     {
         // อัปเดต NPC ทั้งหมด
         NPCAppearanceController[] allNPCs = Object.FindObjectsByType<NPCAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
