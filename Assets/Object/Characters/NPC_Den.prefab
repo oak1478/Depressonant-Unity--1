@@ -865,6 +865,188 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 0
       voiceSoundName: 
+  - dayTitle: DAY 14
+    dayNumber: 14
+    introductionStory:
+    - text: "(\u0E01\u0E33\u0E25\u0E31\u0E07\u0E19\u0E31\u0E48\u0E07\u0E02\u0E21\u0E27\u0E14\u0E04\u0E34\u0E49\u0E27\u0E2D\u0E22\u0E39\u0E48\u0E01\u0E31\u0E1A\u0E0B\u0E32\u0E0A\u0E48\u0E32\u0E41\u0E25\u0E30\u0E2D\u0E35\u0E01\u0E2D\u0E19\u0E15\u0E23\u0E07\u0E42\u0E15\u0E4A\u0E30\u0E21\u0E49\u0E32\u0E19\u0E31\u0E48\u0E07
+        \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E01\u0E23\u0E30\u0E08\u0E32\u0E22\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E40\u0E01\u0E21\u0E17\u0E32\u0E22\u0E1B\u0E31\u0E0D\u0E2B\u0E32\u0E1A\u0E19\u0E42\u0E15\u0E4A\u0E30)"
+      speakerName: Den
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E42\u0E2D\u0E4A\u0E22! \u0E02\u0E49\u0E2D\u0E19\u0E35\u0E49\u0E22\u0E32\u0E01\u0E0A\u0E30\u0E21\u0E31\u0E14!
+        \"\u0E2D\u0E30\u0E44\u0E23\u0E40\u0E2D\u0E48\u0E22 \u0E22\u0E34\u0E48\u0E07\u0E15\u0E31\u0E14\u0E22\u0E34\u0E48\u0E07\u0E22\u0E32\u0E27
+        \u0E22\u0E34\u0E48\u0E07\u0E16\u0E2D\u0E22\u0E22\u0E34\u0E48\u0E07\u0E43\u0E01\u0E25\u0E49\"?"
+      speakerName: Den
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E14\u0E19\u0E04\u0E34\u0E14\u0E44\u0E21\u0E48\u0E2D\u0E2D\u0E01\u0E40\u0E2D\u0E07\u0E21\u0E32\u0E01\u0E01\u0E27\u0E48\u0E32!
+        \u0E1E\u0E35\u0E48\u0E40\u0E23\u0E19\u0E01\u0E47\u0E44\u0E21\u0E48\u0E2D\u0E22\u0E39\u0E48\u0E14\u0E49\u0E27\u0E22\u0E2A\u0E34\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49..."
+      speakerName: Sasha
+      portraitName: 
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 6
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22... (\u0E2B\u0E31\u0E19\u0E44\u0E1B\u0E40\u0E2B\u0E47\u0E19\u0E40\u0E19\u0E35\u0E22\u0E40\u0E14\u0E34\u0E19\u0E1C\u0E48\u0E32\u0E19\u0E1E\u0E2D\u0E14\u0E35)"
+      speakerName: Egon
+      portraitName: 
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 7
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E2D\u0E49\u0E32\u0E27! \u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22!
+        \u0E21\u0E32\u0E0A\u0E48\u0E27\u0E22\u0E1E\u0E27\u0E01\u0E40\u0E23\u0E32\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E14\u0E34!
+        \u0E40\u0E01\u0E21\u0E17\u0E32\u0E22\u0E1B\u0E31\u0E0D\u0E2B\u0E32\u0E01\u0E25\u0E38\u0E48\u0E21\u0E19\u0E35\u0E49\u0E16\u0E49\u0E32\u0E1E\u0E27\u0E01\u0E40\u0E23\u0E32\u0E41\u0E1E\u0E49\u0E40\u0E14\u0E47\u0E01\u0E01\u0E25\u0E38\u0E48\u0E21\u0E42\u0E19\u0E49\u0E19
+        \u0E42\u0E14\u0E19\u0E25\u0E49\u0E2D\u0E41\u0E19\u0E48\u0E40\u0E25\u0E22!"
+      speakerName: Den
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 1
+      voiceSoundName: 
+    - text: "(\u0E21\u0E2D\u0E07\u0E14\u0E39\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E40\u0E01\u0E21\u0E1A\u0E19\u0E42\u0E15\u0E4A\u0E30...
+        \u0E2A\u0E21\u0E2D\u0E07\u0E2A\u0E48\u0E27\u0E19 mPFC \u0E41\u0E25\u0E30
+        SFG \u0E1B\u0E23\u0E30\u0E21\u0E27\u0E25\u0E1C\u0E25\u0E44\u0E14\u0E49\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E23\u0E32\u0E1A\u0E23\u0E37\u0E48\u0E19)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E23\u0E32\u0E04\u0E07\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E44\u0E23\u0E49\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E0A\u0E19\u0E4C\u0E08\u0E19\u0E44\u0E21\u0E48\u0E01\u0E25\u0E49\u0E32\u0E0A\u0E48\u0E27\u0E22...
+        \u0E41\u0E15\u0E48\u0E08\u0E23\u0E34\u0E07\u0E46 \u0E41\u0E04\u0E48\u0E42\u0E08\u0E17\u0E22\u0E4C\u0E1B\u0E31\u0E0D\u0E2B\u0E32\u0E1E\u0E27\u0E01\u0E19\u0E35\u0E49
+        \u0E40\u0E23\u0E32\u0E2D\u0E48\u0E32\u0E19\u0E40\u0E08\u0E2D\u0E43\u0E19\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D\u0E1A\u0E48\u0E2D\u0E22\u0E21\u0E32\u0E01\u0E46)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E04\u0E37\u0E2D \"\u0E16\u0E19\u0E19\"
+        \u0E44\u0E07\u0E25\u0E48\u0E30\u0E40\u0E14\u0E19... \u0E22\u0E34\u0E48\u0E07\u0E15\u0E31\u0E14\u0E16\u0E19\u0E19\u0E01\u0E47\u0E22\u0E34\u0E48\u0E07\u0E22\u0E32\u0E27
+        \u0E22\u0E34\u0E48\u0E07\u0E16\u0E2D\u0E22\u0E23\u0E16\u0E01\u0E25\u0E31\u0E1A\u0E01\u0E47\u0E22\u0E34\u0E48\u0E07\u0E43\u0E01\u0E25\u0E49\u0E08\u0E38\u0E14\u0E40\u0E23\u0E34\u0E48\u0E21\u0E15\u0E49\u0E19"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E15\u0E32\u0E42\u0E15) \u0E40\u0E2E\u0E49\u0E22! \u0E08\u0E23\u0E34\u0E07\u0E14\u0E49\u0E27\u0E22!
+        \u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22\u0E42\u0E04\u0E15\u0E23\u0E40\u0E08\u0E4B\u0E07\u0E40\u0E25\u0E22!"
+      speakerName: Den
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 1
+      voiceSoundName: 
+    - text: "\u0E2B\u0E19\u0E39\u0E1A\u0E2D\u0E01\u0E41\u0E25\u0E49\u0E27\u0E27\u0E48\u0E32\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22\u0E40\u0E1B\u0E47\u0E19\u0E15\u0E31\u0E27\u0E25\u0E36\u0E01\u0E25\u0E31\u0E1A\u0E2A\u0E38\u0E14\u0E22\u0E2D\u0E14!
+        \u0E07\u0E31\u0E49\u0E19\u0E21\u0E32\u0E40\u0E25\u0E48\u0E19\u0E23\u0E2D\u0E1A\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E40\u0E1B\u0E47\u0E19\u0E2B\u0E31\u0E27\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E21\u0E43\u0E2B\u0E49\u0E1E\u0E27\u0E01\u0E2B\u0E19\u0E39\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E2A\u0E34\u0E04\u0E30\u0E1E\u0E35\u0E48!"
+      speakerName: Sasha
+      portraitName: 
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 6
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(OFC \u0E1B\u0E23\u0E30\u0E21\u0E27\u0E25\u0E1C\u0E25\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E16\u0E39\u0E01\u0E22\u0E2D\u0E21\u0E23\u0E31\u0E1A\u0E44\u0E14\u0E49\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E40\u0E15\u0E47\u0E21\u0E17\u0E35\u0E48...
+        \u0E21\u0E48\u0E32\u0E19\u0E21\u0E31\u0E27\u0E43\u0E19\u0E2B\u0E31\u0E27\u0E41\u0E17\u0E1A\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E2D\u0E22\u0E39\u0E48\u0E41\u0E25\u0E49\u0E27)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    storyChoices:
+    - choiceButtonText: "\u0E44\u0E14\u0E49\u0E2A\u0E34! \u0E23\u0E2D\u0E1A\u0E19\u0E35\u0E49\u0E1E\u0E35\u0E48\u0E08\u0E30\u0E1E\u0E32\u0E1E\u0E27\u0E01\u0E40\u0E23\u0E32\u0E0A\u0E19\u0E30\u0E40\u0E2D\u0E07
+        \u0E21\u0E32\u0E40\u0E23\u0E34\u0E48\u0E21\u0E01\u0E31\u0E19\u0E40\u0E25\u0E22!"
+      stressChange: -15
+      speakerName: Nia
+      portraitName: good1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E40\u0E22\u0E49! \u0E21\u0E35\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22\u0E2D\u0E22\u0E39\u0E48
+          \u0E17\u0E35\u0E21\u0E40\u0E23\u0E32\u0E0A\u0E19\u0E30\u0E0A\u0E31\u0E27\u0E23\u0E4C!"
+        speakerName: Den
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 1
+        voiceSoundName: 
+    - choiceButtonText: "\u0E1E\u0E35\u0E48\u0E25\u0E2D\u0E07\u0E0A\u0E48\u0E27\u0E22\u0E14\u0E39\u0E43\u0E2B\u0E49\u0E01\u0E47\u0E44\u0E14\u0E49\u0E08\u0E49\u0E30...
+        \u0E41\u0E15\u0E48\u0E1E\u0E27\u0E01\u0E40\u0E18\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E0A\u0E48\u0E27\u0E22\u0E01\u0E31\u0E19\u0E04\u0E34\u0E14\u0E14\u0E49\u0E27\u0E22\u0E19\u0E30"
+      stressChange: -5
+      speakerName: Nia
+      portraitName: idle
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E23\u0E31\u0E1A\u0E17\u0E23\u0E32\u0E1A\u0E04\u0E48\u0E30\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22!"
+        speakerName: Sasha
+        portraitName: 
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 6
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "\u0E1E\u0E35\u0E48\u0E41\u0E04\u0E48\u0E19\u0E36\u0E01\u0E2D\u0E2D\u0E01\u0E1E\u0E2D\u0E14\u0E35...
+        \u0E1E\u0E27\u0E01\u0E40\u0E18\u0E2D\u0E40\u0E25\u0E48\u0E19\u0E01\u0E31\u0E19\u0E15\u0E48\u0E2D\u0E40\u0E16\u0E2D\u0E30
+        \u0E1E\u0E35\u0E48\u0E44\u0E21\u0E48\u0E04\u0E48\u0E2D\u0E22\u0E16\u0E19\u0E31\u0E14\u0E40\u0E17\u0E48\u0E32\u0E44\u0E2B\u0E23\u0E48"
+      stressChange: 0
+      speakerName: Nia
+      portraitName: idle
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E42\u0E18\u0E48 \u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22... \u0E25\u0E2D\u0E07\u0E40\u0E25\u0E48\u0E19\u0E14\u0E49\u0E27\u0E22\u0E01\u0E31\u0E19\u0E01\u0E48\u0E2D\u0E19\u0E14\u0E34\u0E04\u0E23\u0E31\u0E1A"
+        speakerName: Den
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    conclusionStory:
+    - text: "\u0E0A\u0E19\u0E30\u0E41\u0E25\u0E49\u0E27... \u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E04\u0E23\u0E31\u0E1A\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22"
+      speakerName: Egon
+      portraitName: 
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 7
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E2A\u0E38\u0E14\u0E22\u0E2D\u0E14\u0E44\u0E1B\u0E40\u0E25\u0E22!
+        \u0E27\u0E31\u0E19\u0E2B\u0E25\u0E31\u0E07\u0E21\u0E32\u0E40\u0E25\u0E48\u0E19\u0E14\u0E49\u0E27\u0E22\u0E01\u0E31\u0E19\u0E2D\u0E35\u0E01\u0E19\u0E30\u0E04\u0E23\u0E31\u0E1A\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22!"
+      speakerName: Den
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 1
+      voiceSoundName: 
   fallbackStoryByDay: []
   fallbackStory: []
   lastTalkedDay: 0

@@ -121,11 +121,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5341692315550646347}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20aee1959a5bcab42a8a02e7bb3cdb3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxBackground
+  playerTransform: {fileID: 0}
   cameraTransform: {fileID: 0}
-  parallaxEffectX: 1
-  parallaxEffectZ: 1
+  parallaxEffectX: 0.3
+  parallaxEffectZ: 0.3
+  parallaxEffectY: 0

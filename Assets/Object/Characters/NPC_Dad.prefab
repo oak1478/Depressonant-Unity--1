@@ -991,6 +991,270 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
+  - dayTitle: DAY 10
+    dayNumber: 10
+    introductionStory:
+    - text: "\u0E40\u0E19\u0E35\u0E22 \u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E1E\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E2D\u0E2D\u0E01\u0E44\u0E1B\u0E02\u0E49\u0E32\u0E07\u0E19\u0E2D\u0E01\u0E17\u0E31\u0E49\u0E07\u0E27\u0E31\u0E19"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E27\u0E32\u0E19\u0E40\u0E2B\u0E47\u0E19\u0E41\u0E21\u0E48\u0E40\u0E23\u0E32\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E40\u0E23\u0E32\u0E21\u0E35\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E0A\u0E01\u0E15\u0E1A\u0E01\u0E31\u0E1A\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19\u0E17\u0E35\u0E48\u0E42\u0E23\u0E07\u0E40\u0E23\u0E35\u0E22\u0E19\u0E40\u0E2B\u0E23\u0E2D?"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E2D\u0E22\u0E48\u0E32\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E1B\u0E27\u0E14\u0E2B\u0E31\u0E27\u0E43\u0E2B\u0E49\u0E1E\u0E48\u0E2D\u0E01\u0E31\u0E1A\u0E41\u0E21\u0E48\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E44\u0E14\u0E49\u0E44\u0E2B\u0E21
+        \u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E07\u0E32\u0E19\u0E1E\u0E48\u0E2D\u0E01\u0E47\u0E40\u0E04\u0E23\u0E35\u0E22\u0E14\u0E1E\u0E2D\u0E41\u0E25\u0E49\u0E27"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E44\u0E21\u0E48\u0E21\u0E35\u0E43\u0E04\u0E23\u0E16\u0E32\u0E21\u0E40\u0E2B\u0E15\u0E38\u0E1C\u0E25...
+        \u0E44\u0E21\u0E48\u0E21\u0E35\u0E43\u0E04\u0E23\u0E1F\u0E31\u0E07\u0E02\u0E49\u0E2D\u0E40\u0E17\u0E47\u0E08\u0E08\u0E23\u0E34\u0E07...
+        \u0E17\u0E38\u0E01\u0E04\u0E19\u0E21\u0E2D\u0E07\u0E27\u0E48\u0E32\u0E09\u0E31\u0E19\u0E04\u0E37\u0E2D\u0E15\u0E31\u0E27\u0E1B\u0E31\u0E0D\u0E2B\u0E32\u0E44\u0E27\u0E49\u0E01\u0E48\u0E2D\u0E19\u0E41\u0E25\u0E49\u0E27)"
+      speakerName: Nia
+      portraitName: bad1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(mPFC \u0E17\u0E35\u0E48\u0E21\u0E31\u0E27\u0E21\u0E37\u0E14\u0E1A\u0E35\u0E1A\u0E43\u0E2B\u0E49\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32...
+        \u0E09\u0E31\u0E19\u0E21\u0E31\u0E19\u0E44\u0E21\u0E48\u0E21\u0E35\u0E04\u0E48\u0E32\u0E1E\u0E2D\u0E17\u0E35\u0E48\u0E08\u0E30\u0E43\u0E2B\u0E49\u0E43\u0E04\u0E23\u0E23\u0E31\u0E1A\u0E1F\u0E31\u0E07\u0E08\u0E23\u0E34\u0E07\u0E46)"
+      speakerName: Nia
+      portraitName: bad1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    storyChoices:
+    - choiceButtonText: "\u0E2B\u0E19\u0E39\u0E02\u0E2D\u0E42\u0E17\u0E29\u0E04\u0E48\u0E30\u0E1E\u0E48\u0E2D...
+        \u0E2B\u0E19\u0E39\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E2D\u0E22\u0E32\u0E01\u0E43\u0E2B\u0E49\u0E40\u0E01\u0E34\u0E14\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E41\u0E1A\u0E1A\u0E19\u0E31\u0E49\u0E19\u0E02\u0E36\u0E49\u0E19\u0E40\u0E25\u0E22"
+      stressChange: -10
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E40\u0E2B\u0E49\u0E2D... \u0E23\u0E39\u0E49\u0E15\u0E31\u0E27\u0E01\u0E47\u0E14\u0E35
+          \u0E04\u0E23\u0E32\u0E27\u0E2B\u0E25\u0E31\u0E07\u0E04\u0E27\u0E1A\u0E04\u0E38\u0E21\u0E2D\u0E32\u0E23\u0E21\u0E13\u0E4C\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E1A\u0E49\u0E32\u0E07"
+        speakerName: Dad
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "(\u0E1E\u0E22\u0E31\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E23\u0E31\u0E1A\u0E40\u0E07\u0E35\u0E22\u0E1A\u0E46
+        \u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E1E\u0E39\u0E14\u0E2D\u0E30\u0E44\u0E23)"
+      stressChange: 0
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E1E\u0E48\u0E2D\u0E44\u0E1B\u0E25\u0E30 \u0E2D\u0E22\u0E39\u0E48\u0E1A\u0E49\u0E32\u0E19\u0E01\u0E47\u0E0A\u0E48\u0E27\u0E22\u0E41\u0E21\u0E48\u0E14\u0E39\u0E19\u0E49\u0E2D\u0E07\u0E14\u0E49\u0E27\u0E22"
+        speakerName: Dad
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "\u0E1E\u0E48\u0E2D\u0E1F\u0E31\u0E07\u0E41\u0E15\u0E48\u0E04\u0E19\u0E2D\u0E37\u0E48\u0E19
+        \u0E41\u0E25\u0E49\u0E27\u0E1E\u0E48\u0E2D\u0E40\u0E04\u0E22\u0E1F\u0E31\u0E07\u0E2B\u0E19\u0E39\u0E1A\u0E49\u0E32\u0E07\u0E44\u0E2B\u0E21\u0E25\u0E48\u0E30\u0E04\u0E30?!"
+      stressChange: 10
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 2
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E1E\u0E48\u0E2D\u0E44\u0E21\u0E48\u0E21\u0E35\u0E40\u0E27\u0E25\u0E32\u0E21\u0E32\u0E1F\u0E31\u0E07\u0E40\u0E18\u0E2D\u0E43\u0E0A\u0E49\u0E2D\u0E32\u0E23\u0E21\u0E13\u0E4C\u0E2B\u0E23\u0E2D\u0E01\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22!
+          \u0E1E\u0E2D\u0E17\u0E35!"
+        speakerName: Dad
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 2
+        voiceSoundName: 
+    conclusionStory:
+    - text: ...
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+  - dayTitle: DAY 11
+    dayNumber: 11
+    introductionStory:
+    - text: "(\u0E19\u0E31\u0E48\u0E07\u0E2D\u0E48\u0E32\u0E19\u0E02\u0E48\u0E32\u0E27\u0E2D\u0E22\u0E39\u0E48\u0E17\u0E35\u0E48\u0E42\u0E15\u0E4A\u0E30\u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27
+        \u0E1E\u0E48\u0E2D\u0E27\u0E32\u0E07\u0E42\u0E17\u0E23\u0E28\u0E31\u0E1E\u0E17\u0E4C\u0E25\u0E07\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E40\u0E2B\u0E47\u0E19\u0E40\u0E19\u0E35\u0E22\u0E19\u0E31\u0E48\u0E07\u0E25\u0E07\u0E1D\u0E31\u0E48\u0E07\u0E15\u0E23\u0E07\u0E02\u0E49\u0E32\u0E21)"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E19\u0E35\u0E22... \u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E27\u0E31\u0E19\u0E01\u0E48\u0E2D\u0E19\u0E17\u0E35\u0E48\u0E1E\u0E48\u0E2D\u0E1E\u0E39\u0E14\u0E41\u0E23\u0E07\u0E43\u0E2A\u0E48\u0E40\u0E23\u0E32
+        \u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E18\u0E38\u0E23\u0E30\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E23\u0E16...
+        \u0E1E\u0E48\u0E2D\u0E02\u0E2D\u0E42\u0E17\u0E29\u0E19\u0E30"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E0A\u0E48\u0E27\u0E07\u0E19\u0E35\u0E49\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E1A\u0E23\u0E34\u0E29\u0E31\u0E17\u0E1E\u0E48\u0E2D\u0E15\u0E36\u0E07\u0E40\u0E04\u0E23\u0E35\u0E22\u0E14\u0E21\u0E32\u0E01
+        \u0E42\u0E14\u0E19\u0E25\u0E14\u0E07\u0E1A\u0E1B\u0E23\u0E30\u0E21\u0E32\u0E13
+        \u0E1E\u0E48\u0E2D\u0E40\u0E25\u0E22\u0E40\u0E2D\u0E32\u0E2D\u0E32\u0E23\u0E21\u0E13\u0E4C\u0E2B\u0E07\u0E38\u0E14\u0E2B\u0E07\u0E34\u0E14\u0E21\u0E32\u0E25\u0E07\u0E17\u0E35\u0E48\u0E1A\u0E49\u0E32\u0E19"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E1E\u0E2D\u0E40\u0E2B\u0E47\u0E19\u0E40\u0E23\u0E32\u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E40\u0E01\u0E47\u0E1A\u0E15\u0E31\u0E27\u0E43\u0E19\u0E2B\u0E49\u0E2D\u0E07
+        \u0E1E\u0E48\u0E2D\u0E01\u0E47\u0E22\u0E34\u0E48\u0E07\u0E01\u0E31\u0E07\u0E27\u0E25\u0E27\u0E48\u0E32\u0E2D\u0E19\u0E32\u0E04\u0E15\u0E40\u0E23\u0E32\u0E08\u0E30\u0E2D\u0E22\u0E39\u0E48\u0E22\u0E31\u0E07\u0E44\u0E07...
+        \u0E1E\u0E48\u0E2D\u0E40\u0E25\u0E22\u0E1E\u0E39\u0E14\u0E08\u0E32\u0E44\u0E21\u0E48\u0E14\u0E35\u0E2D\u0E2D\u0E01\u0E44\u0E1B"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(pgACC \u0E17\u0E35\u0E48\u0E40\u0E04\u0E22\u0E15\u0E23\u0E27\u0E08\u0E08\u0E31\u0E1A\u0E41\u0E15\u0E48\u0E04\u0E27\u0E32\u0E21\u0E02\u0E31\u0E14\u0E41\u0E22\u0E49\u0E07\u0E40\u0E0A\u0E34\u0E07\u0E25\u0E1A
+        \u0E40\u0E23\u0E34\u0E48\u0E21\u0E2A\u0E31\u0E21\u0E1C\u0E31\u0E2A\u0E44\u0E14\u0E49\u0E16\u0E36\u0E07\u0E04\u0E27\u0E32\u0E21\u0E08\u0E23\u0E34\u0E07\u0E43\u0E08\u0E02\u0E2D\u0E07\u0E1E\u0E48\u0E2D)"
+      speakerName: Nia
+      portraitName: bad1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E04\u0E33\u0E1E\u0E39\u0E14\u0E02\u0E2D\u0E07\u0E1E\u0E48\u0E2D\u0E01\u0E23\u0E30\u0E15\u0E38\u0E49\u0E19
+        Hippocampus... \u0E20\u0E32\u0E1E\u0E1E\u0E48\u0E2D\u0E17\u0E35\u0E48\u0E40\u0E04\u0E22\u0E2D\u0E38\u0E49\u0E21\u0E40\u0E23\u0E32\u0E15\u0E2D\u0E19\u0E40\u0E14\u0E47\u0E01\u0E46
+        \u0E0B\u0E49\u0E2D\u0E19\u0E17\u0E31\u0E1A\u0E02\u0E36\u0E49\u0E19\u0E21\u0E32\u0E41\u0E17\u0E19\u0E20\u0E32\u0E1E\u0E1E\u0E48\u0E2D\u0E17\u0E35\u0E48\u0E01\u0E33\u0E25\u0E31\u0E07\u0E15\u0E27\u0E32\u0E14)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E09\u0E31\u0E19\u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32\u0E1E\u0E48\u0E2D\u0E40\u0E01\u0E25\u0E35\u0E22\u0E14\u0E09\u0E31\u0E19...
+        \u0E41\u0E15\u0E48\u0E08\u0E23\u0E34\u0E07 \u0E46 \u0E41\u0E25\u0E49\u0E27
+        \u0E1E\u0E48\u0E2D\u0E41\u0E04\u0E48\u0E01\u0E33\u0E25\u0E31\u0E07\u0E41\u0E1A\u0E01\u0E23\u0E31\u0E1A\u0E04\u0E27\u0E32\u0E21\u0E40\u0E04\u0E23\u0E35\u0E22\u0E14\u0E02\u0E2D\u0E07\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E31\u0E19)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    storyChoices:
+    - choiceButtonText: "\u0E2B\u0E19\u0E39\u0E40\u0E02\u0E49\u0E32\u0E43\u0E08\u0E04\u0E48\u0E30\u0E1E\u0E48\u0E2D...
+        \u0E2B\u0E19\u0E39\u0E40\u0E2D\u0E07\u0E01\u0E47\u0E02\u0E2D\u0E42\u0E17\u0E29\u0E17\u0E35\u0E48\u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E2B\u0E19\u0E35\u0E1B\u0E31\u0E0D\u0E2B\u0E32
+        \u0E2B\u0E19\u0E39\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32\u0E1E\u0E48\u0E2D\u0E23\u0E33\u0E04\u0E32\u0E0D\u0E2B\u0E19\u0E39
+        \u0E41\u0E25\u0E30\u0E21\u0E2D\u0E07\u0E27\u0E48\u0E32\u0E2B\u0E19\u0E39\u0E44\u0E21\u0E48\u0E21\u0E35\u0E2D\u0E19\u0E32\u0E04\u0E15..."
+      stressChange: -10
+      speakerName: Nia
+      portraitName: good1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E44\u0E21\u0E48\u0E21\u0E35\u0E1E\u0E48\u0E2D\u0E04\u0E19\u0E44\u0E2B\u0E19\u0E21\u0E2D\u0E07\u0E25\u0E39\u0E01\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E41\u0E1A\u0E1A\u0E19\u0E31\u0E49\u0E19\u0E2B\u0E23\u0E2D\u0E01\u0E40\u0E19\u0E35\u0E22
+          \u0E1E\u0E48\u0E2D\u0E41\u0E04\u0E48\u0E40\u0E1B\u0E47\u0E19\u0E2B\u0E48\u0E27\u0E07\u0E41\u0E15\u0E48\u0E41\u0E2A\u0E14\u0E07\u0E2D\u0E2D\u0E01\u0E44\u0E21\u0E48\u0E40\u0E1B\u0E47\u0E19...
+          \u0E08\u0E32\u0E01\u0E19\u0E35\u0E49\u0E40\u0E23\u0E32\u0E21\u0E32\u0E04\u0E48\u0E2D\u0E22\u0E46
+          \u0E1B\u0E23\u0E31\u0E1A\u0E01\u0E31\u0E19\u0E19\u0E30"
+        speakerName: Dad
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "\u0E44\u0E21\u0E48\u0E40\u0E1B\u0E47\u0E19\u0E44\u0E23\u0E04\u0E48\u0E30\u0E1E\u0E48\u0E2D
+        \u0E2B\u0E19\u0E39\u0E0A\u0E34\u0E19\u0E41\u0E25\u0E49\u0E27..."
+      stressChange: 0
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E2D\u0E22\u0E48\u0E32\u0E1E\u0E39\u0E14\u0E27\u0E48\u0E32\u0E0A\u0E34\u0E19\u0E2A\u0E34\u0E40\u0E19\u0E35\u0E22...
+          \u0E1E\u0E48\u0E2D\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E22\u0E32\u0E22\u0E32\u0E21\u0E1B\u0E23\u0E31\u0E1A\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E39\u0E48\u0E19\u0E30"
+        speakerName: Dad
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "\u0E1E\u0E48\u0E2D\u0E2B\u0E48\u0E27\u0E07\u0E41\u0E15\u0E48\u0E07\u0E32\u0E19\u0E01\u0E31\u0E1A\u0E2B\u0E19\u0E49\u0E32\u0E15\u0E32\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E21\u0E32\u0E01\u0E01\u0E27\u0E48\u0E32\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E2B\u0E19\u0E39\u0E2D\u0E22\u0E39\u0E48\u0E41\u0E25\u0E49\u0E27\u0E19\u0E35\u0E48\u0E04\u0E30!"
+      stressChange: 10
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 2
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E17\u0E33\u0E44\u0E21\u0E1E\u0E39\u0E14\u0E08\u0E32\u0E43\u0E08\u0E41\u0E04\u0E1A\u0E41\u0E1A\u0E1A\u0E19\u0E35\u0E49\u0E40\u0E19\u0E35\u0E22!
+          \u0E1E\u0E48\u0E2D\u0E17\u0E33\u0E07\u0E32\u0E19\u0E2B\u0E19\u0E31\u0E01\u0E01\u0E47\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E1E\u0E27\u0E01\u0E40\u0E18\u0E2D\u0E19\u0E30!"
+        speakerName: Dad
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 2
+        voiceSoundName: 
+    conclusionStory:
+    - text: ...
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E2D\u0E32\u0E40\u0E1B\u0E47\u0E19\u0E27\u0E48\u0E32 \u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E16\u0E49\u0E32\u0E27\u0E48\u0E32\u0E07
+        \u0E2D\u0E2D\u0E01\u0E44\u0E1B\u0E23\u0E31\u0E1A\u0E25\u0E21\u0E02\u0E49\u0E32\u0E07\u0E19\u0E2D\u0E01\u0E1A\u0E49\u0E32\u0E07\u0E19\u0E30
+        \u0E1E\u0E48\u0E2D\u0E2D\u0E22\u0E32\u0E01\u0E40\u0E2B\u0E47\u0E19\u0E40\u0E23\u0E32\u0E41\u0E08\u0E48\u0E21\u0E43\u0E2A\u0E02\u0E36\u0E49\u0E19"
+      speakerName: Dad
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
   fallbackStoryByDay: []
   fallbackStory: []
   lastTalkedDay: 0
@@ -1006,7 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76ba26fa336cb8e41ba63d5acedec903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCAppearanceController
-  activeDays: 0100000002000000
+  activeDays: 010000000200000011000000
 --- !u!114 &1287053990042361047
 MonoBehaviour:
   m_ObjectHideFlags: 0

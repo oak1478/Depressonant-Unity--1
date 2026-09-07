@@ -1,33 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DayManager : MonoBehaviour
 {
     public static DayManager Instance;
 
     [Header("ข้อมูลวันปัจจุบัน")]
-    [Range(1, 15)]
-    [SerializeField] private int dayIndex = 1;
-
-    public int currentDay
-    {
-        get
-        {
-            if (GameManagerSetup.Instance != null)
-            {
-                return GameManagerSetup.Instance.currentDay;
-            }
-            return dayIndex;
-        }
-        set
-        {
-            dayIndex = value;
-            if (GameManagerSetup.Instance != null)
-            {
-                GameManagerSetup.Instance.currentDay = value;
-            }
-        }
-    }
+    [Range(1, 20)]
+    public int currentDay = 1;
 
     private void Awake()
     {
@@ -37,44 +16,23 @@ public class DayManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "MainMenu") return;
-
-        // ซิงค์ค่าวันปัจจุบันระดับโลกเมื่อเข้าสู่ฉากใหม่
-        if (GameManagerSetup.Instance != null)
-        {
-            dayIndex = GameManagerSetup.Instance.currentDay;
-        }
-
-        UpdateAllAppearances();
-    }
-
     private void Start()
     {
         // โหลดค่าวันปัจจุบันระดับโลกมาใช้เมื่อเริ่มฉาก
         if (GameManagerSetup.Instance != null)
         {
-            dayIndex = GameManagerSetup.Instance.currentDay;
+            currentDay = GameManagerSetup.Instance.currentDay;
         }
 
+        // ⚡ [เพิ่มใหม่] บังคับอัปเดตสถานะตัวละครและไอเทมทั้งหมดตามวันปัจจุบันทันทีที่โหลดฉาก
         UpdateAllAppearances();
     }
 
     public void GoToNextDay()
     {
-        if (currentDay < 15)
+        if (currentDay < 17)
         {
+            // ⚡ [เพิ่มใหม่] ตรวจสอบเงื่อนไขความเครียดสะสมต่อเนื่องก่อนข้ามวัน
             if (GameManagerSetup.Instance != null)
             {
                 if (GameManagerSetup.Instance.currentStress >= 100f)
@@ -89,8 +47,8 @@ public class DayManager : MonoBehaviour
                 // หากเครียด 100% สองวันติดกัน จะคัทเข้าฉากจบพิเศษ Game Over
                 if (GameManagerSetup.Instance.consecutiveMaxStressDays >= 2)
                 {
-                    Debug.Log("[DayManager] Nia รับไม่ไหว ความเครียดสูงสุดติดต่อกัน 2 วัน! ตัดเข้าฉากจบพิเศษ");
-                    SceneManager.LoadScene("GameOver_Stress");
+                    Debug.Log("⚠️ Nia รับไม่ไหว ความเครียดสูงสุดติดต่อกัน 2 วัน! ตัดเข้าฉากจบพิเศษ");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver_Stress");
                     return;
                 }
             }
@@ -103,16 +61,19 @@ public class DayManager : MonoBehaviour
                 GameManagerSetup.Instance.currentDay = currentDay;
             }
 
-            if (currentDay >= 15)
+            // ⚡ หากข้ามวันมาจนถึงวันที่ 17 ให้ทำระบบตัดสินฉากจบปกติ
+            if (currentDay >= 17)
             {
                 TriggerEnding();
                 return;
             }
 
-            Debug.Log("[DayManager] ข้ามวันสำเร็จ! ตอนนี้คือวันที่ " + currentDay);
+            Debug.Log("ข้ามวันสำเร็จ! ตอนนี้คือวันที่ " + currentDay);
             
+            // ⚡ [ปรับปรุงใหม่] บังคับอัปเดตสถานะตัวละครและไอเทมในซีนใหม่
             UpdateAllAppearances();
 
+            // ⚡ [เพิ่มใหม่] รีเซ็ตความสามารถไอเทมรายวัน
             if (InventoryManager.Instance != null) InventoryManager.Instance.ResetDailyItems();
             StressManager stress = Object.FindAnyObjectByType<StressManager>();
             if (stress != null) stress.ResetDailyModifiers();
@@ -120,7 +81,7 @@ public class DayManager : MonoBehaviour
     }
 
     // ⚡ [เพิ่มใหม่] ฟังก์ชันสำหรับอัปเดตตัวตน NPC และไอเทมในฉากทั้งหมดอย่างปลอดภัย
-    public void UpdateAllAppearances()
+    private void UpdateAllAppearances()
     {
         // อัปเดต NPC ทั้งหมด
         NPCAppearanceController[] allNPCs = Object.FindObjectsByType<NPCAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -157,6 +118,7 @@ public class DayManager : MonoBehaviour
         }
     }
 
+    // ⚡ [เพิ่มใหม่] ฟังก์ชันตัดสินฉากจบตามข้อกำหนดรายงาน
     private void TriggerEnding()
     {
         float finalStress = 0f;
@@ -184,18 +146,18 @@ public class DayManager : MonoBehaviour
 
         if (finalStress <= 30f && hasRainDrawing)
         {
-            Debug.Log("[Ending] Ending A: The Existence (ความเครียดต่ำกว่า 30% และมีภาพวาดเรน)");
-            SceneManager.LoadScene("Ending_A");
+            Debug.Log("🎉 Good Ending: The Sun After the Storm (ความเครียดต่ำกว่า 30% และมีภาพวาดเรน)");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Good");
         }
         else if (finalStress <= 70f)
         {
-            Debug.Log("[Ending] Ending B: Fading Away (ความเครียด 31-70% หรือ ความเครียดต่ำกว่า 30% แต่ไม่มีภาพวาดเรน)");
-            SceneManager.LoadScene("Ending_B");
+            Debug.Log("🎭 Normal Ending: สมดุลชีวิตใหม่ (ความเครียด 31-70% หรือ ความเครียดต่ำกว่า 30% แต่ไม่มีภาพวาดเรน)");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Normal");
         }
         else
         {
-            Debug.Log("[Ending] Ending C: Bad or Die (ความเครียด 71-100%)");
-            SceneManager.LoadScene("Ending_C");
+            Debug.Log("🥀 Bad Ending: ความมืดมิด (ความเครียด 71-100%)");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Bad");
         }
     }
 }

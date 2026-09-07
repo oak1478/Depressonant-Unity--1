@@ -17,7 +17,7 @@ public class GameManagerSetup : MonoBehaviour
 
     [Header("Global Game State")]
     [Range(0, 100)] public float currentStress = 0f; // ค่าความเครียดสะสมหลัก
-    [Range(1, 15)] public int currentDay = 1;         // วันปัจจุบัน
+    [Range(1, 20)] public int currentDay = 1;         // วันปัจจุบัน
     public int consecutiveMaxStressDays = 0;          // จำนวนวันที่ความเครียดเต็ม 100% ติดต่อกัน
     public int activeSaveSlot = 1; // ⚡ สล็อตเซฟปัจจุบัน (1-4)
     public float playTime = 0f;    // ⚡ เก็บเวลาเล่นรวมสะสม (หน่วยเป็นวินาที)
