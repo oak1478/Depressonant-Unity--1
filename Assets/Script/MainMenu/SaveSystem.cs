@@ -54,6 +54,7 @@ public class SaveSystem : MonoBehaviour
             data.consecutiveMaxStressDays = GameManagerSetup.Instance.consecutiveMaxStressDays;
             data.inventoryItems = new List<GlobalInventoryItem>(GameManagerSetup.Instance.savedInventory);
             data.pickedUpItemIDs = new List<string>(GameManagerSetup.Instance.pickedUpItemIDs);
+            data.talkedNPCsToday = new List<string>(GameManagerSetup.Instance.talkedNPCsToday);
             data.playTime = GameManagerSetup.Instance.playTime;
         }
 
@@ -107,6 +108,9 @@ public class SaveSystem : MonoBehaviour
                 : new List<GlobalInventoryItem>();
             GameManagerSetup.Instance.pickedUpItemIDs = data.pickedUpItemIDs != null 
                 ? new List<string>(data.pickedUpItemIDs) 
+                : new List<string>();
+            GameManagerSetup.Instance.talkedNPCsToday = data.talkedNPCsToday != null
+                ? new List<string>(data.talkedNPCsToday)
                 : new List<string>();
             GameManagerSetup.Instance.activeSaveSlot = slotIndex; // ซิงค์เลขสล็อตกลับไปด้วย
             GameManagerSetup.Instance.playTime = data.playTime;

@@ -42,6 +42,7 @@ public class SleepSaveMenuController : MonoBehaviour
     private bool isTransitioning = false;
 
     public bool IsMenuOpen => saveMenuPanel != null && saveMenuPanel.activeSelf;
+    public bool IsTransitioning => isTransitioning;
 
     private void Awake()
     {
@@ -130,6 +131,18 @@ public class SleepSaveMenuController : MonoBehaviour
             {
                 CloseMenu();
             }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (isTransitioning)
+        {
+            isTransitioning = false;
+            FirstPersonInteractor interactor = UnityEngine.Object.FindAnyObjectByType<FirstPersonInteractor>();
+            if (interactor != null) interactor.enabled = true;
+            FirstPersonController controller = UnityEngine.Object.FindAnyObjectByType<FirstPersonController>();
+            if (controller != null) controller.enabled = true;
         }
     }
 
@@ -295,6 +308,13 @@ public class SleepSaveMenuController : MonoBehaviour
     {
         isTransitioning = true;
 
+        // ปิดการควบคุมตัวละครและการยิง Raycast โต้ตอบชั่วคราวเพื่อไม่ให้เป้าเล็งหรือข้อความค้างบนจอดำ
+        FirstPersonInteractor interactor = UnityEngine.Object.FindAnyObjectByType<FirstPersonInteractor>();
+        if (interactor != null) interactor.enabled = false;
+
+        FirstPersonController controller = UnityEngine.Object.FindAnyObjectByType<FirstPersonController>();
+        if (controller != null) controller.enabled = false;
+
         // ล็อกเมาส์
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -424,6 +444,13 @@ public class SleepSaveMenuController : MonoBehaviour
             fadeOverlayGroup.alpha = 0f;
             fadeOverlayGroup.blocksRaycasts = false;
         }
+
+        // คืนการควบคุมให้ผู้เล่นเมื่อจอแสดงผลเช้าวันใหม่เรียบร้อย
+        FirstPersonInteractor endInteractor = interactor != null ? interactor : UnityEngine.Object.FindAnyObjectByType<FirstPersonInteractor>();
+        if (endInteractor != null) endInteractor.enabled = true;
+
+        FirstPersonController endController = controller != null ? controller : UnityEngine.Object.FindAnyObjectByType<FirstPersonController>();
+        if (endController != null) endController.enabled = true;
 
         isTransitioning = false;
         Debug.Log($"[SleepSaveMenu] ตื่นนอนรับวันใหม่เรียบร้อย! ตอนนี้คือวันที่ {nextDay}");

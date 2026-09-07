@@ -50,7 +50,7 @@ public class Floating3DTextManager : MonoBehaviour
                 if (f != null && (f.name.Contains("Kanit") || f.name.Contains("Thai") || f.name.Contains("Sarabun") || f.name.Contains("Prompt")))
                 {
                     customThaiFont = f;
-                    Debug.Log($"⚡ [Floating3DTextManager] ออโต้ค้นพบฟอนต์ภาษาไทย {f.name} สำเร็จ!");
+                    Debug.Log($"[Floating3DTextManager] ออโต้ค้นพบฟอนต์ภาษาไทย {f.name} สำเร็จ!");
                     break;
                 }
             }
@@ -66,7 +66,7 @@ public class Floating3DTextManager : MonoBehaviour
         textObj.transform.position = worldPosition;
 
         TextMeshPro tmp = textObj.AddComponent<TextMeshPro>();
-        tmp.text = message;
+        tmp.text = ThaiTextAdjuster.Adjust(message);
         tmp.fontSize = fontSize > 0 ? fontSize : defaultFontSize;
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.color = Color.white;

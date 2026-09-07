@@ -25,6 +25,27 @@ public class DailyQuestManager : MonoBehaviour
     [Tooltip("ลาก QuestPanel หรือ QuestCanvas มาใส่ (หากเว้นว่างไว้ ระบบจะค้นหา Canvas จากตัวมันเองให้อัตโนมัติ)")]
     public GameObject questUIRoot;
 
+    [Header("Quest Icons")]
+    public Sprite bulletIcon;
+    public Sprite completedIcon;
+
+    [System.Serializable]
+    public class DailyNPCQuestSchedule
+    {
+        public int dayNumber;
+        public List<string> npcNames = new List<string>();
+
+        public DailyNPCQuestSchedule(int day, params string[] names)
+        {
+            dayNumber = day;
+            npcNames = new List<string>(names);
+        }
+    }
+
+    [Header("Daily Quest Schedule")]
+    [Tooltip("ตารางรายชื่อ NPC ที่มีเควสตามวัน (หากว่างไว้จะดึงค่าเริ่มต้นอัตโนมัติ)")]
+    public List<DailyNPCQuestSchedule> questSchedule = new List<DailyNPCQuestSchedule>();
+
     [Header("Refresh Settings")]
     [Tooltip("อัปเดตรายชื่อทุกกี่วินาที (ตั้ง 1 ก็เพียงพอ ไม่ต้องทุกเฟรม)")]
     public float refreshInterval = 1f;
@@ -39,23 +60,77 @@ public class DailyQuestManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
 
-        cachedCanvas = GetComponentInParent<Canvas>();
+        EnsureDefaultSchedule();
+
+        cachedCanvas = GetComponent<Canvas>();
+        if (cachedCanvas == null) cachedCanvas = GetComponentInParent<Canvas>();
+
+        // กำหนด SortingOrder ให้อยู่ระดับ HUD (5) เพื่อให้อยู่ด้านหลังเมนูกระเป๋า (Inventory 15) และบทสนทนา (Dialogue)
+        if (cachedCanvas != null && cachedCanvas.sortingOrder > 5)
+        {
+            cachedCanvas.sortingOrder = 5;
+        }
 
         // ปิดการดักคลิกเมาส์ (Raycast) ทั้งหมดของ Canvas เควสโดยอัตโนมัติ
-        // เพราะ Canvas นี้เป็นเพียง HUD แสดงข้อความ ไม่จำเป็นต้องรับคลิกเมาส์
-        // และป้องกันไม่ให้บังปุ่มตัวเลือกบทสนทนา (Choice Buttons)
-        GraphicRaycaster raycaster = GetComponentInParent<GraphicRaycaster>();
+        GraphicRaycaster raycaster = GetComponent<GraphicRaycaster>();
+        if (raycaster == null) raycaster = GetComponentInParent<GraphicRaycaster>();
         if (raycaster != null)
         {
             raycaster.enabled = false;
         }
     }
 
+    private void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu") return;
+        RefreshQuestList();
+    }
+
+    private void EnsureDefaultSchedule()
+    {
+        if (questSchedule == null || questSchedule.Count == 0)
+        {
+            questSchedule = new List<DailyNPCQuestSchedule>
+            {
+                new DailyNPCQuestSchedule(1, "Mom"),
+                new DailyNPCQuestSchedule(2, "Rein", "Den", "Jin"),
+                new DailyNPCQuestSchedule(3, "Mom", "Dad", "Rein"),
+                new DailyNPCQuestSchedule(4, "Mom", "Dad", "Den", "Jin", "Shirou"),
+                new DailyNPCQuestSchedule(5, "Rin", "Vipar"),
+                new DailyNPCQuestSchedule(6, "Momon", "Rin", "Shia", "Vipar")
+            };
+        }
+    }
+
     /// <summary>
-    /// สั่งซ่อนหรือแสดงหน้าต่างเควส (เรียกจาก DialogueManager ตอนเริ่ม/จบบทสนทนา)
+    /// สั่งซ่อนหรือแสดงหน้าต่างเควส (เรียกจาก DialogueManager หรือ InventoryManager)
     /// </summary>
     public void SetVisible(bool isVisible)
     {
+        // หากกระเป๋าเป้กำลังเปิดอยู่ หรือมีบทสนทนา ให้คงสถานะซ่อนไว้เสมอ
+        if (isVisible)
+        {
+            if (InventoryManager.Instance != null && InventoryManager.Instance.inventoryPanel != null && InventoryManager.Instance.inventoryPanel.activeSelf)
+            {
+                isVisible = false;
+            }
+            DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+            if (dm != null && dm.IsDialogueActive())
+            {
+                isVisible = false;
+            }
+        }
+
         if (questUIRoot != null)
         {
             questUIRoot.SetActive(isVisible);
@@ -89,26 +164,35 @@ public class DailyQuestManager : MonoBehaviour
     {
         if (npcListContainer == null || npcRowPrefab == null) return;
 
+        EnsureDefaultSchedule();
         int today = GetCurrentDay();
 
-        // หา NPC ทุกตัวในฉากที่มี NPCInteraction
+        // 1. ดึงรายชื่อ NPC จากตารางประจำวัน
+        List<string> targetNPCsToday = new List<string>();
+        foreach (var schedule in questSchedule)
+        {
+            if (schedule != null && schedule.dayNumber == today && schedule.npcNames != null)
+            {
+                foreach (string name in schedule.npcNames)
+                {
+                    if (!string.IsNullOrEmpty(name) && !targetNPCsToday.Contains(name))
+                    {
+                        targetNPCsToday.Add(name);
+                    }
+                }
+            }
+        }
+
+        // 2. สแกน NPC ในฉากปัจจุบันเพิ่มเติม เพื่อรองรับกรณีมี NPC ใหม่ที่ไม่ได้ใส่ในตาราง
         NPCInteraction[] allNPCInteractions = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-
-        // สร้างลิสต์ NPC ที่มี Story ใหม่วันนี้และยังไม่ได้คุย
-        List<string> availableNPCs = new List<string>();
-
         foreach (NPCInteraction npc in allNPCInteractions)
         {
             if (npc == null) continue;
 
-            // ข้ามถ้าคุยไปแล้วในวันนี้
-            if (npc.lastTalkedDay == today) continue;
-
-            // เช็คว่ามี Story วันนี้ไหม
             bool hasStoryToday = false;
             foreach (var dialog in npc.dialoguesByDay)
             {
-                if (dialog.dayNumber == today)
+                if (dialog != null && dialog.dayNumber == today)
                 {
                     hasStoryToday = true;
                     break;
@@ -117,7 +201,50 @@ public class DailyQuestManager : MonoBehaviour
 
             if (hasStoryToday)
             {
-                availableNPCs.Add(npc.npcDisplayName);
+                string id = npc.GetNPCIdentifier();
+                if (!string.IsNullOrEmpty(id) && !targetNPCsToday.Contains(id))
+                {
+                    targetNPCsToday.Add(id);
+                }
+            }
+        }
+
+        // 3. กรองเอาเฉพาะ NPC ที่ยังไม่ได้คุยในวันนี้
+        List<string> availableNPCs = new List<string>();
+        foreach (string npcName in targetNPCsToday)
+        {
+            bool alreadyTalked = false;
+
+            // เช็คกับ GameManagerSetup ส่วนกลาง
+            if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.HasTalkedToNPCToday(npcName))
+            {
+                alreadyTalked = true;
+            }
+
+            // เช็คกับ instance ในฉากปัจจุบัน (หากมี)
+            if (!alreadyTalked)
+            {
+                foreach (NPCInteraction npc in allNPCInteractions)
+                {
+                    if (npc != null)
+                    {
+                        string id = npc.GetNPCIdentifier();
+                        if (string.Equals(id, npcName, System.StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(npc.npcDisplayName, npcName, System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (npc.lastTalkedDay == today)
+                            {
+                                alreadyTalked = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!alreadyTalked)
+            {
+                availableNPCs.Add(npcName);
             }
         }
 
@@ -128,25 +255,35 @@ public class DailyQuestManager : MonoBehaviour
         }
         activeRows.Clear();
 
+        if (bulletIcon == null) bulletIcon = Resources.Load<Sprite>("Quest_Bullet");
+        if (completedIcon == null) completedIcon = Resources.Load<Sprite>("Quest_Check");
+
         if (availableNPCs.Count == 0)
         {
-            // ซ่อน TitleText หรือตัวแผง Panel ถ้ายัดมา
-            if (titleObjectToHide != null) titleObjectToHide.SetActive(false);
+            if (titleObjectToHide != null) titleObjectToHide.SetActive(true);
 
             // สร้างแถวแจ้งเตือนว่าคุยครบแล้ว
             GameObject row = Instantiate(npcRowPrefab, npcListContainer);
             activeRows.Add(row);
+
+            Image icon = row.transform.Find("StatusIcon")?.GetComponent<Image>();
+            if (icon == null) icon = row.GetComponentInChildren<Image>();
+            if (icon != null && completedIcon != null)
+            {
+                icon.sprite = completedIcon;
+                icon.color = Color.white;
+            }
+
             TextMeshProUGUI label = row.GetComponentInChildren<TextMeshProUGUI>();
             if (label != null)
             {
-                label.text = "พูดคุยครบแล้ว!";
-                label.fontStyle = FontStyles.Italic;
-                label.color = Color.gray; // ทำให้สีดูจางลงนิดนึง
+                label.text = "พูดคุยครบแล้ว";
+                label.fontStyle = FontStyles.Normal;
+                label.color = new Color(0.48f, 0.85f, 0.58f, 1f); // เขียวพาสเทลโมเดิร์น
             }
         }
         else
         {
-            // เปิด TitleText กลับมาเมื่อมีคนให้คุย
             if (titleObjectToHide != null) titleObjectToHide.SetActive(true);
 
             // สร้างแถวใหม่ตามจำนวน NPC ที่พบ (ไม่เกิน 6 คน)
@@ -155,11 +292,20 @@ public class DailyQuestManager : MonoBehaviour
                 GameObject row = Instantiate(npcRowPrefab, npcListContainer);
                 activeRows.Add(row);
 
-                // หา TextMeshPro ในแถวแล้วกำหนดชื่อ
+                Image icon = row.transform.Find("StatusIcon")?.GetComponent<Image>();
+                if (icon == null) icon = row.GetComponentInChildren<Image>();
+                if (icon != null && bulletIcon != null)
+                {
+                    icon.sprite = bulletIcon;
+                    icon.color = Color.white;
+                }
+
                 TextMeshProUGUI label = row.GetComponentInChildren<TextMeshProUGUI>();
                 if (label != null)
                 {
-                    label.text = "- " + availableNPCs[i];
+                    label.text = availableNPCs[i];
+                    label.fontStyle = FontStyles.Normal;
+                    label.color = new Color(0.89f, 0.92f, 0.96f, 1f); // ขาวนวล
                 }
             }
         }

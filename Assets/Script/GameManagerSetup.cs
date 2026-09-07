@@ -45,6 +45,61 @@ public class GameManagerSetup : MonoBehaviour
         }
     }
 
+    [Header("Daily Talk State")]
+    public List<string> talkedNPCsToday = new List<string>();
+
+    public bool HasTalkedToNPCToday(string npcName)
+    {
+        if (string.IsNullOrEmpty(npcName)) return false;
+
+        string cleanSearch = npcName.Trim();
+        if (cleanSearch.StartsWith("NPC_", System.StringComparison.OrdinalIgnoreCase))
+        {
+            cleanSearch = cleanSearch.Substring(4);
+        }
+
+        foreach (string talked in talkedNPCsToday)
+        {
+            if (string.IsNullOrEmpty(talked)) continue;
+
+            string cleanTalked = talked.Trim();
+            if (cleanTalked.StartsWith("NPC_", System.StringComparison.OrdinalIgnoreCase))
+            {
+                cleanTalked = cleanTalked.Substring(4);
+            }
+
+            if (string.Equals(talked, npcName.Trim(), System.StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(cleanTalked, cleanSearch, System.StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void RegisterNPCTalkedToday(string npcName)
+    {
+        if (string.IsNullOrEmpty(npcName)) return;
+
+        string cleanName = npcName.Trim();
+        if (cleanName.StartsWith("NPC_", System.StringComparison.OrdinalIgnoreCase))
+        {
+            cleanName = cleanName.Substring(4);
+        }
+
+        if (!HasTalkedToNPCToday(cleanName))
+        {
+            talkedNPCsToday.Add(cleanName);
+            Debug.Log($"[GameManagerSetup] บันทึกการพูดคุยกับ '{cleanName}' ประจำวันสำเร็จ (รวมคุยแล้ววันนี้: {talkedNPCsToday.Count} คน)");
+        }
+    }
+
+    public void ResetDailyNPCTalk()
+    {
+        talkedNPCsToday.Clear();
+        Debug.Log("[GameManagerSetup] รีเซ็ตรายชื่อ NPC ที่พูดคุยแล้วสำหรับวันใหม่");
+    }
+
     void Awake()
     {
         // ⚡ ป้องกันไม่ให้มี GameManager ซ้ำซ้อนกันในซีน
@@ -107,6 +162,9 @@ public class GameManagerSetup : MonoBehaviour
                 : new List<GlobalInventoryItem>();
             pickedUpItemIDs = SaveSystem.pendingLoadData.pickedUpItemIDs != null 
                 ? new List<string>(SaveSystem.pendingLoadData.pickedUpItemIDs) 
+                : new List<string>();
+            talkedNPCsToday = SaveSystem.pendingLoadData.talkedNPCsToday != null
+                ? new List<string>(SaveSystem.pendingLoadData.talkedNPCsToday)
                 : new List<string>();
             activeSaveSlot = SaveSystem.pendingLoadData.activeSaveSlot;
             playTime = SaveSystem.pendingLoadData.playTime;

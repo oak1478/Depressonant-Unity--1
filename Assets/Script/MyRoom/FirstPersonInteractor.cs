@@ -120,12 +120,20 @@ public class FirstPersonInteractor : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        currentInteractable = null;
+        UpdatePromptUI(null);
+    }
+
     private bool IsAnyMenuOpen()
     {
         // หากเคอร์เซอร์เมาส์ถูกปลดล็อกให้มองเห็น แปลว่ากำลังเปิดเมนูใดๆ อยู่
         if (Cursor.visible || Cursor.lockState != CursorLockMode.Locked) return true;
 
-        if (SleepSaveMenuController.Instance != null && SleepSaveMenuController.Instance.IsMenuOpen) return true;
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return true;
+
+        if (SleepSaveMenuController.Instance != null && (SleepSaveMenuController.Instance.IsMenuOpen || SleepSaveMenuController.Instance.IsTransitioning)) return true;
 
         DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
         if (dm != null && dm.IsDialogueActive()) return true;
@@ -145,7 +153,7 @@ public class FirstPersonInteractor : MonoBehaviour
         {
             if (interactable != null)
             {
-                promptText.text = $"กด [F] เพื่อ {interactable.promptMessage}";
+                promptText.text = ThaiTextAdjuster.Adjust($"กด [F] เพื่อ {interactable.promptMessage}");
                 promptText.gameObject.SetActive(true);
             }
             else
@@ -157,7 +165,7 @@ public class FirstPersonInteractor : MonoBehaviour
 
     private void OnGUI()
     {
-        if (cam == null || IsAnyMenuOpen()) return;
+        if (!enabled || cam == null || IsAnyMenuOpen()) return;
 
         bool isHovering = (currentInteractable != null);
 

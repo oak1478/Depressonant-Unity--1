@@ -64,6 +64,20 @@ public class PauseMenuController : MonoBehaviour
 
         if (escPressed)
         {
+            // หากหน้าต่าง Command Prompt (DevConsole) เปิดอยู่ ให้ปิดหน้าต่าง Console แทนการเปิด Pause Menu
+            if (DevConsole.Instance != null && DevConsole.Instance.IsOpen)
+            {
+                DevConsole.Instance.CloseConsole();
+                return;
+            }
+
+            // หากกระเป๋าเป้เปิดอยู่ ให้ปิดกระเป๋าเป้ก่อน
+            if (InventoryManager.Instance != null && InventoryManager.Instance.inventoryPanel != null && InventoryManager.Instance.inventoryPanel.activeSelf)
+            {
+                InventoryManager.Instance.CloseInventory();
+                return;
+            }
+
             if (isPaused)
             {
                 ResumeGame();

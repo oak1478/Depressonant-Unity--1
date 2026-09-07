@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-[System.Serializable] // 🌟 บรรทัดนี้สำคัญมาก! ทำให้ Unity แปลงคลาสนี้เป็น JSON ได้
+[System.Serializable] // บรรทัดนี้สำคัญมาก! ทำให้ Unity แปลงคลาสนี้เป็น JSON ได้
 public class SaveData
 {
     // เก็บตำแหน่งตัวละคร
@@ -24,6 +24,9 @@ public class SaveData
 
     // [เพิ่มใหม่] เก็บรหัสไอเทมที่ถูกเก็บไปแล้วในเกมนอน/ตื่น
     public List<string> pickedUpItemIDs = new List<string>();
+
+    // [เพิ่มใหม่] เก็บรายชื่อ NPC ที่คุยจบแล้วในวันปัจจุบัน
+    public List<string> talkedNPCsToday = new List<string>();
 
     // [เพิ่มใหม่] สล็อตเซฟเกมที่กำลังใช้งานอยู่ (1-4)
     public int activeSaveSlot;

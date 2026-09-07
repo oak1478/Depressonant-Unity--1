@@ -84,6 +84,18 @@ MonoBehaviour:
     portraits:
     - portraitName: idle
       sprite: {fileID: 21300000, guid: 7316fb5c4729ee8448357d4ddb17e0ed, type: 3}
+  - npcName: Sasha
+    portraits:
+    - portraitName: idle
+      sprite: {fileID: 21300000, guid: b70ebd6811499b343a3f0ee6e618ea2d, type: 3}
+  - npcName: Egon
+    portraits:
+    - portraitName: idle
+      sprite: {fileID: 21300000, guid: 8ef9557f70a2eb84189a14da6f066989, type: 3}
+  - npcName: Rein
+    portraits:
+    - portraitName: Idle
+      sprite: {fileID: 21300000, guid: dc39b12ded23a024abd8d9677eda975e, type: 3}
   dialoguesByDay:
   - dayTitle: DAY 2
     dayNumber: 2
