@@ -5,6 +5,8 @@ using UnityEngine.Rendering.Universal;
 
 public class StressManager : MonoBehaviour
 {
+    public static StressManager Instance { get; private set; }
+
     [Header("Stress Settings")]
     [Range(0, 100)] public float currentStress = 0f;
 
@@ -33,6 +35,18 @@ public class StressManager : MonoBehaviour
 
     // ⚡ [ระบบใหม่] ตัวแปรสำหรับคุม Armband (ปลอกแขน)
     [HideInInspector] public bool hasArmbandTriggeredToday = false;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            // Do not destroy object if attached to Player/Manager, just ensure Instance is set
+        }
+    }
 
     void Start()
     {

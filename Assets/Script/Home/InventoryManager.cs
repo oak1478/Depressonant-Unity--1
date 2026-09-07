@@ -17,14 +17,22 @@ public class InventoryManager : MonoBehaviour
     [Header("ลาก Slot_1 ถึง Slot_6 มาใส่ในช่องนี้ตามลำดับ")]
     public Image[] itemSlots; 
 
-    // ⚡ [เพิ่มใหม่] ลาก CountText ของ Slot 1-6 มาใส่ในช่องนี้ตามลำดับเดียวกับไอเทม
+    // [เพิ่มใหม่] ลาก CountText ของ Slot 1-6 มาใส่ในช่องนี้ตามลำดับเดียวกับไอเทม
     [Header("ลาก Text แสดงจำนวนชิ้นของ Slot 1-6 มาใส่ตามลำดับ")]
     public TextMeshProUGUI[] slotCountTexts;
 
     private ItemType[] slotItemTypes = new ItemType[6];
     
-    // ⚡ [เพิ่มใหม่] อาร์เรย์สำหรับเก็บจำนวนไอเทมในแต่ละช่อง
+    // อาร์เรย์สำหรับเก็บจำนวนไอเทมในแต่ละช่อง
     private int[] slotItemCounts = new int[6];
+
+    [Header("UI แสดงคำอธิบายไอเทมด้านล่าง (Examine Box)")]
+    public TextMeshProUGUI examineDescriptionText;
+    [Tooltip("ฟอนต์สำหรับคำอธิบายไอเทม (หากว่างไว้ ระบบจะค้นหาและใช้ฟอนต์ไทยที่มีในเกมอัตโนมัติ)")]
+    public TMP_FontAsset examineFont;
+
+    private int currentHoveredSlot = -1;
+    private const string defaultExaminePrompt = "ชี้เมาส์ที่ไอเทมในกระเป๋าเพื่อดูคำอธิบายและวิธีใช้งาน";
 
     [Header("UI สำหรับ Diary")]
     public TextMeshProUGUI diaryStressText; 
@@ -86,8 +94,8 @@ public class InventoryManager : MonoBehaviour
         }
         else if (Instance != this)
         {
-            // ⚡ ป้องกันกระเป๋าเป้ซ้ำซ้อน: ถ้ามี InventoryManager ตัวหลักอยู่แล้ว ให้ทำลายตัวที่เกิดซ้ำทิ้งทันที!
-            Debug.LogWarning($"⚠️ [InventoryManager] ตรวจพบกระเป๋าเป้ซ้ำซ้อนในฉาก ({gameObject.name})! ระบบทำการลบตัวซ้ำทิ้งอัตโนมัติเพื่อป้องกัน UI ซ้อนกัน");
+            //  ป้องกันกระเป๋าเป้ซ้ำซ้อน: ถ้ามี InventoryManager ตัวหลักอยู่แล้ว ให้ทำลายตัวที่เกิดซ้ำทิ้งทันที!
+            Debug.LogWarning($" [InventoryManager] ตรวจพบกระเป๋าเป้ซ้ำซ้อนในฉาก ({gameObject.name})! ระบบทำการลบตัวซ้ำทิ้งอัตโนมัติเพื่อป้องกัน UI ซ้อนกัน");
             Destroy(gameObject);
             return;
         }
@@ -135,10 +143,10 @@ public class InventoryManager : MonoBehaviour
         audioSource.spatialBlend = 0f; // 2D UI sound
         audioSource.playOnAwake = false;
 
-        // ⚡ [เพิ่มใหม่] โหลดเสียงและรูปภาพไอเทมทั้งหมดอัตโนมัติหากยังไม่ได้ลากใส่ใน Inspector
+        //  [เพิ่มใหม่] โหลดเสียงและรูปภาพไอเทมทั้งหมดอัตโนมัติหากยังไม่ได้ลากใส่ใน Inspector
         AutoLoadSFXAndSpritesIfMissing();
 
-        // ⚡ [เพิ่มใหม่] สแกนหาไอเทมบนพื้นทั้งหมดในฉาก เพื่อดึงรูปภาพที่คุณลากใส่ไว้ใน PickupItem มาจดจำอัตโนมัติ!
+        //  [เพิ่มใหม่] สแกนหาไอเทมบนพื้นทั้งหมดในฉาก เพื่อดึงรูปภาพที่คุณลากใส่ไว้ใน PickupItem มาจดจำอัตโนมัติ!
         PickupItem[] groundItems = Object.FindObjectsByType<PickupItem>(FindObjectsSortMode.None);
         foreach (var groundItem in groundItems)
         {
@@ -148,14 +156,14 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        // ⚡ [แก้ไข] เช็คประเภทซีนห้องนอน 3D เพื่อตั้งค่าเมาส์ตอนเกิดเฟรมแรกให้ถูกต้อง ไม่แย่งล็อกเมาส์กันเอง
+        //  [แก้ไข] เช็คประเภทซีนห้องนอน 3D เพื่อตั้งค่าเมาส์ตอนเกิดเฟรมแรกให้ถูกต้อง ไม่แย่งล็อกเมาส์กันเอง
         bool is3DScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Bedroom_3D";
         Cursor.visible = !is3DScene;
         Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
 
         if (stressManager == null)
         {
-            Debug.LogError("⚠️ [Inventory] หา StressManager ในฉากไม่เจอ! โปรดเช็คว่าวัตถุ StressManager มีสคริปต์แปะอยู่ไหม");
+            Debug.LogError("[Inventory] หา StressManager ในฉากไม่เจอ โปรดเช็คว่าวัตถุ StressManager มีสคริปต์แปะอยู่ไหม");
         }
 
         for (int i = 0; i < itemSlots.Length; i++)
@@ -168,7 +176,12 @@ public class InventoryManager : MonoBehaviour
 
             int index = i; 
             
-            // ⚡ ค้นหาปุ่มแบบละเอียด (เช็คทั้งที่ตัวเอง, ตัวพ่อ, และตัวลูก)
+            // เพิ่มระบบตรวจจับเมาส์ชี้ (Hover) เพื่อแสดงคำอธิบายในช่อง Examine
+            InventorySlotHover hover = itemSlots[index].GetComponent<InventorySlotHover>();
+            if (hover == null) hover = itemSlots[index].gameObject.AddComponent<InventorySlotHover>();
+            hover.slotIndex = index;
+
+            // ค้นหาปุ่มแบบละเอียด (เช็คทั้งที่ตัวเอง, ตัวพ่อ, และตัวลูก)
             Button btn = itemSlots[index].GetComponent<Button>();
             if (btn == null) btn = itemSlots[index].GetComponentInParent<Button>();
             if (btn == null) btn = itemSlots[index].GetComponentInChildren<Button>();
@@ -176,22 +189,44 @@ public class InventoryManager : MonoBehaviour
             if (btn != null)
             {
                 btn.onClick.AddListener(() => UseItem(index));
-                Debug.Log($"✅ [Inventory] ผูกระบบคลิกเข้ากับปุ่มของ Slot_{index + 1} สำเร็จ!");
+                Debug.Log($"[Inventory] ผูกระบบคลิกเข้ากับปุ่มของ Slot_{index + 1} สำเร็จ");
             }
             else
             {
-                Debug.LogError($"❌ [Inventory] Slot_{index + 1} หาคอมโพเนนต์ Button ไม่เจอ! โปรดตรวจสอบว่าใน Hierarchy มีปุ่ม Button แปะอยู่กับช่องเก็บของไหม");
+                Debug.LogError($"[Inventory] Slot_{index + 1} หาคอมโพเนนต์ Button ไม่เจอ โปรดตรวจสอบว่าใน Hierarchy มีปุ่ม Button แปะอยู่กับช่องเก็บของไหม");
             }
         }
 
+        // จัดรูปแบบตัวเลขแสดงจำนวนชิ้นให้สวยงาม ป้องกันบัคตัวเลขตกบรรทัดเมื่อเกิน 10 ชิ้น
+        ConfigureSlotCountTexts();
+
+        // ปรับแต่งปุ่มปิดกระเป๋าให้สวยงามทันสมัย
+        SetupCloseButtonUI();
+
+        // สร้างและตั้งค่ากล่องข้อความ Examine อัตโนมัติ
+        SetupExamineDescriptionUI();
+        ResetExamineDescription();
+
         // [เพิ่มใหม่] โหลดไอเทมข้ามฉอกจาก GameManager เข้ามาแสดงผลใน UI
         LoadFromGlobal();
+
+        // กำหนด SortingOrder ของ Canvas กระเป๋าเป้ให้อยู่เหนือเควส HUD และข้อความทั่วไป (15)
+        Canvas myCanvas = GetComponentInParent<Canvas>();
+        if (myCanvas == null) myCanvas = GetComponent<Canvas>();
+        if (myCanvas != null && myCanvas.sortingOrder < 15)
+        {
+            myCanvas.sortingOrder = 15;
+            Debug.Log($"[InventoryManager] ปรับ SortingOrder ของ Canvas '{myCanvas.name}' เป็น 15 เพื่อให้อยู่ด้านหน้าเควสและ HUD");
+        }
 
         if (diaryStressText != null) diaryStressText.gameObject.SetActive(false);
     }
 
     void Update()
     {
+        // หากหน้าต่าง Command Prompt (DevConsole) กำลังเปิดอยู่ จะไม่รับปุ่มคีย์ลัดของกระเป๋าเป้
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
+
         if (Keyboard.current != null)
         {
             if (Keyboard.current.tabKey.wasPressedThisFrame)
@@ -202,62 +237,9 @@ public class InventoryManager : MonoBehaviour
                     ToggleInventory();
                 }
             }
-
-            // ⚡ [ระบบปุ่มคีย์ลัดสำหรับทดสอบ Playtest]
-            // กด F1 - F6 เพื่อเสกไอเทมแต่ละชิ้นเข้ากระเป๋าเป้ทันที
-            if (Keyboard.current.f1Key.wasPressedThisFrame || Keyboard.current.digit1Key.wasPressedThisFrame)
-            {
-                AddItem(GetSpriteForItemType(ItemType.Candy), ItemType.Candy);
-                Debug.Log("🧪 [Test] เสกไอเทม: ลูกอม (Candy) เข้ากระเป๋าแล้ว!");
-            }
-            if (Keyboard.current.f2Key.wasPressedThisFrame || Keyboard.current.digit2Key.wasPressedThisFrame)
-            {
-                AddItem(GetSpriteForItemType(ItemType.StrawberryMilk), ItemType.StrawberryMilk);
-                Debug.Log("🧪 [Test] เสกไอเทม: นมสตรอเบอร์รี่ (StrawberryMilk) เข้ากระเป๋าแล้ว!");
-            }
-            if (Keyboard.current.f3Key.wasPressedThisFrame || Keyboard.current.digit3Key.wasPressedThisFrame)
-            {
-                AddItem(GetSpriteForItemType(ItemType.Diary), ItemType.Diary);
-                Debug.Log("🧪 [Test] เสกไอเทม: ไดอารี่ (Diary) เข้ากระเป๋าแล้ว!");
-            }
-            if (Keyboard.current.f4Key.wasPressedThisFrame || Keyboard.current.digit4Key.wasPressedThisFrame)
-            {
-                AddItem(GetSpriteForItemType(ItemType.Headphone), ItemType.Headphone);
-                Debug.Log("🧪 [Test] เสกไอเทม: หูฟัง (Headphone) เข้ากระเป๋าแล้ว!");
-            }
-            if (Keyboard.current.f5Key.wasPressedThisFrame || Keyboard.current.digit5Key.wasPressedThisFrame)
-            {
-                AddItem(GetSpriteForItemType(ItemType.Armband), ItemType.Armband);
-                Debug.Log("🧪 [Test] เสกไอเทม: ปลอกแขน (Armband) เข้ากระเป๋าแล้ว!");
-            }
-            if (Keyboard.current.f6Key.wasPressedThisFrame || Keyboard.current.digit6Key.wasPressedThisFrame)
-            {
-                AddItem(GetSpriteForItemType(ItemType.RainDrawing), ItemType.RainDrawing);
-                Debug.Log("🧪 [Test] เสกไอเทม: ภาพวาดของเรน (RainDrawing) เข้ากระเป๋าแล้ว!");
-            }
-
-            // กด F7 เพื่อปรับวันเป็นวันที่ 8 (ใช้ทดสอบหูฟัง)
-            if (Keyboard.current.f7Key.wasPressedThisFrame || Keyboard.current.digit7Key.wasPressedThisFrame)
-            {
-                if (DayManager.Instance != null) DayManager.Instance.currentDay = 8;
-                if (GameManagerSetup.Instance != null) GameManagerSetup.Instance.currentDay = 8;
-                Debug.Log("🧪 [Test] วาร์ปข้ามไป 'วันที่ 8' เรียบร้อย! ตอนนี้สามารถทดสอบกดใช้หูฟังได้แล้ว");
-            }
-
-            // กด F8 / F9 เพื่อปรับค่าความเครียดเพิ่ม/ลด 25% (ใช้ทดสอบการเปลี่ยนสีหน้าไดอารี่ Dynamic UI)
-            if (Keyboard.current.f8Key.wasPressedThisFrame || Keyboard.current.digit8Key.wasPressedThisFrame)
-            {
-                if (stressManager != null) stressManager.ChangeStress(25f);
-                Debug.Log("🧪 [Test] เพิ่มความเครียด +25% เพื่อทดสอบหน้าไดอารี่");
-            }
-            if (Keyboard.current.f9Key.wasPressedThisFrame || Keyboard.current.digit9Key.wasPressedThisFrame)
-            {
-                if (stressManager != null) stressManager.ChangeStress(-25f);
-                Debug.Log("🧪 [Test] ลดความเครียด -25% เพื่อทดสอบหน้าไดอารี่");
-            }
         }
 
-        // ⚡ [เพิ่มใหม่] อัปเดตรูปปกไดอารี่ในกระเป๋าเป้ตามค่าความเครียดแบบเรียลไทม์ (Dynamic Cover)
+        //  [เพิ่มใหม่] อัปเดตรูปปกไดอารี่ในกระเป๋าเป้ตามค่าความเครียดแบบเรียลไทม์ (Dynamic Cover)
         for (int i = 0; i < itemSlots.Length; i++)
         {
             if (itemSlots[i].enabled && slotItemTypes[i] == ItemType.Diary)
@@ -268,7 +250,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ⚡ [ฟังก์ชันคลิกขวาใน Inspector] เสกไอเทมครบทุกชิ้นเข้ากระเป๋าทันที
+    //  [ฟังก์ชันคลิกขวาใน Inspector] เสกไอเทมครบทุกชิ้นเข้ากระเป๋าทันที
     [ContextMenu("Give All Test Items")]
     public void GiveAllTestItems()
     {
@@ -278,7 +260,7 @@ public class InventoryManager : MonoBehaviour
         AddItem(GetSpriteForItemType(ItemType.StrawberryMilk), ItemType.StrawberryMilk);
         AddItem(GetSpriteForItemType(ItemType.Armband), ItemType.Armband);
         AddItem(GetSpriteForItemType(ItemType.RainDrawing), ItemType.RainDrawing);
-        Debug.Log("🎉 เสกไอเทมทดสอบครบทั้ง 6 ชนิดเข้ากระเป๋าเป้เรียบร้อย!");
+        Debug.Log(" เสกไอเทมทดสอบครบทั้ง 6 ชนิดเข้ากระเป๋าเป้เรียบร้อย!");
     }
 
     public void ToggleInventory()
@@ -288,35 +270,49 @@ public class InventoryManager : MonoBehaviour
             bool isActive = !inventoryPanel.activeSelf;
             inventoryPanel.SetActive(isActive);
 
-            // ⚡ เล่นเสียงรูดซิปกระเป๋า
+            // ซ่อนหรือแสดง Quest HUD ตามสถานะการเปิดกระเป๋า
+            if (DailyQuestManager.Instance != null)
+            {
+                DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+                bool isDialogueActive = dm != null && dm.IsDialogueActive();
+                DailyQuestManager.Instance.SetVisible(!isActive && !isDialogueActive);
+            }
+
+            // เล่นเสียงรูดซิปกระเป๋า
             if (isActive)
             {
+                SetupCloseButtonUI();
+                SetupExamineDescriptionUI();
+                ConfigureSlotCountTexts();
+                currentHoveredSlot = -1;
+                ResetExamineDescription();
                 PlaySFX(bagOpenSound);
             }
             else
             {
+                currentHoveredSlot = -1;
                 PlaySFX(bagCloseSound);
             }
 
-            // ⚡ [เพิ่มใหม่] ค้นหาสคริปต์เดินและจัดการความเครียดของฉากปัจจุบันใหม่ทุกครั้งเพื่อป้องกันลิงก์อ้างอิงพังเวลาข้ามฉาก
+            //  [เพิ่มใหม่] ค้นหาสคริปต์เดินและจัดการความเครียดของฉากปัจจุบันใหม่ทุกครั้งเพื่อป้องกันลิงก์อ้างอิงพังเวลาข้ามฉาก
             playerMovement = Object.FindAnyObjectByType<PlayerMovement>();
             stressManager = Object.FindAnyObjectByType<StressManager>();
 
-            // ⚡ เช็คว่าปัจจุบันเป็นฉากห้องนอน 3D หรือเปล่า
+            //  เช็คว่าปัจจุบันเป็นฉากห้องนอน 3D หรือเปล่า
             bool is3DScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Bedroom_3D";
 
-            // ⚡ ปลดล็อก/ล็อกเมาส์ตามสถานะการเปิดกระเป๋า (หากเป็นฉากบ้าน 2.5D จะไม่ล็อกเมาส์เลย)
+            //  ปลดล็อก/ล็อกเมาส์ตามสถานะการเปิดกระเป๋า (หากเป็นฉากบ้าน 2.5D จะไม่ล็อกเมาส์เลย)
             Cursor.visible = isActive || !is3DScene;
             Cursor.lockState = (isActive || !is3DScene) ? CursorLockMode.None : CursorLockMode.Locked;
 
             // ปิดการเดินในด่าน 2.5D
             if (playerMovement != null) playerMovement.enabled = !isActive; 
 
-            // ⚡ [เพิ่มใหม่] ค้นหาและปิดการควบคุมกล้อง 3D บุคคลที่หนึ่ง (เพื่อไม่ให้กล้องส่ายตามการเลื่อนเมาส์ไปจิ้มปุ่ม)
+            //  [เพิ่มใหม่] ค้นหาและปิดการควบคุมกล้อง 3D บุคคลที่หนึ่ง (เพื่อไม่ให้กล้องส่ายตามการเลื่อนเมาส์ไปจิ้มปุ่ม)
             FirstPersonController fpController = Object.FindAnyObjectByType<FirstPersonController>();
             if (fpController != null) fpController.enabled = !isActive;
 
-            // ⚡ [เพิ่มใหม่] ค้นหาและปิดตัวชี้เลเซอร์ F เพื่อไม่ให้เผลอไปกดใช้เตียงหรือกระจกระหว่างคลิกของ
+            //  [เพิ่มใหม่] ค้นหาและปิดตัวชี้เลเซอร์ F เพื่อไม่ให้เผลอไปกดใช้เตียงหรือกระจกระหว่างคลิกของ
             FirstPersonInteractor fpInteractor = Object.FindAnyObjectByType<FirstPersonInteractor>();
             if (fpInteractor != null) fpInteractor.enabled = !isActive;
 
@@ -335,7 +331,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ⚡ [เพิ่มใหม่] ฟังก์ชันสำหรับปุ่มกากบาท [X] บนหน้ากระเป๋าเป้ สั่งปิดกระเป๋าโดยตรง
+    //  [เพิ่มใหม่] ฟังก์ชันสำหรับปุ่มกากบาท [X] บนหน้ากระเป๋าเป้ สั่งปิดกระเป๋าโดยตรง
     public void CloseInventory()
     {
         if (inventoryPanel != null && inventoryPanel.activeSelf)
@@ -344,7 +340,75 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ⚡ [ปรับปรุงใหม่] ฟังก์ชันเพิ่มไอเทม รองรับระบบเก็บซ้อนกัน (Stacking)
+    // ปรับแต่งปุ่มปิดกระเป๋า [X] ให้เป็นสไตล์โมเดิร์น สวยงาม ทันสมัย
+    public void SetupCloseButtonUI()
+    {
+        if (inventoryPanel == null) return;
+
+        Transform closeBtnTrans = inventoryPanel.transform.Find("CloseButton");
+        if (closeBtnTrans == null)
+        {
+            Button[] buttons = inventoryPanel.GetComponentsInChildren<Button>(true);
+            foreach (var b in buttons)
+            {
+                if (b.name.Contains("Close") || b.name.Contains("Exit") || b.name.Contains("Back"))
+                {
+                    closeBtnTrans = b.transform;
+                    break;
+                }
+            }
+        }
+
+        if (closeBtnTrans != null)
+        {
+            RectTransform rt = closeBtnTrans.GetComponent<RectTransform>();
+            if (rt != null)
+            {
+                rt.localScale = Vector3.one;
+                rt.anchorMin = new Vector2(1f, 1f);
+                rt.anchorMax = new Vector2(1f, 1f);
+                rt.pivot = new Vector2(0.5f, 0.5f);
+                rt.anchoredPosition = new Vector2(-207f, -94f);
+                rt.sizeDelta = new Vector2(64f, 64f);
+            }
+
+            Image img = closeBtnTrans.GetComponent<Image>();
+            if (img != null)
+            {
+                Sprite modernSprite = Resources.Load<Sprite>("Close_Button_Modern");
+                if (modernSprite != null)
+                {
+                    img.sprite = modernSprite;
+                }
+                img.color = Color.white;
+                img.raycastTarget = true;
+            }
+
+            TextMeshProUGUI tmpText = closeBtnTrans.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (tmpText != null)
+            {
+                tmpText.gameObject.SetActive(false);
+            }
+
+            Button btn = closeBtnTrans.GetComponent<Button>();
+            if (btn != null)
+            {
+                btn.transition = Selectable.Transition.ColorTint;
+                ColorBlock cb = btn.colors;
+                cb.normalColor = Color.white;
+                cb.highlightedColor = new Color(1f, 0.55f, 0.6f, 1f);
+                cb.pressedColor = new Color(0.85f, 0.25f, 0.3f, 1f);
+                cb.selectedColor = Color.white;
+                cb.fadeDuration = 0.1f;
+                btn.colors = cb;
+
+                btn.onClick.RemoveListener(CloseInventory);
+                btn.onClick.AddListener(CloseInventory);
+            }
+        }
+    }
+
+    //  [ปรับปรุงใหม่] ฟังก์ชันเพิ่มไอเทม รองรับระบบเก็บซ้อนกัน (Stacking)
     public bool AddItem(Sprite itemSprite, ItemType type)
     {
         // ถ้ามี Sprite ส่งเข้ามา ให้จดจำเข้าฐานข้อมูลทันที
@@ -395,13 +459,13 @@ public class InventoryManager : MonoBehaviour
         return false; 
     }
 
-    // ⚡ วางทับฟังก์ชัน UseItem เดิม เพื่อตรวจเช็คการคลิกเรียลไทม์
+    //  วางทับฟังก์ชัน UseItem เดิม เพื่อตรวจเช็คการคลิกเรียลไทม์
     public void UseItem(int slotIndex)
     {
         ItemType type = slotItemTypes[slotIndex];
         
-        // ⚡ ข้อความแจ้งเตือนเมื่อกดคลิก
-        Debug.Log($"🚨 [Inventory Click] คุณกดคลิกที่ช่อง Slot_{slotIndex + 1} | ไอเทมคือ: {type} | จำนวนในช่อง: {slotItemCounts[slotIndex]} ชิ้น");
+        //  ข้อความแจ้งเตือนเมื่อกดคลิก
+        Debug.Log($" [Inventory Click] คุณกดคลิกที่ช่อง Slot_{slotIndex + 1} | ไอเทมคือ: {type} | จำนวนในช่อง: {slotItemCounts[slotIndex]} ชิ้น");
 
         if (type == ItemType.None) 
         {
@@ -409,7 +473,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        // ⚡ [เพิ่มใหม่] ค้นหา StressManager ของด่านปัจจุบันใหม่ในกรณีที่เพิ่งเปลี่ยนด่านเข้า/ออกแล้วลิงก์เดิมสูญหาย
+        //  [เพิ่มใหม่] ค้นหา StressManager ของด่านปัจจุบันใหม่ในกรณีที่เพิ่งเปลี่ยนด่านเข้า/ออกแล้วลิงก์เดิมสูญหาย
         if (stressManager == null)
         {
             stressManager = Object.FindAnyObjectByType<StressManager>();
@@ -417,7 +481,7 @@ public class InventoryManager : MonoBehaviour
 
         if (stressManager == null)
         {
-            Debug.LogError("-> ❌ ไม่สามารถใช้ไอเทมได้เนื่องจากหา StressManager ไม่เจอ!");
+            Debug.LogError("->  ไม่สามารถใช้ไอเทมได้เนื่องจากหา StressManager ไม่เจอ!");
             return;
         }
 
@@ -441,7 +505,7 @@ public class InventoryManager : MonoBehaviour
 
                 if (currentDay < 8)
                 {
-                    Debug.LogWarning("🎧 หูฟังนี้ยังใช้ไม่ได้! (สวมใส่และใช้งานได้ตั้งแต่วันที่ 8 เป็นต้นไป)");
+                    Debug.LogWarning("[Inventory] หูฟังนี้ยังใช้ไม่ได้ (สวมใส่และใช้งานได้ตั้งแต่วันที่ 8 เป็นต้นไป)");
                     break;
                 }
 
@@ -449,11 +513,12 @@ public class InventoryManager : MonoBehaviour
                 {
                     stressManager.ChangeStress(-10f); // ลดค่าความเครียด 10% (10 หน่วย)
                     hasUsedHeadphoneToday = true;
-                    Debug.Log("🎧 สวมหูฟัง: ลดความเครียดลง 10 หน่วยเรียบร้อย!");
+                    Debug.Log("[Inventory] สวมหูฟัง: ลดความเครียดลง 10 หน่วยเรียบร้อย");
+                    if (currentHoveredSlot == slotIndex) UpdateExamineDescription(slotIndex);
                 }
                 else
                 {
-                    Debug.Log("🎧 วันนี้คุณใช้หูฟังไปแล้ว!");
+                    Debug.Log("[Inventory] วันนี้คุณใช้หูฟังไปแล้ว");
                 }
                 break;
 
@@ -465,9 +530,9 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    // ⚡ หากยังไม่ได้สร้าง UI ใน Canvas ระบบจะเปิดหน้าต่างไดอารี่ OnGUI ให้ทดสอบได้ทันที!
+                    // หากยังไม่ได้สร้าง UI ใน Canvas ระบบจะเปิดหน้าต่างไดอารี่ OnGUI ให้ทดสอบได้ทันที
                     isDiaryOpenOnGUI = true;
-                    Debug.Log("📖 ไดอารี่: เปิดหน้าต่างบันทึกไดอารี่จำลอง (Dynamic UI) ขึ้นมาบนหน้าจอเรียบร้อย!");
+                    Debug.Log("[Inventory] ไดอารี่: เปิดหน้าต่างบันทึกไดอารี่จำลอง (Dynamic UI) ขึ้นมาบนหน้าจอเรียบร้อย");
                 }
                 break;
 
@@ -483,12 +548,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ⚡ [ฟังก์ชันใหม่] ใช้หักจำนวนไอเทมลงเมื่อกดใช้
+    // ใช้หักจำนวนไอเทมลงเมื่อกดใช้
     private void ConsumeItem(int index)
     {
         slotItemCounts[index]--; // ลดจำนวนลง 1
         
-        // ⚡ [เพิ่มใหม่] แจ้งระบบ Tutorial เมื่อใช้งานไอเทมสำเร็จ
+        // แจ้งระบบ Tutorial เมื่อใช้งานไอเทมสำเร็จ
         if (TutorialManager.Instance != null)
         {
             TutorialManager.Instance.OnItemUsed();
@@ -501,15 +566,83 @@ public class InventoryManager : MonoBehaviour
         else
         {
             UpdateSlotUI(index); // ถ้ายังเหลือให้อัปเดตตัวเลขใหม่
-            SaveToGlobal();      // [เพิ่มใหม่] ซิงค์คลังข้ามซีน
+            SaveToGlobal();      // ซิงค์คลังข้ามซีน
+            if (currentHoveredSlot == index)
+            {
+                UpdateExamineDescription(index);
+            }
         }
     }
 
-    // ⚡ [ปรับปรุงใหม่] ฟังก์ชันอัปเดตตัวเลขจำนวนไอเทมบน UI ของช่องเก็บของ
+    // จัดรูปแบบและบังคับตำแหน่งตัวเลขของสล็อตรายช่องให้อยู่มุมล่างขวาเสมอ
+    public void ConfigureSlotCountText(int i)
+    {
+        if (slotCountTexts == null || i < 0 || i >= slotCountTexts.Length) return;
+        if (slotCountTexts[i] == null) return;
+
+        RectTransform rt = slotCountTexts[i].rectTransform;
+        // จัดตำแหน่งให้อยู่มุมล่างขวาของแต่ละสล็อตเสมอ
+        rt.anchorMin = new Vector2(1f, 0f);
+        rt.anchorMax = new Vector2(1f, 0f);
+        rt.pivot = new Vector2(1f, 0f);
+        rt.anchoredPosition = new Vector2(-8f, 6f);
+        rt.sizeDelta = new Vector2(60f, 30f);
+
+        // รีเซ็ต Margin ให้เป็น 0 ทุกด้าน ป้องกันบัค Margin ขวาใน Inspector ดันตัวเลขไปทางซ้าย
+        slotCountTexts[i].margin = Vector4.zero;
+
+        // ปิดการตัดคำ (Word Wrapping) ป้องกันตัวเลข 10 ชิ้นขึ้นไปตกบรรทัด
+        slotCountTexts[i].enableWordWrapping = false;
+        slotCountTexts[i].overflowMode = TextOverflowModes.Overflow;
+        slotCountTexts[i].alignment = TextAlignmentOptions.BottomRight;
+        slotCountTexts[i].fontSize = 22f;
+        slotCountTexts[i].fontStyle = FontStyles.Bold;
+        slotCountTexts[i].color = Color.white;
+        slotCountTexts[i].raycastTarget = false; // ป้องกันการบดบัง raycast ตอนเอาเมาส์ชี้สล็อต
+
+        // เพิ่มเงาตัวเลขด้วยคอมโพเนนต์ Shadow ของ UGUI แบบปลอดภัย ไม่ยุ่งกับ shader material
+        Shadow shadow = slotCountTexts[i].GetComponent<Shadow>();
+        if (shadow == null) shadow = slotCountTexts[i].gameObject.AddComponent<Shadow>();
+        if (shadow != null)
+        {
+            shadow.effectColor = new Color(0f, 0f, 0f, 0.9f);
+            shadow.effectDistance = new Vector2(1.5f, -1.5f);
+        }
+    }
+
+    // จัดรูปแบบและแก้บัคข้อความแสดงจำนวนชิ้นบนสล็อตไอเทมทั้งหมด
+    public void ConfigureSlotCountTexts()
+    {
+        if (slotCountTexts == null) return;
+
+        for (int i = 0; i < slotCountTexts.Length; i++)
+        {
+            if (slotCountTexts[i] != null)
+            {
+                ConfigureSlotCountText(i);
+
+                if (slotItemCounts[i] > 1)
+                {
+                    slotCountTexts[i].gameObject.SetActive(true);
+                    slotCountTexts[i].text = slotItemCounts[i].ToString();
+                }
+                else
+                {
+                    slotCountTexts[i].gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+    // ฟังก์ชันอัปเดตตัวเลขจำนวนไอเทมบน UI ของช่องเก็บของ
     private void UpdateSlotUI(int index)
     {
+        if (index < 0 || index >= slotCountTexts.Length) return;
+
         if (slotCountTexts[index] != null)
         {
+            ConfigureSlotCountText(index);
+
             // ถ้าไอเทมมีมากกว่า 1 ชิ้น ให้เปิดการแสดงผลตัวเลข
             if (slotItemCounts[index] > 1)
             {
@@ -532,10 +665,175 @@ public class InventoryManager : MonoBehaviour
         slotItemCounts[index] = 0;
         if (slotCountTexts[index] != null) slotCountTexts[index].gameObject.SetActive(false);
         
-        SaveToGlobal(); // [เพิ่มใหม่] ซิงค์คลังข้ามซีน
+        if (currentHoveredSlot == index)
+        {
+            ResetExamineDescription();
+        }
+
+        SaveToGlobal(); // ซิงค์คลังข้ามซีน
     }
 
-    // ⚡ [เพิ่มใหม่] ฟังก์ชันจดจำ Sprite ของไอเทมเข้าฐานข้อมูลอัตโนมัติ
+    // ระบบตรวจจับเมาส์ชี้ (Hover) บนสล็อตไอเทม
+    public void OnSlotHoverEnter(int slotIndex)
+    {
+        currentHoveredSlot = slotIndex;
+        UpdateExamineDescription(slotIndex);
+    }
+
+    public void OnSlotHoverExit(int slotIndex)
+    {
+        if (currentHoveredSlot == slotIndex)
+        {
+            currentHoveredSlot = -1;
+            ResetExamineDescription();
+        }
+    }
+
+    public void UpdateExamineDescription(int slotIndex)
+    {
+        if (examineDescriptionText == null)
+        {
+            SetupExamineDescriptionUI();
+        }
+
+        if (examineDescriptionText == null) return;
+
+        if (slotIndex >= 0 && slotIndex < slotItemTypes.Length)
+        {
+            ItemType type = slotItemTypes[slotIndex];
+            if (type != ItemType.None)
+            {
+                examineDescriptionText.text = ThaiTextAdjuster.Adjust(GetItemDescription(type));
+                return;
+            }
+        }
+
+        ResetExamineDescription();
+    }
+
+    public void ResetExamineDescription()
+    {
+        if (examineDescriptionText != null)
+        {
+            examineDescriptionText.text = ThaiTextAdjuster.Adjust(defaultExaminePrompt);
+        }
+    }
+
+    // ข้อความอธิบายความสามารถและวิธีใช้ไอเทมแต่ละชนิด
+    public string GetItemDescription(ItemType type)
+    {
+        switch (type)
+        {
+            case ItemType.Candy:
+                return "<b><size=115%>ลูกอมหลากสี (Candy)</size></b>\n" +
+                       "ลูกอมรสหวาน ช่วยคลายความกังวลและลดค่าความเครียดเล็กน้อย (-3%)\n" +
+                       "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อรับประทาน]</i></color></size>";
+
+            case ItemType.StrawberryMilk:
+                return "<b><size=115%>นมสตรอว์เบอร์รี่ (Strawberry Milk)</size></b>\n" +
+                       "เครื่องดื่มกลิ่นหวานหอม ดื่มแล้วรู้สึกผ่อนคลายและลดค่าความเครียด (-5%)\n" +
+                       "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อดื่ม]</i></color></size>";
+
+            case ItemType.Diary:
+                return "<b><size=115%>ไดอารี่ของเนีย (Diary)</size></b>\n" +
+                       "สมุดบันทึกส่วนตัวของเนีย ใช้เขียนเรื่องราวในแต่ละวันและตรวจสอบระดับความเครียดสะสม\n" +
+                       "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อเปิดอ่าน]</i></color></size>";
+
+            case ItemType.Headphone:
+                int currentDay = DayManager.Instance != null ? DayManager.Instance.currentDay : 1;
+                string headphoneStatus;
+                if (currentDay < 8)
+                {
+                    headphoneStatus = "<size=85%><color=#DC2626><i>(ยังไม่สามารถใช้งานได้ จะเริ่มใช้งานได้ตั้งแต่วันที่ 8 เป็นต้นไป)</i></color></size>";
+                }
+                else if (hasUsedHeadphoneToday)
+                {
+                    headphoneStatus = "<size=85%><color=#D97706><i>(วันนี้ใช้งานไปแล้ว สามารถใช้งานได้วันละ 1 ครั้ง)</i></color></size>";
+                }
+                else
+                {
+                    headphoneStatus = "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อสวมใส่]</i></color></size>";
+                }
+
+                return "<b><size=115%>หูฟังครอบหู (Headphone)</size></b>\n" +
+                       "หูฟังแบบมีสาย ช่วยตัดเสียงรบกวนรอบตัวและลดค่าความเครียด (-10%)\n" +
+                       headphoneStatus;
+
+            case ItemType.Armband:
+                return "<b><size=115%>ปลอกแขนผ้า (Armband)</size></b>\n" +
+                       "ปลอกแขนผ้าช่วยดึงสติ ซึมซับและลดการเพิ่มขึ้นของความเครียดลง 50% ครั้งแรกในแต่ละวัน\n" +
+                       "<size=85%><color=#4B5563><i>[ไอเทมติดตัว / ทำงานอัตโนมัติ]</i></color></size>";
+
+            case ItemType.RainDrawing:
+                return "<b><size=115%>ภาพวาดของเรน (Rain's Drawing)</size></b>\n" +
+                       "ภาพวาดลายเส้นที่เรนเคยวาดให้ เป็นความทรงจำอันอบอุ่นที่คอยปลอบประโลมใจเนีย\n" +
+                       "<size=85%><color=#4B5563><i>[ไอเทมสำคัญ / ส่งผลต่อฉากจบ]</i></color></size>";
+
+            default:
+                return "";
+        }
+    }
+
+    // สร้างหรือค้นหาคอมโพเนนต์ TextMeshProUGUI สำหรับช่อง Examine ด้านล่างกระเป๋า
+    private void SetupExamineDescriptionUI()
+    {
+        if (inventoryPanel == null) return;
+
+        if (examineDescriptionText == null)
+        {
+            Transform existing = inventoryPanel.transform.Find("ExamineDescriptionText");
+            if (existing != null)
+            {
+                examineDescriptionText = existing.GetComponent<TextMeshProUGUI>();
+            }
+            else
+            {
+                GameObject textObj = new GameObject("ExamineDescriptionText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+                textObj.transform.SetParent(inventoryPanel.transform, false);
+
+                RectTransform rt = textObj.GetComponent<RectTransform>();
+                rt.anchorMin = new Vector2(0.5f, 0.5f);
+                rt.anchorMax = new Vector2(0.5f, 0.5f);
+                rt.pivot = new Vector2(0.5f, 0.5f);
+                rt.anchoredPosition = new Vector2(0f, -375f);
+                rt.sizeDelta = new Vector2(900f, 170f);
+
+                examineDescriptionText = textObj.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        if (examineDescriptionText != null)
+        {
+            if (examineFont == null)
+            {
+                TMP_FontAsset[] fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
+                foreach (var f in fonts)
+                {
+                    if (f != null && (f.name.Contains("Kanit") || f.name.Contains("Thai") || f.name.Contains("Sarabun") || f.name.Contains("Prompt")))
+                    {
+                        examineFont = f;
+                        break;
+                    }
+                }
+            }
+
+            if (examineFont != null)
+            {
+                examineDescriptionText.font = examineFont;
+            }
+
+            examineDescriptionText.fontSize = 24f;
+            examineDescriptionText.color = new Color(0.12f, 0.16f, 0.22f, 1f);
+            examineDescriptionText.alignment = TextAlignmentOptions.Center;
+            examineDescriptionText.enableWordWrapping = true;
+            examineDescriptionText.overflowMode = TextOverflowModes.Truncate;
+            examineDescriptionText.lineSpacing = 10f;
+            examineDescriptionText.raycastTarget = false;
+            examineDescriptionText.text = ThaiTextAdjuster.Adjust(defaultExaminePrompt);
+        }
+    }
+
+    //  [เพิ่มใหม่] ฟังก์ชันจดจำ Sprite ของไอเทมเข้าฐานข้อมูลอัตโนมัติ
     public void RegisterSpriteIfMissing(ItemType type, Sprite sprite)
     {
         if (sprite == null || type == ItemType.None) return;
@@ -560,7 +858,7 @@ public class InventoryManager : MonoBehaviour
         itemSpriteDatabase.Add(mapping);
     }
 
-    // ⚡ [เพิ่มใหม่] โหลดไฟล์เสียง SFX และ Sprite ไอเทมทั้งหมดอัตโนมัติหากยังว่างอยู่
+    //  [เพิ่มใหม่] โหลดไฟล์เสียง SFX และ Sprite ไอเทมทั้งหมดอัตโนมัติหากยังว่างอยู่
     private void AutoLoadSFXAndSpritesIfMissing()
     {
         AudioClip[] clips = Resources.FindObjectsOfTypeAll<AudioClip>();
@@ -590,7 +888,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ⚡ [เพิ่มใหม่] ฟังก์ชันเลือกรูปปกไดอารี่ตามระดับความเครียดสะสม (Dynamic Covers)
+    //  [เพิ่มใหม่] ฟังก์ชันเลือกรูปปกไดอารี่ตามระดับความเครียดสะสม (Dynamic Covers)
     public Sprite GetDynamicDiarySprite()
     {
         float stress = stressManager != null ? stressManager.currentStress : 0f;
@@ -617,15 +915,46 @@ public class InventoryManager : MonoBehaviour
         return CreateFallbackSprite(ItemType.Diary);
     }
 
+    // [เพิ่มใหม่] เสกไอเทมเข้ากระเป๋าเป้ (ใช้สำหรับระบบ Command Prompt หรือเควส)
+    public bool GiveItem(ItemType type, int amount = 1)
+    {
+        if (amount <= 0 || type == ItemType.None) return false;
+        Sprite sprite = GetSpriteForItemType(type);
+        bool anyAdded = false;
+        for (int i = 0; i < amount; i++)
+        {
+            if (AddItem(sprite, type))
+            {
+                anyAdded = true;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return anyAdded;
+    }
+
+    // [เพิ่มใหม่] ล้างไอเทมทั้งหมดในกระเป๋าเป้
+    public void ClearAllItems()
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            RemoveItemAt(i);
+        }
+        ResetExamineDescription();
+        SaveToGlobal();
+    }
+
     // [เพิ่มใหม่] แปลงสไปรต์สำหรับโหลดไอเทมข้ามซีน
-    private Sprite GetSpriteForItemType(ItemType type)
+    public Sprite GetSpriteForItemType(ItemType type)
     {
         foreach (var mapping in itemSpriteDatabase)
         {
             if (mapping.type == type && mapping.sprite != null) return mapping.sprite;
         }
 
-        // ⚡ [เพิ่มใหม่] หากยังไม่ได้ลากรูปใส่ใน Inspector ให้สร้าง Sprite สีตามชนิดไอเทมชั่วคราวเพื่อใช้ทดสอบ (ไม่ให้ขึ้นเป็นกล่องขาวโล้นๆ)
+        //  [เพิ่มใหม่] หากยังไม่ได้ลากรูปใส่ใน Inspector ให้สร้าง Sprite สีตามชนิดไอเทมชั่วคราวเพื่อใช้ทดสอบ (ไม่ให้ขึ้นเป็นกล่องขาวโล้นๆ)
         return CreateFallbackSprite(type);
     }
 
@@ -686,6 +1015,7 @@ public class InventoryManager : MonoBehaviour
                 UpdateSlotUI(index);
             }
         }
+        ConfigureSlotCountTexts();
         Debug.Log("[Inventory] โหลดไอเทมข้ามซีนมาแสดงผลบนกระเป๋าเรียบร้อย");
     }
 
@@ -725,7 +1055,7 @@ public class InventoryManager : MonoBehaviour
         hasUsedHeadphoneToday = false;
     }
 
-    // ⚡ [เพิ่มใหม่] ฟังก์ชันเปิดแสดงหน้าต่างไดอารี่ และเปลี่ยนสไตล์ตามความเครียดสะสม (Dynamic UI)
+    //  [เพิ่มใหม่] ฟังก์ชันเปิดแสดงหน้าต่างไดอารี่ และเปลี่ยนสไตล์ตามความเครียดสะสม (Dynamic UI)
     public void OpenDiaryUI()
     {
         if (diaryPanel == null || stressManager == null) return;
@@ -736,7 +1066,7 @@ public class InventoryManager : MonoBehaviour
         // ปิดการเดินตัวละครระหว่างอ่านไดอารี่
         if (playerMovement != null) playerMovement.enabled = false;
 
-        // ⚡ ระบบ Dynamic UI ปรับเปลี่ยนสีพื้นหลังและสไตล์ฟอนต์ตามระดับความเครียด
+        //  ระบบ Dynamic UI ปรับเปลี่ยนสีพื้นหลังและสไตล์ฟอนต์ตามระดับความเครียด
         if (diaryBgImage != null)
         {
             Sprite dynamicCover = GetDynamicDiarySprite();
@@ -771,7 +1101,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        // ⚡ อัปเดตเนื้อเรื่องสรุปรายวันตามวันปัจจุบัน
+        //  อัปเดตเนื้อเรื่องสรุปรายวันตามวันปัจจุบัน
         int day = 1;
         if (DayManager.Instance != null) day = DayManager.Instance.currentDay;
 
@@ -819,7 +1149,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ⚡ ฟังก์ชันช่วยเล่นเสียง SFX
+    //  ฟังก์ชันช่วยเล่นเสียง SFX
     public void PlaySFX(AudioClip clip)
     {
         if (clip != null && audioSource != null)
@@ -861,7 +1191,7 @@ public class InventoryManager : MonoBehaviour
                $"{diaryText}";
     }
 
-    // ⚡ [ระบบหน้าต่างจำลองอัตโนมัติ] เปิดหน้าต่างไดอารี่ Dynamic UI ให้ทดสอบได้ทันทีในหน้า Game View
+    //  [ระบบหน้าต่างจำลองอัตโนมัติ] เปิดหน้าต่างไดอารี่ Dynamic UI ให้ทดสอบได้ทันทีในหน้า Game View
     private void OnGUI()
     {
         if (!isDiaryOpenOnGUI) return;
@@ -894,7 +1224,7 @@ public class InventoryManager : MonoBehaviour
         titleStyle.fontStyle = FontStyle.Bold;
         titleStyle.normal.textColor = Color.black;
         titleStyle.alignment = TextAnchor.MiddleCenter;
-        GUILayout.Label($"📖 บันทึกของเนีย - วันที่ {day}", titleStyle);
+        GUILayout.Label($"บันทึกของเนีย - วันที่ {day}", titleStyle);
 
         // สถานะความเครียด
         GUIStyle statusStyle = new GUIStyle(GUI.skin.label);
@@ -943,7 +1273,7 @@ public class InventoryManager : MonoBehaviour
         GUIStyle btnStyle = new GUIStyle(GUI.skin.button);
         btnStyle.fontSize = 16;
         btnStyle.fontStyle = FontStyle.Bold;
-        if (GUILayout.Button("✖ ปิดไดอารี่", btnStyle, GUILayout.Height(40)))
+        if (GUILayout.Button("[X] ปิดไดอารี่", btnStyle, GUILayout.Height(40)))
         {
             PlaySFX(diaryCloseSound);
             isDiaryOpenOnGUI = false;

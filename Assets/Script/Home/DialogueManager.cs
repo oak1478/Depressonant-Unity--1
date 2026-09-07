@@ -262,7 +262,18 @@ public class DialogueManager : MonoBehaviour
         {
             bool isPlayer = currentSpeaker.Equals(playerName, System.StringComparison.OrdinalIgnoreCase) || 
                             currentSpeaker.Equals("Nia", System.StringComparison.OrdinalIgnoreCase);
-            displaySprite = isPlayer ? currentFallbackPlayerImg : currentFallbackNpcImg;
+            if (isPlayer)
+            {
+                displaySprite = currentFallbackPlayerImg;
+            }
+            else if (currentSpeaker.Equals(currentNPCName, System.StringComparison.OrdinalIgnoreCase))
+            {
+                displaySprite = currentFallbackNpcImg;
+            }
+            else
+            {
+                displaySprite = CharacterPortraitDatabase.GetPortrait(currentSpeaker, currentLine.portraitName);
+            }
         }
 
         // 4. แสดงรูป, ไฮไลท์คนพูดปัจจุบัน และทำเอฟเฟกต์ Dimming คนอื่น
@@ -276,6 +287,10 @@ public class DialogueManager : MonoBehaviour
                 {
                     activeSlots[i].sprite = displaySprite;
                     activeSlots[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    activeSlots[i].gameObject.SetActive(false);
                 }
 
                 activeSlots[i].color = Color.white;
@@ -294,7 +309,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 // หากตัวละครเดียวกันเคยอยู่ในสล็อตอื่น ให้ทำการเคลียร์และปิดตัวเก่าทิ้งทันที เพื่อแก้ปัญหารูปซ้ำซ้อน
-                if (!string.IsNullOrEmpty(currentSpeaker) && slotSpeakers[i] == currentSpeaker)
+                if (!string.IsNullOrEmpty(currentSpeaker) && string.Equals(slotSpeakers[i], currentSpeaker, System.StringComparison.OrdinalIgnoreCase))
                 {
                     activeSlots[i].gameObject.SetActive(false);
                     slotSpeakers[i] = "";

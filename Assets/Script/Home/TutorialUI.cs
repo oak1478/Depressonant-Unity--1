@@ -185,7 +185,7 @@ public class TutorialUI : MonoBehaviour
         if (instructionText != null)
         {
             CheckAndApplyThaiFont();
-            instructionText.text = message;
+            instructionText.text = ThaiTextAdjuster.Adjust(message);
         }
 
         // ซ่อน/โชว์ปุ่มคีย์บอร์ดที่เกี่ยวข้องในสเต็ปนี้

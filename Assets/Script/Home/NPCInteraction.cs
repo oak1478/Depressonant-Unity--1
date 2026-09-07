@@ -82,6 +82,53 @@ public class NPCInteraction : MonoBehaviour
     private bool isPlayerClose = false;
     [HideInInspector] public int lastTalkedDay = 0;
 
+    public string GetNPCIdentifier()
+    {
+        if (!string.IsNullOrEmpty(npcDisplayName) && npcDisplayName != "-" && npcDisplayName != "'-'")
+        {
+            return npcDisplayName.Trim();
+        }
+
+        if (npcProfiles != null)
+        {
+            foreach (var profile in npcProfiles)
+            {
+                if (profile != null && !string.IsNullOrEmpty(profile.npcName))
+                {
+                    if (!profile.npcName.Equals("Nia", System.StringComparison.OrdinalIgnoreCase) &&
+                        !profile.npcName.Equals("Player", System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        return profile.npcName.Trim();
+                    }
+                }
+            }
+        }
+
+        string cleanName = gameObject.name.Replace("(Clone)", "").Trim();
+        if (cleanName.StartsWith("NPC_", System.StringComparison.OrdinalIgnoreCase))
+        {
+            cleanName = cleanName.Substring(4);
+        }
+        return cleanName;
+    }
+
+    void Start()
+    {
+        if (string.IsNullOrEmpty(npcDisplayName) || npcDisplayName == "-" || npcDisplayName == "'-'")
+        {
+            npcDisplayName = GetNPCIdentifier();
+        }
+
+        DayManager dm = Object.FindAnyObjectByType<DayManager>();
+        int today = dm != null ? (int)dm.currentDay : (GameManagerSetup.Instance != null ? GameManagerSetup.Instance.currentDay : 1);
+
+        string npcId = GetNPCIdentifier();
+        if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.HasTalkedToNPCToday(npcId))
+        {
+            lastTalkedDay = today;
+        }
+    }
+
     void Update()
     {
         if (isPlayerClose && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
@@ -101,6 +148,7 @@ public class NPCInteraction : MonoBehaviour
         if (dm != null && dayManager != null)
         {
             int today = (int)dayManager.currentDay;
+            string npcId = GetNPCIdentifier();
 
             // 1. ดึงภาพใบหน้าเริ่มต้นแบบ fallback จากโปรไฟล์ที่ผู้ใช้กรอก
             Sprite playerFallbackImg = null;
@@ -126,7 +174,13 @@ public class NPCInteraction : MonoBehaviour
             }
 
             // 2. เช็คคุยซ้ำในวันเดียวกัน
-            if (today == lastTalkedDay)
+            bool hasTalkedToday = (today == lastTalkedDay);
+            if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.HasTalkedToNPCToday(npcId))
+            {
+                hasTalkedToday = true;
+            }
+
+            if (hasTalkedToday)
             {
                 Debug.Log($"[{npcDisplayName}] วันนี้คุยไปแล้ว! เล่นข้อความสำรองประจำวัน");
                 List<DialogueLine> activeFallback = GetTodaysFallback(today);
@@ -136,6 +190,14 @@ public class NPCInteraction : MonoBehaviour
             }
 
             lastTalkedDay = today;
+            if (GameManagerSetup.Instance != null)
+            {
+                GameManagerSetup.Instance.RegisterNPCTalkedToday(npcId);
+            }
+            if (DailyQuestManager.Instance != null)
+            {
+                DailyQuestManager.Instance.RefreshQuestList();
+            }
 
             DailyDialogue todaysDialogue = null;
             foreach (var dialog in dialoguesByDay)
@@ -160,7 +222,7 @@ public class NPCInteraction : MonoBehaviour
                                        todaysDialogue.storyChoices, 
                                        todaysDialogue.conclusionStory);
 
-                if (TutorialManager.Instance != null && npcDisplayName.Equals("Mom", System.StringComparison.OrdinalIgnoreCase))
+                if (TutorialManager.Instance != null && (npcDisplayName.Equals("Mom", System.StringComparison.OrdinalIgnoreCase) || npcId.Equals("Mom", System.StringComparison.OrdinalIgnoreCase)))
                 {
                     TutorialManager.Instance.OnTalkedToMom();
                 }
@@ -191,22 +253,35 @@ public class NPCInteraction : MonoBehaviour
 
     public Sprite GetNPCPortrait(string speakerName, string portraitName)
     {
-        if (string.IsNullOrEmpty(speakerName) || string.IsNullOrEmpty(portraitName)) return null;
+        if (string.IsNullOrEmpty(speakerName)) return null;
 
-        foreach (var profile in npcProfiles)
+        // 1. ค้นหาจาก npcProfiles ของตนเอง
+        if (npcProfiles != null)
         {
-            if (profile != null && profile.npcName.Equals(speakerName, System.StringComparison.OrdinalIgnoreCase))
+            foreach (var profile in npcProfiles)
             {
-                foreach (var portrait in profile.portraits)
+                if (profile != null && profile.npcName.Equals(speakerName, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    if (portrait != null && portrait.portraitName.Equals(portraitName, System.StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrEmpty(portraitName))
                     {
-                        return portrait.sprite;
+                        foreach (var portrait in profile.portraits)
+                        {
+                            if (portrait != null && portrait.portraitName.Equals(portraitName, System.StringComparison.OrdinalIgnoreCase) && portrait.sprite != null)
+                            {
+                                return portrait.sprite;
+                            }
+                        }
+                    }
+                    if (profile.portraits != null && profile.portraits.Count > 0 && profile.portraits[0] != null && profile.portraits[0].sprite != null)
+                    {
+                        return profile.portraits[0].sprite;
                     }
                 }
             }
         }
-        return null;
+
+        // 2. ค้นหาจาก CharacterPortraitDatabase สากล
+        return CharacterPortraitDatabase.GetPortrait(speakerName, portraitName);
     }
 
     private void ResolveDialogueLineSprites(List<DialogueLine> lines)

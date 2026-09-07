@@ -46,28 +46,45 @@ public class FirstPersonController : MonoBehaviour
         Debug.Log("[FirstPersonController] ทำการล็อกและซ่อนเคอร์เซอร์เมาส์แล้ว", this);
     }
 
+    public bool IsControlBlocked()
+    {
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return true;
+
+        if (SleepSaveMenuController.Instance != null && (SleepSaveMenuController.Instance.IsMenuOpen || SleepSaveMenuController.Instance.IsTransitioning)) return true;
+
+        DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+        if (dm != null && dm.IsDialogueActive()) return true;
+
+        InventoryManager inv = Object.FindAnyObjectByType<InventoryManager>();
+        if (inv != null && inv.inventoryPanel != null && inv.inventoryPanel.activeSelf) return true;
+
+        PauseMenuController pm = Object.FindAnyObjectByType<PauseMenuController>();
+        if (pm != null && pm.pauseMenuPanel != null && pm.pauseMenuPanel.activeSelf) return true;
+
+        return false;
+    }
+
+    private void OnDisable()
+    {
+        velocity = Vector3.zero;
+    }
+
     private void Update()
     {
-        // ⚡ [แก้ไขเพิ่มเติม] หากเคอร์เซอร์ไม่ได้ล็อกอยู่ ให้ตรวจจับว่าคลิกเมาส์กลับเข้าเกมหรือไม่ (หากไม่มีเมนูหรือบทสนทนาเปิดอยู่)
+        if (IsControlBlocked())
+        {
+            velocity = Vector3.zero;
+            return;
+        }
+
+        // หากเคอร์เซอร์ไม่ได้ล็อกอยู่ ให้ตรวจจับว่าคลิกเมาส์กลับเข้าเกมหรือไม่
         if (Cursor.lockState != CursorLockMode.Locked)
         {
             if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && Time.timeScale > 0f)
             {
-                DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
-                InventoryManager inv = Object.FindAnyObjectByType<InventoryManager>();
-                PauseMenuController pm = Object.FindAnyObjectByType<PauseMenuController>();
-
-                bool isDialogueOpen = dm != null && dm.IsDialogueActive();
-                bool isInventoryOpen = inv != null && inv.inventoryPanel != null && inv.inventoryPanel.activeSelf;
-                bool isPauseMenuOpen = pm != null && pm.pauseMenuPanel != null && pm.pauseMenuPanel.activeSelf;
-                bool isSleepMenuOpen = SleepSaveMenuController.Instance != null && SleepSaveMenuController.Instance.IsMenuOpen;
-
-                if (!isDialogueOpen && !isInventoryOpen && !isPauseMenuOpen && !isSleepMenuOpen)
-                {
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
-                    Debug.Log("[FirstPersonController] คลิกหน้าจอเพื่อล็อกเมาส์กลับเข้าสู่มุมมองบุคคลที่หนึ่ง", this);
-                }
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Debug.Log("[FirstPersonController] คลิกหน้าจอเพื่อล็อกเมาส์กลับเข้าสู่มุมมองบุคคลที่หนึ่ง", this);
             }
             return;
         }

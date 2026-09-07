@@ -116,6 +116,16 @@ public class DayManager : MonoBehaviour
             if (InventoryManager.Instance != null) InventoryManager.Instance.ResetDailyItems();
             StressManager stress = Object.FindAnyObjectByType<StressManager>();
             if (stress != null) stress.ResetDailyModifiers();
+
+            if (GameManagerSetup.Instance != null)
+            {
+                GameManagerSetup.Instance.ResetDailyNPCTalk();
+            }
+
+            if (DailyQuestManager.Instance != null)
+            {
+                DailyQuestManager.Instance.RefreshQuestList();
+            }
         }
     }
 
