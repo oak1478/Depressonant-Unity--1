@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -3772,9 +3772,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e1c8f39e3dacc42895fdee8ccb90e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsController
-  mainMixer: {fileID: 24100000, guid: eb761bb21b35bfe40b97c5a33357efcb, type: 2}
-  volumeSlider: {fileID: 692635948}
   settingsPanel: {fileID: 460579995}
+  mainMixer: {fileID: 24100000, guid: eb761bb21b35bfe40b97c5a33357efcb, type: 2}
+  masterSlider: {fileID: 0}
+  masterValueText: {fileID: 0}
+  bgmSlider: {fileID: 0}
+  bgmValueText: {fileID: 0}
+  sfxSlider: {fileID: 0}
+  sfxValueText: {fileID: 0}
+  fullscreenToggle: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
+  qualityDropdown: {fileID: 0}
+  vSyncToggle: {fileID: 0}
+  brightnessSlider: {fileID: 0}
+  brightnessValueText: {fileID: 0}
+  mouseSensitivitySlider: {fileID: 0}
+  mouseSensitivityValueText: {fileID: 0}
 --- !u!1 &1507978281
 GameObject:
   m_ObjectHideFlags: 0

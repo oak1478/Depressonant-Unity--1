@@ -478,7 +478,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TriggerSceneWarp
   targetSceneName: OutSide
   targetSpawnPointName: Player_Spawn_Point
+<<<<<<< HEAD
   doorOpenSound: {fileID: 8300000, guid: eb30089e568c1df4ba88b13bdf3a5108, type: 3}
+=======
+  doorOpenSound: {fileID: 0}
+>>>>>>> f4985971801b072c5d1148db0e16581e352bc986
 --- !u!65 &86814108
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2013,7 +2017,11 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+<<<<<<< HEAD
   m_ColorTemperature: 8201
+=======
+  m_ColorTemperature: 11407
+>>>>>>> f4985971801b072c5d1148db0e16581e352bc986
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -4914,7 +4922,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TriggerSceneWarp
   targetSceneName: Bedroom_3D
   targetSpawnPointName: Player_Spawn_Point
+<<<<<<< HEAD
   doorOpenSound: {fileID: 8300000, guid: eb30089e568c1df4ba88b13bdf3a5108, type: 3}
+=======
+  doorOpenSound: {fileID: 0}
+>>>>>>> f4985971801b072c5d1148db0e16581e352bc986
 --- !u!4 &1318012048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b0be235ff8b88ea498e74ac6303519ba, type: 3}
@@ -7174,6 +7186,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 1830131974505251705, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7230,6 +7243,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+=======
+>>>>>>> f4985971801b072c5d1148db0e16581e352bc986
     - target: {fileID: 5055866883162553104, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.21917
@@ -7270,6 +7285,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 5093680732439561503, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -7294,10 +7310,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -55.9373
       objectReference: {fileID: 0}
+=======
+>>>>>>> f4985971801b072c5d1148db0e16581e352bc986
     - target: {fileID: 5394354577381289564, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
       propertyPath: m_Name
       value: '[GameManager_Core]'
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 7246632554686201102, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
       propertyPath: m_fontSize
       value: 44.55
@@ -7378,6 +7397,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+=======
+>>>>>>> f4985971801b072c5d1148db0e16581e352bc986
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

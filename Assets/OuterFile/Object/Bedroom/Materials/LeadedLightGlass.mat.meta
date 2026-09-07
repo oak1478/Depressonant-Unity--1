@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ec36f7a45512d9140a4e372d3dd6be77
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 133820
+  packageName: WindowsAndDoorsPack01
+  packageVersion: 2.0
+  assetPath: Assets/WindowAndDoorsPack01/Materials/LeadedLightGlass.mat
+  uploadId: 715535

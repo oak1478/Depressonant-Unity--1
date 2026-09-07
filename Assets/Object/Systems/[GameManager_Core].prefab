@@ -813,7 +813,7 @@ RectTransform:
   m_GameObject: {fileID: 1151015097366691033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5996245471321309672}
@@ -3364,7 +3364,7 @@ RectTransform:
   m_GameObject: {fileID: 3981352457251349645}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5996245471321309672}
@@ -4004,6 +4004,7 @@ MonoBehaviour:
   npcListContainer: {fileID: 5082747603116553042}
   npcRowPrefab: {fileID: 4447496603711433513, guid: 25701814fbb74c04087dd3eab0fb4340, type: 3}
   titleObjectToHide: {fileID: 7257964029638888750}
+  questUIRoot: {fileID: 0}
   refreshInterval: 1
 --- !u!1 &5046172996434668484
 GameObject:
@@ -4283,7 +4284,7 @@ RectTransform:
   m_GameObject: {fileID: 5180931784963688844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5996245471321309672}
@@ -4965,7 +4966,7 @@ RectTransform:
   m_GameObject: {fileID: 5592255926938204088}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5996245471321309672}
@@ -5916,7 +5917,7 @@ RectTransform:
   m_GameObject: {fileID: 6543493797051905131}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5996245471321309672}
@@ -6770,8 +6771,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 3405774848
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0.79607844}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7479,7 +7480,7 @@ RectTransform:
   m_GameObject: {fileID: 8186825578285276551}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5996245471321309672}
@@ -7976,7 +7977,7 @@ RectTransform:
   m_GameObject: {fileID: 8710451367838654781}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5996245471321309672}

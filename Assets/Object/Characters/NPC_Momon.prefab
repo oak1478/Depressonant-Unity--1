@@ -1,0 +1,1288 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1045410145850230202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8154024058421438302}
+  - component: {fileID: 8861338897602958839}
+  - component: {fileID: 2281694316899412056}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8154024058421438302
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045410145850230202}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 218295256277935529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1.1578026, y: 0.6366997}
+  m_SizeDelta: {x: -1.5353012, y: -0.896698}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8861338897602958839
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045410145850230202}
+  m_CullTransparentMesh: 1
+--- !u!114 &2281694316899412056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045410145850230202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.7175809, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 1686348646, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1302187433753302241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2300437157357348136}
+  - component: {fileID: 581613523042820949}
+  - component: {fileID: 1497941683104065554}
+  m_Layer: 0
+  m_Name: NPCVisual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2300437157357348136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302187433753302241}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.6678827, y: 6.4799976, z: -0.0063234214}
+  m_LocalScale: {x: 0.9, y: 0.59999996, z: 0.29581597}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5833724142160659115}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &581613523042820949
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302187433753302241}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: 5507cd553b2bdfc438f60cd182371ad1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 12.803906, y: 21.6}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+--- !u!114 &1497941683104065554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302187433753302241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b634dcaeec2d44faf3e2c25e3322a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestCollision
+--- !u!1 &2400506645854523943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2998473419723759913}
+  - component: {fileID: 7558993529744644353}
+  - component: {fileID: 3101523817826247579}
+  - component: {fileID: 1211301746454398028}
+  m_Layer: 0
+  m_Name: PopupCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2998473419723759913
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2400506645854523943}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 3.333333, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 218295256277935529}
+  m_Father: {fileID: 5833724142160659115}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -8.18, y: 12.47}
+  m_SizeDelta: {x: 3, y: 1.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &7558993529744644353
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2400506645854523943}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &3101523817826247579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2400506645854523943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &1211301746454398028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2400506645854523943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!1 &3806983223933095080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 218295256277935529}
+  - component: {fileID: 1884976242369288710}
+  - component: {fileID: 8616254609992352412}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &218295256277935529
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806983223933095080}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 528125458408328026}
+  - {fileID: 8154024058421438302}
+  - {fileID: 8180912336924448236}
+  m_Father: {fileID: 2998473419723759913}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.19510269, y: -0.094200134}
+  m_SizeDelta: {x: -0.39009857, y: -0.18830109}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1884976242369288710
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806983223933095080}
+  m_CullTransparentMesh: 1
+--- !u!114 &8616254609992352412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806983223933095080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -248340449, guid: 2009fd1e84e922f4c8f597af0d9f416e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6375495022708227684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8180912336924448236}
+  - component: {fileID: 2196028479993391537}
+  - component: {fileID: 5196227700907935754}
+  m_Layer: 0
+  m_Name: Name
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8180912336924448236
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375495022708227684}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 218295256277935529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1.1578026, y: 0.6366997}
+  m_SizeDelta: {x: -1.5353012, y: -0.896698}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2196028479993391537
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375495022708227684}
+  m_CullTransparentMesh: 1
+--- !u!114 &5196227700907935754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375495022708227684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Mom
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 38333846f5ed9534ba4457319b62489b, type: 2}
+  m_sharedMaterial: {fileID: -3684093273843957968, guid: 38333846f5ed9534ba4457319b62489b, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.4
+  m_fontSizeBase: 0.4
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &6589870709020724232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5833724142160659115}
+  - component: {fileID: 3445064232221217943}
+  - component: {fileID: 7031110804936892037}
+  - component: {fileID: 408637039827304119}
+  - component: {fileID: 9054252961316461215}
+  m_Layer: 0
+  m_Name: NPC_Momon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5833724142160659115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589870709020724232}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -117.507744, y: 0.05925556, z: 37.787697}
+  m_LocalScale: {x: 0.17, y: 0.25500003, z: 0.85}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 2300437157357348136}
+  - {fileID: 2998473419723759913}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3445064232221217943
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589870709020724232}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.6280174
+  m_Center: {x: 3.1400871, y: 5, z: 0}
+--- !u!114 &7031110804936892037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589870709020724232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5994098dddd3fd43a53f49b1cb873df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCInteraction
+  npcDisplayName: Momon
+  npcProfiles:
+  - npcName: Nia
+    portraits:
+    - portraitName: idle
+      sprite: {fileID: 21300000, guid: b0da9f997a1499241bb34209da311e78, type: 3}
+    - portraitName: good1
+      sprite: {fileID: 21300000, guid: 88ee9be14039d9445bce6b410415b08b, type: 3}
+    - portraitName: bad1
+      sprite: {fileID: 21300000, guid: 59425c8993e720149b1dd16d5f765aea, type: 3}
+  - npcName: Momon
+    portraits:
+    - portraitName: idle
+      sprite: {fileID: 21300000, guid: 025ac2e8686854f4ca1c5a6e7baac8ce, type: 3}
+  dialoguesByDay:
+  - dayTitle: DAY 6
+    dayNumber: 6
+    introductionStory:
+    - text: ...
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E40\u0E14\u0E34\u0E19\u0E16\u0E37\u0E2D\u0E41\u0E01\u0E49\u0E27\u0E01\u0E32\u0E41\u0E1F\u0E40\u0E02\u0E49\u0E32\u0E21\u0E32\u0E40\u0E07\u0E35\u0E22\u0E1A\u0E46
+        \u0E14\u0E49\u0E32\u0E19\u0E2B\u0E25\u0E31\u0E07\u0E40\u0E19\u0E35\u0E22)"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E08\u0E31\u0E14\u0E0A\u0E31\u0E49\u0E19\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D\u0E2B\u0E21\u0E27\u0E14\u0E27\u0E34\u0E17\u0E22\u0E32\u0E28\u0E32\u0E2A\u0E15\u0E23\u0E4C\u0E40\u0E2A\u0E23\u0E47\u0E08\u0E44\u0E27\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E40\u0E14\u0E34\u0E21\u0E40\u0E25\u0E22\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E04\u0E23\u0E39\u0E42\u0E21\u0E21\u0E48\u0E2D\u0E19..."
+      speakerName: Nia
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E15\u0E23\u0E07\u0E19\u0E35\u0E49\u0E21\u0E38\u0E21\u0E23\u0E30\u0E40\u0E1A\u0E35\u0E22\u0E1A\u0E14\u0E35\u0E02\u0E36\u0E49\u0E19\u0E40\u0E22\u0E2D\u0E30
+        \u0E1B\u0E01\u0E15\u0E34\u0E0A\u0E31\u0E49\u0E19\u0E19\u0E35\u0E49\u0E22\u0E38\u0E48\u0E07\u0E40\u0E2B\u0E22\u0E34\u0E07\u0E15\u0E25\u0E2D\u0E14\u0E16\u0E49\u0E32\u0E40\u0E18\u0E2D\u0E44\u0E21\u0E48\u0E2D\u0E22\u0E39\u0E48"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E04\u0E23\u0E39\u0E41\u0E04\u0E48\u0E1E\u0E39\u0E14\u0E44\u0E1B\u0E07\u0E31\u0E49\u0E19\u0E46
+        \u0E41\u0E2B\u0E25\u0E30... \u0E40\u0E02\u0E32\u0E04\u0E07\u0E41\u0E04\u0E48\u0E40\u0E01\u0E23\u0E07\u0E43\u0E08
+        \u0E1B\u0E25\u0E2D\u0E1A\u0E43\u0E08\u0E40\u0E14\u0E47\u0E01\u0E2B\u0E48\u0E27\u0E22\u0E46
+        \u0E04\u0E19\u0E19\u0E36\u0E07\u0E2D\u0E22\u0E39\u0E48\u0E2A\u0E34\u0E19\u0E30)"
+      speakerName: Nia
+      portraitName: bad1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E07\u0E35\u0E22\u0E1A\u0E17\u0E33\u0E44\u0E21\u0E25\u0E48\u0E30?
+        \u0E01\u0E32\u0E41\u0E1F\u0E14\u0E33\u0E40\u0E02\u0E49\u0E32\u0E15\u0E32\u0E40\u0E2B\u0E23\u0E2D?"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E1B\u0E25\u0E48\u0E32\u0E04\u0E48\u0E30... \u0E41\u0E04\u0E48\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32
+        \u0E43\u0E04\u0E23\u0E46 \u0E01\u0E47\u0E17\u0E33\u0E44\u0E14\u0E49"
+      speakerName: Nia
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: ...
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E04\u0E19\u0E2D\u0E37\u0E48\u0E19\u0E17\u0E33\u0E44\u0E14\u0E49 \u0E41\u0E15\u0E48\u0E40\u0E18\u0E2D\u0E17\u0E33\u0E21\u0E31\u0E19
+        \u0E43\u0E2A\u0E48\u0E43\u0E08 \u0E01\u0E27\u0E48\u0E32\u0E04\u0E19\u0E2D\u0E37\u0E48\u0E19
+        \u0E40\u0E19\u0E35\u0E22"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E19\u0E35\u0E49 \u0E16\u0E49\u0E32\u0E44\u0E21\u0E48\u0E21\u0E35\u0E40\u0E18\u0E2D\u0E04\u0E2D\u0E22\u0E14\u0E39\u0E41\u0E25
+        \u0E1B\u0E48\u0E32\u0E19\u0E19\u0E35\u0E49\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D\u0E04\u0E07\u0E2A\u0E25\u0E31\u0E1A\u0E2B\u0E21\u0E27\u0E14\u0E08\u0E19\u0E04\u0E23\u0E39\u0E27\u0E34\u0E20\u0E32\u0E2B\u0E32\u0E44\u0E21\u0E48\u0E40\u0E08\u0E2D\u0E2A\u0E31\u0E01\u0E40\u0E25\u0E48\u0E21\u0E41\u0E25\u0E49\u0E27"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    storyChoices:
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E04\u0E48\u0E30\u0E04\u0E23\u0E39...
+        \u0E2B\u0E19\u0E39\u0E08\u0E30\u0E1E\u0E22\u0E32\u0E22\u0E32\u0E21\u0E14\u0E39\u0E41\u0E25\u0E43\u0E2B\u0E49\u0E14\u0E35\u0E02\u0E36\u0E49\u0E19\u0E2D\u0E35\u0E01"
+      stressChange: -15
+      speakerName: Nia
+      portraitName: good1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines: []
+    - choiceButtonText: "\u0E04\u0E23\u0E39\u0E1E\u0E39\u0E14\u0E1B\u0E23\u0E30\u0E0A\u0E14\u0E2B\u0E19\u0E39\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E1B\u0E25\u0E48\u0E32\u0E04\u0E30?"
+      stressChange: 0
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E2B\u0E19\u0E49\u0E32\u0E04\u0E23\u0E39\u0E14\u0E39\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E04\u0E19\u0E0A\u0E2D\u0E1A\u0E1E\u0E39\u0E14\u0E1B\u0E23\u0E30\u0E0A\u0E14\u0E02\u0E19\u0E32\u0E14\u0E19\u0E31\u0E49\u0E19\u0E40\u0E25\u0E22\u0E40\u0E2B\u0E23\u0E2D?"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 5
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "(\u0E01\u0E49\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E44\u0E21\u0E48\u0E1E\u0E39\u0E14\u0E2D\u0E30\u0E44\u0E23)"
+      stressChange: 0
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E40\u0E2D\u0E32\u0E40\u0E16\u0E2D\u0E30 \u0E02\u0E2D\u0E1A\u0E43\u0E08\u0E21\u0E32\u0E01\u0E19\u0E30"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    conclusionStory:
+    - text: "\u0E02\u0E2D\u0E15\u0E31\u0E27\u0E01\u0E48\u0E2D\u0E19\u0E19\u0E30\u0E04\u0E48\u0E30"
+      speakerName: Nia
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+  - dayTitle: DAY 7
+    dayNumber: 7
+    introductionStory:
+    - text: "(\u0E40\u0E14\u0E34\u0E19\u0E19\u0E33\u0E40\u0E19\u0E35\u0E22\u0E2D\u0E2D\u0E01\u0E21\u0E32\u0E15\u0E32\u0E21\u0E17\u0E32\u0E07\u0E40\u0E14\u0E34\u0E19)"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E0A\u0E35\u0E2D\u0E48\u0E32\u0E1E\u0E39\u0E14\u0E2D\u0E30\u0E44\u0E23\u0E01\u0E31\u0E1A\u0E40\u0E18\u0E2D\u0E43\u0E0A\u0E48\u0E44\u0E2B\u0E21?"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E1B\u0E25\u0E48\u0E32\u0E04\u0E48\u0E30... \u0E40\u0E18\u0E2D\u0E41\u0E04\u0E48\u0E1E\u0E39\u0E14\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E08\u0E23\u0E34\u0E07"
+      speakerName: Nia
+      portraitName: bad1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E08\u0E23\u0E34\u0E07\u0E02\u0E2D\u0E07\u0E0A\u0E35\u0E2D\u0E48\u0E32
+        \u0E44\u0E21\u0E48\u0E43\u0E0A\u0E48\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E08\u0E23\u0E34\u0E07\u0E02\u0E2D\u0E07\u0E40\u0E18\u0E2D
+        \u0E40\u0E19\u0E35\u0E22"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E2A\u0E21\u0E2D\u0E07\u0E04\u0E19\u0E40\u0E23\u0E32\u0E0A\u0E2D\u0E1A\u0E08\u0E33\u0E41\u0E15\u0E48\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E41\u0E22\u0E48\u0E46
+        \u0E41\u0E25\u0E49\u0E27\u0E25\u0E37\u0E21\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E14\u0E35\u0E46
+        \u0E17\u0E35\u0E48\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E40\u0E04\u0E22\u0E17\u0E33"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E04\u0E23\u0E39\u0E40\u0E2B\u0E47\u0E19\u0E27\u0E48\u0E32\u0E40\u0E18\u0E2D\u0E1E\u0E22\u0E32\u0E22\u0E32\u0E21\u0E41\u0E04\u0E48\u0E44\u0E2B\u0E19\u0E43\u0E19\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14
+        \u0E2D\u0E22\u0E48\u0E32\u0E1B\u0E25\u0E48\u0E2D\u0E22\u0E43\u0E2B\u0E49\u0E04\u0E33\u0E1E\u0E39\u0E14\u0E04\u0E19\u0E2D\u0E37\u0E48\u0E19\u0E21\u0E32\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E0A\u0E35\u0E27\u0E34\u0E15\u0E40\u0E18\u0E2D"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    storyChoices:
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E04\u0E48\u0E30\u0E04\u0E23\u0E39...
+        \u0E2B\u0E19\u0E39\u0E08\u0E30\u0E1E\u0E22\u0E32\u0E22\u0E32\u0E21\u0E22\u0E49\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07"
+      stressChange: -15
+      speakerName: Nia
+      portraitName: good1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines: []
+    - choiceButtonText: "\u0E41\u0E15\u0E48\u0E2B\u0E19\u0E39\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E41\u0E1A\u0E1A\u0E19\u0E31\u0E49\u0E19\u0E08\u0E23\u0E34\u0E07\u0E46
+        \u0E19\u0E35\u0E48\u0E04\u0E30... \u0E2B\u0E19\u0E39\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E44\u0E21\u0E48\u0E21\u0E35\u0E04\u0E38\u0E13\u0E04\u0E48\u0E32\u0E2D\u0E30\u0E44\u0E23\u0E40\u0E25\u0E22"
+      stressChange: 5
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines: []
+    - choiceButtonText: "\u0E2B\u0E19\u0E39\u0E02\u0E2D\u0E15\u0E31\u0E27\u0E44\u0E1B\u0E2B\u0E49\u0E2D\u0E07\u0E19\u0E49\u0E33\u0E01\u0E48\u0E2D\u0E19\u0E19\u0E30\u0E04\u0E30"
+      stressChange: 0
+      speakerName: Nia
+      portraitName: idle
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines: []
+    conclusionStory:
+    - text: ...
+      speakerName: Nia
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+  - dayTitle: DAY 13
+    dayNumber: 13
+    introductionStory:
+    - text: "(\u0E22\u0E37\u0E48\u0E19\u0E41\u0E1F\u0E49\u0E21\u0E08\u0E31\u0E14\u0E2B\u0E21\u0E27\u0E14\u0E2B\u0E21\u0E39\u0E48\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D\u0E40\u0E25\u0E48\u0E21\u0E43\u0E2B\u0E21\u0E48\u0E43\u0E2B\u0E49\u0E40\u0E19\u0E35\u0E22
+        \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E21\u0E2D\u0E07\u0E14\u0E39\u0E0A\u0E31\u0E49\u0E19\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D\u0E17\u0E35\u0E48\u0E16\u0E39\u0E01\u0E40\u0E23\u0E35\u0E22\u0E07\u0E44\u0E27\u0E49\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E30\u0E40\u0E1A\u0E35\u0E22\u0E1A)"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E23\u0E30\u0E1A\u0E1A\u0E14\u0E23\u0E23\u0E0A\u0E19\u0E35\u0E2B\u0E21\u0E27\u0E14\u0E43\u0E2B\u0E21\u0E48\u0E17\u0E35\u0E48\u0E40\u0E18\u0E2D\u0E40\u0E2A\u0E19\u0E2D\u0E21\u0E31\u0E48\u0E19\u0E43\u0E08\u0E27\u0E48\u0E32\u0E17\u0E33\u0E40\u0E2A\u0E23\u0E47\u0E08\u0E17\u0E31\u0E19\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E43\u0E0A\u0E48\u0E44\u0E2B\u0E21\u0E40\u0E19\u0E35\u0E22?"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E2A\u0E23\u0E47\u0E08\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22\u0E41\u0E25\u0E49\u0E27\u0E04\u0E48\u0E30\u0E04\u0E23\u0E39...
+        \u0E2B\u0E19\u0E39\u0E08\u0E31\u0E14\u0E41\u0E1A\u0E48\u0E07\u0E15\u0E32\u0E21\u0E2B\u0E21\u0E27\u0E14\u0E23\u0E2B\u0E31\u0E2A\u0E2A\u0E35\u0E43\u0E2B\u0E21\u0E48
+        \u0E17\u0E33\u0E43\u0E2B\u0E49\u0E2B\u0E32\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D\u0E2B\u0E21\u0E27\u0E14\u0E27\u0E34\u0E17\u0E22\u0E32\u0E28\u0E32\u0E15\u0E23\u0E4C\u0E01\u0E31\u0E1A\u0E27\u0E23\u0E23\u0E13\u0E01\u0E23\u0E23\u0E21\u0E07\u0E48\u0E32\u0E22\u0E02\u0E36\u0E49\u0E19\u0E40\u0E22\u0E2D\u0E30\u0E40\u0E25\u0E22\u0E04\u0E48\u0E30"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E40\u0E14\u0E34\u0E19\u0E44\u0E1B\u0E2A\u0E33\u0E23\u0E27\u0E08\u0E17\u0E35\u0E48\u0E0A\u0E31\u0E49\u0E19\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D
+        \u0E25\u0E2D\u0E07\u0E2B\u0E22\u0E34\u0E1A\u0E2D\u0E2D\u0E01\u0E21\u0E32\u0E40\u0E25\u0E48\u0E21\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E41\u0E25\u0E49\u0E27\u0E22\u0E34\u0E49\u0E21\u0E21\u0E38\u0E21\u0E1B\u0E32\u0E01)"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22\u0E41\u0E25\u0E30\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E21\u0E32\u0E01...
+        \u0E04\u0E23\u0E39\u0E2D\u0E22\u0E39\u0E48\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E19\u0E35\u0E49\u0E21\u0E32\u0E2B\u0E25\u0E32\u0E22\u0E1B\u0E35
+        \u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E40\u0E04\u0E22\u0E40\u0E2B\u0E47\u0E19\u0E43\u0E04\u0E23\u0E08\u0E31\u0E14\u0E23\u0E30\u0E1A\u0E1A\u0E44\u0E14\u0E49\u0E40\u0E02\u0E49\u0E32\u0E21\u0E37\u0E2D\u0E40\u0E17\u0E48\u0E32\u0E40\u0E18\u0E2D\u0E40\u0E25\u0E22\u0E19\u0E30"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(mPFC \u0E40\u0E23\u0E34\u0E48\u0E21\u0E2A\u0E30\u0E17\u0E49\u0E2D\u0E19\u0E20\u0E32\u0E1E\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E44\u0E14\u0E49\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19\u0E02\u0E36\u0E49\u0E19...
+        \u0E21\u0E48\u0E32\u0E19\u0E1D\u0E49\u0E32\u0E21\u0E31\u0E27\u0E25\u0E14\u0E25\u0E07)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E20\u0E32\u0E04\u0E20\u0E39\u0E21\u0E34\u0E43\u0E08\u0E40\u0E25\u0E47\u0E01\u0E46
+        \u0E40\u0E23\u0E34\u0E48\u0E21\u0E40\u0E01\u0E34\u0E14\u0E02\u0E36\u0E49\u0E19
+        \u0E42\u0E14\u0E22\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E21\u0E35\u0E40\u0E2A\u0E35\u0E22\u0E07\u0E25\u0E1A\u0E43\u0E19\u0E2B\u0E31\u0E27\u0E04\u0E2D\u0E22\u0E04\u0E49\u0E32\u0E19\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E01\u0E48\u0E2D\u0E19)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E40\u0E23\u0E32... \u0E17\u0E33\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E0A\u0E2D\u0E1A\u0E44\u0E14\u0E49\u0E14\u0E35\u0E08\u0E23\u0E34\u0E07\u0E46)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    storyChoices:
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E04\u0E48\u0E30\u0E04\u0E23\u0E39!
+        \u0E2B\u0E19\u0E39\u0E0A\u0E2D\u0E1A\u0E07\u0E32\u0E19\u0E43\u0E19\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E08\u0E23\u0E34\u0E07\u0E46
+        \u0E04\u0E48\u0E30 \u0E41\u0E25\u0E30\u0E2B\u0E19\u0E39\u0E15\u0E31\u0E49\u0E07\u0E43\u0E08\u0E17\u0E33\u0E21\u0E31\u0E19\u0E40\u0E15\u0E47\u0E21\u0E17\u0E35\u0E48"
+      stressChange: -15
+      speakerName: Nia
+      portraitName: good1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E14\u0E35\u0E41\u0E25\u0E49\u0E27\u0E25\u0E48\u0E30 \u0E01\u0E32\u0E23\u0E44\u0E14\u0E49\u0E17\u0E33\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E0A\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E17\u0E33\u0E21\u0E31\u0E19\u0E44\u0E14\u0E49\u0E14\u0E35
+          \u0E19\u0E31\u0E48\u0E19\u0E04\u0E37\u0E2D\u0E04\u0E38\u0E13\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E21\u0E35\u0E43\u0E04\u0E23\u0E41\u0E22\u0E48\u0E07\u0E44\u0E1B\u0E08\u0E32\u0E01\u0E40\u0E18\u0E2D\u0E44\u0E14\u0E49\u0E19\u0E30"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "\u0E2B\u0E19\u0E39\u0E41\u0E04\u0E48\u0E25\u0E2D\u0E07\u0E17\u0E33\u0E14\u0E39\u0E15\u0E32\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E19\u0E48\u0E30\u0E04\u0E48\u0E30..."
+      stressChange: -5
+      speakerName: Nia
+      portraitName: idle
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E15\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E17\u0E33\u0E15\u0E32\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48
+          \u0E41\u0E15\u0E48\u0E1C\u0E25\u0E07\u0E32\u0E19\u0E21\u0E31\u0E19\u0E1F\u0E49\u0E2D\u0E07\u0E27\u0E48\u0E32\u0E40\u0E18\u0E2D\u0E43\u0E2A\u0E48\u0E43\u0E08
+          \u0E22\u0E2D\u0E21\u0E23\u0E31\u0E1A\u0E04\u0E33\u0E0A\u0E21\u0E1A\u0E49\u0E32\u0E07\u0E40\u0E16\u0E2D\u0E30\u0E19\u0E30"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "(\u0E01\u0E49\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E2B\u0E25\u0E1A\u0E15\u0E32)
+        \u0E2B\u0E19\u0E39\u0E44\u0E21\u0E48\u0E41\u0E19\u0E48\u0E43\u0E08\u0E27\u0E48\u0E32\u0E04\u0E19\u0E2D\u0E37\u0E48\u0E19\u0E08\u0E30\u0E0A\u0E2D\u0E1A\u0E23\u0E30\u0E1A\u0E1A\u0E19\u0E35\u0E49\u0E44\u0E2B\u0E21..."
+      stressChange: 0
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E31\u0E48\u0E19\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E2A\u0E34\u0E40\u0E19\u0E35\u0E22
+          \u0E40\u0E18\u0E2D\u0E17\u0E33\u0E44\u0E14\u0E49\u0E14\u0E35\u0E41\u0E25\u0E49\u0E27"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    conclusionStory:
+    - text: "\u0E44\u0E1B\u0E1E\u0E31\u0E01\u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07\u0E44\u0E14\u0E49\u0E41\u0E25\u0E49\u0E27\u0E25\u0E48\u0E30
+        \u0E17\u0E35\u0E48\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E40\u0E14\u0E35\u0E4B\u0E22\u0E27\u0E04\u0E23\u0E39\u0E40\u0E1D\u0E49\u0E32\u0E15\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E40\u0E2D\u0E07"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+  - dayTitle: DAY 16
+    dayNumber: 16
+    introductionStory:
+    - text: "(\u0E01\u0E33\u0E25\u0E31\u0E07\u0E08\u0E31\u0E14\u0E42\u0E15\u0E4A\u0E30\u0E1A\u0E23\u0E23\u0E13\u0E32\u0E23\u0E31\u0E01\u0E29\u0E4C\u0E43\u0E19\u0E22\u0E32\u0E21\u0E40\u0E22\u0E47\u0E19
+        \u0E40\u0E07\u0E22\u0E2B\u0E19\u0E49\u0E32\u0E02\u0E36\u0E49\u0E19\u0E21\u0E32\u0E22\u0E34\u0E49\u0E21\u0E43\u0E2B\u0E49\u0E40\u0E19\u0E35\u0E22\u0E17\u0E35\u0E48\u0E40\u0E14\u0E34\u0E19\u0E16\u0E37\u0E2D\u0E1E\u0E27\u0E07\u0E01\u0E38\u0E0D\u0E41\u0E08\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E21\u0E32\u0E04\u0E37\u0E19)"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E2A\u0E31\u0E1B\u0E14\u0E32\u0E2B\u0E4C\u0E19\u0E35\u0E49\u0E17\u0E33\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E44\u0E14\u0E49\u0E22\u0E2D\u0E14\u0E40\u0E22\u0E35\u0E48\u0E22\u0E21\u0E21\u0E32\u0E01\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22...
+        \u0E1C\u0E25\u0E07\u0E32\u0E19\u0E01\u0E32\u0E23\u0E08\u0E31\u0E14\u0E23\u0E30\u0E1A\u0E1A\u0E02\u0E2D\u0E07\u0E40\u0E18\u0E2D
+        \u0E17\u0E33\u0E43\u0E2B\u0E49\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E01\u0E25\u0E31\u0E1A\u0E21\u0E32\u0E21\u0E35\u0E0A\u0E35\u0E27\u0E34\u0E15\u0E0A\u0E35\u0E27\u0E32\u0E02\u0E36\u0E49\u0E19\u0E40\u0E22\u0E2D\u0E30\u0E40\u0E25\u0E22"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "\u0E04\u0E23\u0E39\u0E40\u0E2B\u0E47\u0E19\u0E01\u0E32\u0E23\u0E40\u0E15\u0E34\u0E1A\u0E42\u0E15\u0E02\u0E2D\u0E07\u0E40\u0E18\u0E2D\u0E15\u0E25\u0E2D\u0E14\u0E17\u0E31\u0E49\u0E07\u0E2A\u0E31\u0E1B\u0E14\u0E32\u0E2B\u0E4C\u0E19\u0E35\u0E49...
+        \u0E40\u0E18\u0E2D\u0E2A\u0E39\u0E49\u0E01\u0E31\u0E1A\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E08\u0E19\u0E01\u0E49\u0E32\u0E27\u0E1C\u0E48\u0E32\u0E19\u0E21\u0E31\u0E19\u0E21\u0E32\u0E44\u0E14\u0E49
+        \u0E04\u0E23\u0E39\u0E20\u0E39\u0E21\u0E34\u0E43\u0E08\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E18\u0E2D\u0E19\u0E30"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(OFC \u0E41\u0E25\u0E30 mPFC \u0E17\u0E33\u0E07\u0E32\u0E19\u0E1B\u0E23\u0E30\u0E2A\u0E32\u0E19\u0E01\u0E31\u0E19\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E2A\u0E21\u0E1A\u0E39\u0E23\u0E13\u0E4C\u0E41\u0E1A\u0E1A...
+        \u0E23\u0E31\u0E1A\u0E23\u0E39\u0E49\u0E16\u0E36\u0E07\u0E04\u0E27\u0E32\u0E21\u0E08\u0E23\u0E34\u0E07\u0E43\u0E08\u0E41\u0E25\u0E30\u0E04\u0E38\u0E13\u0E04\u0E48\u0E32\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E40\u0E04\u0E22\u0E40\u0E1B\u0E47\u0E19\u0E21\u0E32\u0E01\u0E48\u0E2D\u0E19)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E04\u0E23\u0E39\u0E42\u0E21\u0E21\u0E48\u0E2D\u0E19\u0E04\u0E37\u0E2D\u0E04\u0E19\u0E17\u0E35\u0E48\u0E21\u0E2D\u0E1A\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22\u0E43\u0E2B\u0E49\u0E40\u0E23\u0E32
+        \u0E43\u0E19\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48\u0E40\u0E23\u0E32\u0E21\u0E2D\u0E07\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E47\u0E19\u0E04\u0E38\u0E13\u0E04\u0E48\u0E32\u0E02\u0E2D\u0E07\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E40\u0E25\u0E22\u0E2A\u0E31\u0E01\u0E19\u0E34\u0E14)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    - text: "(\u0E16\u0E36\u0E07\u0E40\u0E27\u0E25\u0E32\u0E1A\u0E2D\u0E01\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E04\u0E23\u0E39\u0E14\u0E49\u0E27\u0E22\u0E04\u0E27\u0E32\u0E21\u0E21\u0E31\u0E48\u0E19\u0E43\u0E08\u0E08\u0E32\u0E01\u0E2B\u0E31\u0E27\u0E43\u0E08\u0E08\u0E23\u0E34\u0E07\u0E46)"
+      speakerName: Nia
+      portraitName: good1
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+    storyChoices:
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E21\u0E32\u0E01\u0E46
+        \u0E04\u0E48\u0E30\u0E04\u0E23\u0E39\u0E42\u0E21\u0E21\u0E48\u0E2D\u0E19!
+        \u0E16\u0E49\u0E32\u0E44\u0E21\u0E48\u0E21\u0E35\u0E04\u0E23\u0E39\u0E04\u0E2D\u0E22\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E31\u0E48\u0E19\u0E41\u0E25\u0E30\u0E43\u0E2B\u0E49\u0E42\u0E2D\u0E01\u0E32\u0E2A\u0E2B\u0E19\u0E39
+        \u0E2B\u0E19\u0E39\u0E04\u0E07\u0E22\u0E31\u0E07\u0E02\u0E31\u0E07\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E2D\u0E22\u0E39\u0E48\u0E43\u0E19\u0E21\u0E37\u0E14
+        \u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E17\u0E35\u0E48\u0E0A\u0E48\u0E27\u0E22\u0E43\u0E2B\u0E49\u0E2B\u0E19\u0E39\u0E04\u0E49\u0E19\u0E1E\u0E1A\u0E04\u0E38\u0E13\u0E04\u0E48\u0E32\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E19\u0E30\u0E04\u0E30!"
+      stressChange: -15
+      speakerName: Nia
+      portraitName: good1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "(\u0E22\u0E34\u0E49\u0E21\u0E2D\u0E1A\u0E2D\u0E38\u0E48\u0E19 \u0E25\u0E39\u0E1A\u0E2B\u0E31\u0E27\u0E40\u0E19\u0E35\u0E22\u0E40\u0E1A\u0E32\u0E46)
+          \u0E40\u0E18\u0E2D\u0E17\u0E33\u0E44\u0E14\u0E49\u0E14\u0E49\u0E27\u0E22\u0E15\u0E31\u0E27\u0E40\u0E18\u0E2D\u0E40\u0E2D\u0E07\u0E15\u0E48\u0E32\u0E07\u0E2B\u0E32\u0E01\u0E40\u0E19\u0E35\u0E22...
+          \u0E08\u0E33\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E19\u0E35\u0E49\u0E44\u0E27\u0E49\u0E19\u0E30
+          \u0E44\u0E21\u0E48\u0E27\u0E48\u0E32\u0E40\u0E08\u0E2D\u0E2D\u0E30\u0E44\u0E23
+          \u0E40\u0E18\u0E2D\u0E1C\u0E48\u0E32\u0E19\u0E21\u0E31\u0E19\u0E44\u0E1B\u0E44\u0E14\u0E49\u0E40\u0E2A\u0E21\u0E2D"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E38\u0E01\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E19\u0E30\u0E04\u0E30\u0E04\u0E23\u0E39...
+        \u0E2B\u0E19\u0E39\u0E14\u0E35\u0E43\u0E08\u0E21\u0E32\u0E01\u0E17\u0E35\u0E48\u0E44\u0E14\u0E49\u0E0A\u0E48\u0E27\u0E22\u0E07\u0E32\u0E19\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14"
+      stressChange: -5
+      speakerName: Nia
+      portraitName: idle
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E22\u0E34\u0E19\u0E14\u0E35\u0E40\u0E2A\u0E21\u0E2D\u0E08\u0E49\u0E30\u0E40\u0E19\u0E35\u0E22
+          \u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E15\u0E49\u0E2D\u0E19\u0E23\u0E31\u0E1A\u0E40\u0E18\u0E2D\u0E40\u0E2A\u0E21\u0E2D\u0E17\u0E38\u0E01\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E19\u0E30"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    - choiceButtonText: "\u0E2B\u0E19\u0E39... \u0E2B\u0E19\u0E39\u0E41\u0E04\u0E48\u0E17\u0E33\u0E15\u0E32\u0E21\u0E17\u0E35\u0E48\u0E04\u0E23\u0E39\u0E2A\u0E31\u0E48\u0E07\u0E19\u0E48\u0E30\u0E04\u0E48\u0E30
+        \u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E40\u0E01\u0E48\u0E07\u0E2D\u0E30\u0E44\u0E23\u0E02\u0E19\u0E32\u0E14\u0E19\u0E31\u0E49\u0E19"
+      stressChange: 0
+      speakerName: Nia
+      portraitName: bad1
+      otherName: 
+      activeSlotIndex: 1
+      motionEffect: 0
+      voiceSoundName: 
+      nextDialogueLines:
+      - text: "\u0E21\u0E31\u0E48\u0E19\u0E43\u0E08\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E2A\u0E34\u0E40\u0E19\u0E35\u0E22
+          \u0E40\u0E18\u0E2D\u0E17\u0E33\u0E44\u0E14\u0E49\u0E14\u0E35\u0E40\u0E22\u0E35\u0E48\u0E22\u0E21\u0E08\u0E23\u0E34\u0E07\u0E46
+          \u0E22\u0E2D\u0E21\u0E23\u0E31\u0E1A\u0E21\u0E31\u0E19\u0E40\u0E16\u0E2D\u0E30\u0E19\u0E30"
+        speakerName: Momon
+        portraitName: idle
+        stressChange: 0
+        otherName: 
+        activeSlotIndex: 4
+        motionEffect: 0
+        voiceSoundName: 
+    conclusionStory:
+    - text: "\u0E01\u0E25\u0E31\u0E1A\u0E1A\u0E49\u0E32\u0E19\u0E14\u0E35\u0E46 \u0E25\u0E48\u0E30\u0E40\u0E19\u0E35\u0E22\u0E1E\u0E31\u0E01\u0E1C\u0E48\u0E2D\u0E19\u0E43\u0E2B\u0E49\u0E40\u0E15\u0E47\u0E21\u0E17\u0E35\u0E48\u0E19\u0E30"
+      speakerName: Momon
+      portraitName: idle
+      stressChange: 0
+      otherName: 
+      activeSlotIndex: 4
+      motionEffect: 0
+      voiceSoundName: 
+  fallbackStoryByDay: []
+  fallbackStory: []
+  lastTalkedDay: 0
+--- !u!114 &408637039827304119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589870709020724232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ba26fa336cb8e41ba63d5acedec903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCAppearanceController
+  activeDays: 0100000002000000
+--- !u!114 &9054252961316461215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589870709020724232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0e5769fe6b4624fa3c544f77507a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSpaceDialogue
+  bubbleContainer: {fileID: 3806983223933095080}
+  textMesh: {fileID: 8134710408070383449}
+  chatterByDay: []
+  chatterLines: []
+  highStressLines: []
+  triggerOnProximity: 1
+  triggerRadius: 2
+  triggerOnTimer: 0
+  minTimerInterval: 5
+  maxTimerInterval: 10
+  displayDuration: 3
+--- !u!1 &7359301638815167473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 528125458408328026}
+  - component: {fileID: 353176459267743688}
+  - component: {fileID: 8134710408070383449}
+  m_Layer: 0
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &528125458408328026
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7359301638815167473}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 218295256277935529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.00049996376, y: -0.0801}
+  m_SizeDelta: {x: -0.1466, y: -0.3686}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &353176459267743688
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7359301638815167473}
+  m_CullTransparentMesh: 1
+--- !u!114 &8134710408070383449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7359301638815167473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\u0E17\u0E14\u0E2A\u0E2D\u0E1A \u0E17\u0E14\u0E2A\u0E2D\u0E1A \u0E17\u0E14\u0E2A\u0E2D\u0E1A
+    \u0E17\u0E14\u0E2A\u0E2D\u0E1A \u0E17\u0E14\u0E2A\u0E2D\u0E1A \u0E17\u0E14\u0E2A\u0E2D\u0E1A
+    \u0E17\u0E14\u0E2A\u0E2D\u0E1A \u0E17\u0E14\u0E2A\u0E2D\u0E1A \u0E17\u0E14\u0E2A\u0E2D\u0E1A "
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 38333846f5ed9534ba4457319b62489b, type: 2}
+  m_sharedMaterial: {fileID: -3684093273843957968, guid: 38333846f5ed9534ba4457319b62489b, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.2
+  m_fontSizeBase: 0.2
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}

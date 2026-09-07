@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -165,6 +164,12 @@ public class DialogueManager : MonoBehaviour
         
         if (choicePanel != null) choicePanel.SetActive(false);
         if (dialogueCanvas != null) dialogueCanvas.SetActive(true);
+
+        // ⚡ ซ่อนหน้าต่างเควสรายวันเมื่อเริ่มบทสนทนา
+        if (DailyQuestManager.Instance != null)
+        {
+            DailyQuestManager.Instance.SetVisible(false);
+        }
 
         Time.timeScale = 0f; 
 
@@ -525,9 +530,32 @@ public class DialogueManager : MonoBehaviour
         Cursor.visible = !is3DScene;
         Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
 
+        // ⚡ ตรวจสอบหากอยู่ในฉากจบ (Ending_Good, Ending_Bad, Ending_Normal) ให้เข้าสู่หน้าจอดำและขึ้น The End
+        string activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (activeScene.StartsWith("Ending_", System.StringComparison.OrdinalIgnoreCase) && activeScene != "GameOver_Stress")
+        {
+            bool isEndingStory = string.IsNullOrEmpty(currentNPCName) || 
+                                 currentNPCName.Equals("Mom", System.StringComparison.OrdinalIgnoreCase) || 
+                                 currentNPCName.Equals("แม่", System.StringComparison.OrdinalIgnoreCase) ||
+                                 (currentActiveStory != null && currentActiveStory.Count > 1);
+
+            if (isEndingStory)
+            {
+                EndingScreenController.ShowEnding(activeScene);
+                return;
+            }
+        }
+
         if (TutorialManager.Instance != null)
         {
             TutorialManager.Instance.OnDialogueFinished();
+        }
+
+        // ⚡ แสดงหน้าต่างเควสรายวันกลับมาและรีเฟรชสถานะทันทีเมื่อจบบทสนทนา
+        if (DailyQuestManager.Instance != null)
+        {
+            DailyQuestManager.Instance.SetVisible(true);
+            DailyQuestManager.Instance.RefreshQuestList();
         }
     }
 
