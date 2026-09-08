@@ -80,7 +80,71 @@ public class NPCInteraction : MonoBehaviour
     public List<DialogueLine> fallbackStory = new List<DialogueLine>();
 
     private bool isPlayerClose = false;
+    private bool isTriggerClose = false;
+    private GUIStyle npcPromptStyle;
+    private Texture2D npcPromptBgTex;
     [HideInInspector] public int lastTalkedDay = 0;
+
+    // กลุ่มตัวละครที่อยู่ด้วยกันและใช้บทสนทนาร่วมกัน
+    private static readonly string[][] CompanionGroups = new string[][]
+    {
+        new string[] { "Jin", "Ben" },
+        new string[] { "Den", "Sasha", "Egon" },
+        new string[] { "Shia", "Hong" }
+    };
+
+    public static bool AreCompanions(string id1, string id2)
+    {
+        if (string.IsNullOrEmpty(id1) || string.IsNullOrEmpty(id2)) return false;
+        if (string.Equals(id1, id2, System.StringComparison.OrdinalIgnoreCase)) return true;
+        foreach (var group in CompanionGroups)
+        {
+            bool has1 = false, has2 = false;
+            foreach (var member in group)
+            {
+                if (string.Equals(member, id1, System.StringComparison.OrdinalIgnoreCase)) has1 = true;
+                if (string.Equals(member, id2, System.StringComparison.OrdinalIgnoreCase)) has2 = true;
+            }
+            if (has1 && has2) return true;
+        }
+        return false;
+    }
+
+    public static string[] GetCompanionGroup(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return new string[] { id };
+        foreach (var group in CompanionGroups)
+        {
+            foreach (var member in group)
+            {
+                if (string.Equals(member, id, System.StringComparison.OrdinalIgnoreCase)) return group;
+            }
+        }
+        return new string[] { id };
+    }
+
+    private bool IsClosestInteractableNPC()
+    {
+        CharacterController player = Object.FindAnyObjectByType<CharacterController>();
+        if (player == null) return true;
+
+        Vector3 playerPos = player.transform.position;
+        float myDist = Vector3.Distance(transform.position, playerPos);
+
+        NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (var npc in allNPCs)
+        {
+            if (npc != null && npc != this && npc.isPlayerClose)
+            {
+                float otherDist = Vector3.Distance(npc.transform.position, playerPos);
+                if (otherDist < myDist)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public string GetNPCIdentifier()
     {
@@ -123,18 +187,47 @@ public class NPCInteraction : MonoBehaviour
         int today = dm != null ? (int)dm.currentDay : (GameManagerSetup.Instance != null ? GameManagerSetup.Instance.currentDay : 1);
 
         string npcId = GetNPCIdentifier();
-        if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.HasTalkedToNPCToday(npcId))
+        if (GameManagerSetup.Instance != null)
         {
-            lastTalkedDay = today;
+            string[] companions = GetCompanionGroup(npcId);
+            foreach (var comp in companions)
+            {
+                if (GameManagerSetup.Instance.HasTalkedToNPCToday(comp))
+                {
+                    lastTalkedDay = today;
+                    break;
+                }
+            }
         }
     }
 
     void Update()
     {
-        if (isPlayerClose && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
+
+        // คำนวณระยะห่างระหว่างตัวละครกับ NPC (รัศมี 2.2 เมตร)
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj == null) playerObj = GameObject.Find("Player");
+        if (playerObj != null)
+        {
+            float dist = Vector3.Distance(transform.position, playerObj.transform.position);
+            if (dist <= 2.2f)
+            {
+                isPlayerClose = true;
+            }
+            else if (!isTriggerClose)
+            {
+                isPlayerClose = false;
+            }
+        }
+
+        if (isPlayerClose && UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
         {
             DialogueManager dmCheck = Object.FindAnyObjectByType<DialogueManager>();
             if (dmCheck != null && dmCheck.IsDialogueActive()) return;
+
+            // หากผู้เล่นอยู่ใกล้ NPC หลายตัวพร้อมกัน ให้ตัวที่ใกล้ผู้เล่นที่สุดเป็นตัวเรียก Trigger
+            if (!IsClosestInteractableNPC()) return;
 
             TriggerAction();
         }
@@ -173,28 +266,25 @@ public class NPCInteraction : MonoBehaviour
                 }
             }
 
-            // 2. เช็คคุยซ้ำในวันเดียวกัน
+            // 2. เช็คคุยซ้ำในวันเดียวกัน (รวมกลุ่มคู่หู/กลุ่มเพื่อน)
             bool hasTalkedToday = (today == lastTalkedDay);
             if (GameManagerSetup.Instance != null)
             {
-                if (GameManagerSetup.Instance.HasTalkedToNPCToday(npcId))
+                string[] companions = GetCompanionGroup(npcId);
+                foreach (var comp in companions)
                 {
-                    hasTalkedToday = true;
-                }
-                else if (string.Equals(npcId, "Ben", System.StringComparison.OrdinalIgnoreCase) && GameManagerSetup.Instance.HasTalkedToNPCToday("Jin"))
-                {
-                    hasTalkedToday = true;
-                }
-                else if (string.Equals(npcId, "Jin", System.StringComparison.OrdinalIgnoreCase) && GameManagerSetup.Instance.HasTalkedToNPCToday("Ben"))
-                {
-                    hasTalkedToday = true;
+                    if (GameManagerSetup.Instance.HasTalkedToNPCToday(comp))
+                    {
+                        hasTalkedToday = true;
+                        break;
+                    }
                 }
             }
 
             if (hasTalkedToday)
             {
                 Debug.Log($"[{npcDisplayName}] วันนี้คุยไปแล้ว! เล่นข้อความสำรองประจำวัน");
-                List<DialogueLine> activeFallback = GetTodaysFallback(today);
+                List<DialogueLine> activeFallback = GetTodaysFallback(today, true);
                 ResolveDialogueLineSprites(activeFallback);
                 ShowFallbackDialogue(dm, activeFallback, playerFallbackImg, npcFallbackImg);
                 return; 
@@ -203,27 +293,18 @@ public class NPCInteraction : MonoBehaviour
             lastTalkedDay = today;
             if (GameManagerSetup.Instance != null)
             {
-                GameManagerSetup.Instance.RegisterNPCTalkedToday(npcId);
-
-                // หากเป็นคู่ตัวละคร Ben และ Jin ให้ลงทะเบียนเสร็จสิ้นทั้งสองคนพร้อมกัน
-                if (string.Equals(npcId, "Ben", System.StringComparison.OrdinalIgnoreCase) || 
-                    string.Equals(npcId, "Jin", System.StringComparison.OrdinalIgnoreCase))
+                string[] companions = GetCompanionGroup(npcId);
+                foreach (var comp in companions)
                 {
-                    GameManagerSetup.Instance.RegisterNPCTalkedToday("Ben");
-                    GameManagerSetup.Instance.RegisterNPCTalkedToday("Jin");
+                    GameManagerSetup.Instance.RegisterNPCTalkedToday(comp);
+                }
 
-                    NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-                    foreach (var otherNpc in allNPCs)
+                NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                foreach (var otherNpc in allNPCs)
+                {
+                    if (otherNpc != null && AreCompanions(npcId, otherNpc.GetNPCIdentifier()))
                     {
-                        if (otherNpc != null)
-                        {
-                            string otherId = otherNpc.GetNPCIdentifier();
-                            if (string.Equals(otherId, "Ben", System.StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(otherId, "Jin", System.StringComparison.OrdinalIgnoreCase))
-                            {
-                                otherNpc.lastTalkedDay = today;
-                            }
-                        }
+                        otherNpc.lastTalkedDay = today;
                     }
                 }
             }
@@ -235,35 +316,30 @@ public class NPCInteraction : MonoBehaviour
             DailyDialogue todaysDialogue = null;
             foreach (var dialog in dialoguesByDay)
             {
-                if (dialog.dayNumber == today)
+                if (dialog != null && dialog.dayNumber == today)
                 {
                     todaysDialogue = dialog;
                     break;
                 }
             }
 
-            // หากเป็น Ben หรือ Jin แล้วตัวใดตัวหนึ่งไม่มีบทสนทนา ให้ดึงบทสนทนาของอีกฝ่ายมาใช้ร่วมกัน
-            if (todaysDialogue == null && (string.Equals(npcId, "Ben", System.StringComparison.OrdinalIgnoreCase) || string.Equals(npcId, "Jin", System.StringComparison.OrdinalIgnoreCase)))
+            // หากตัวละครนี้ไม่มีบทสนทนาประจำวัน ให้สืบค้นจากตัวละครในกลุ่มเดียวกัน (เช่น Sasha/Egon ดึงจาก Den, Ben ดึงจาก Jin, Hong ดึงจาก Shia)
+            if (todaysDialogue == null)
             {
                 NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
                 foreach (var otherNpc in allNPCs)
                 {
-                    if (otherNpc != null && otherNpc != this)
+                    if (otherNpc != null && otherNpc != this && AreCompanions(npcId, otherNpc.GetNPCIdentifier()))
                     {
-                        string otherId = otherNpc.GetNPCIdentifier();
-                        if (string.Equals(otherId, "Ben", System.StringComparison.OrdinalIgnoreCase) ||
-                            string.Equals(otherId, "Jin", System.StringComparison.OrdinalIgnoreCase))
+                        foreach (var d in otherNpc.dialoguesByDay)
                         {
-                            foreach (var d in otherNpc.dialoguesByDay)
+                            if (d != null && d.dayNumber == today)
                             {
-                                if (d != null && d.dayNumber == today)
-                                {
-                                    todaysDialogue = d;
-                                    break;
-                                }
+                                todaysDialogue = d;
+                                break;
                             }
-                            if (todaysDialogue != null) break;
                         }
+                        if (todaysDialogue != null) break;
                     }
                 }
             }
@@ -288,26 +364,66 @@ public class NPCInteraction : MonoBehaviour
             }
             else
             {
-                List<DialogueLine> activeFallback = GetTodaysFallback(today);
+                List<DialogueLine> activeFallback = GetTodaysFallback(today, false);
                 ResolveDialogueLineSprites(activeFallback);
                 ShowFallbackDialogue(dm, activeFallback, playerFallbackImg, npcFallbackImg);
             }
         }
     }
 
-    private List<DialogueLine> GetTodaysFallback(int today)
+    private List<DialogueLine> GetTodaysFallback(int today, bool hasTalkedToday = false)
     {
         if (fallbackStoryByDay != null)
         {
             foreach (var fb in fallbackStoryByDay)
             {
-                if (fb.dayNumber == today)
+                if (fb != null && fb.dayNumber == today && fb.fallbackStory != null && fb.fallbackStory.Count > 0)
                 {
                     return fb.fallbackStory;
                 }
             }
         }
-        return fallbackStory;
+        if (fallbackStory != null && fallbackStory.Count > 0)
+        {
+            return fallbackStory;
+        }
+
+        // ค้นหาข้อความสำรองจากเพื่อนในกลุ่มเดียวกัน
+        NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var otherNpc in allNPCs)
+        {
+            if (otherNpc != null && otherNpc != this && AreCompanions(GetNPCIdentifier(), otherNpc.GetNPCIdentifier()))
+            {
+                if (otherNpc.fallbackStoryByDay != null)
+                {
+                    foreach (var fb in otherNpc.fallbackStoryByDay)
+                    {
+                        if (fb != null && fb.dayNumber == today && fb.fallbackStory != null && fb.fallbackStory.Count > 0)
+                        {
+                            return fb.fallbackStory;
+                        }
+                    }
+                }
+                if (otherNpc.fallbackStory != null && otherNpc.fallbackStory.Count > 0)
+                {
+                    return otherNpc.fallbackStory;
+                }
+            }
+        }
+
+        // หากไม่มีข้อความสำรองใดๆ เลย ให้สร้างประโยคสำรองอัตโนมัติ เพื่อป้องกัน UI เปิดหน้าต่างเปล่า
+        List<DialogueLine> defaultFallback = new List<DialogueLine>();
+        string msg = hasTalkedToday ? $"(คุยกับ {npcDisplayName} เรียบร้อยแล้ว)" : $"(ดูเหมือน {npcDisplayName} จะไม่มีอะไรคุยในตอนนี้)";
+        defaultFallback.Add(new DialogueLine
+        {
+            text = msg,
+            speakerName = "Nia",
+            portraitName = "idle",
+            stressChange = 0f,
+            activeSlotIndex = 1,
+            motionEffect = SpriteAction.None
+        });
+        return defaultFallback;
     }
 
     public Sprite GetNPCPortrait(string speakerName, string portraitName)
@@ -370,6 +486,11 @@ public class NPCInteraction : MonoBehaviour
 
     private void ShowFallbackDialogue(DialogueManager dm, List<DialogueLine> lines, Sprite playerImg, Sprite npcImg)
     {
+        if (lines == null || lines.Count == 0)
+        {
+            Debug.Log($"[{npcDisplayName}] ไม่มีข้อความสำรอง");
+            return;
+        }
         dm.StartCustomDialogue(npcDisplayName, playerImg, npcImg, 
                                lines, 
                                new List<DialogueChoice>(), 
@@ -378,12 +499,56 @@ public class NPCInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<CharacterController>() != null) isPlayerClose = true;
+        if (other.CompareTag("Player") || other.GetComponent<CharacterController>() != null || other.GetComponent<PlayerMovement>() != null)
+        {
+            isTriggerClose = true;
+            isPlayerClose = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<CharacterController>() != null) isPlayerClose = false;
+        if (other.CompareTag("Player") || other.GetComponent<CharacterController>() != null || other.GetComponent<PlayerMovement>() != null)
+        {
+            isTriggerClose = false;
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (!isPlayerClose) return;
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
+
+        DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+        if (dm != null && dm.IsDialogueActive()) return;
+
+        // หากผู้เล่นอยู่ใกล้ NPC หลายตัวพร้อมกัน แสดงข้อความเฉพาะตัวที่ใกล้ที่สุด
+        if (!IsClosestInteractableNPC()) return;
+
+        if (npcPromptStyle == null)
+        {
+            npcPromptStyle = new GUIStyle();
+            npcPromptStyle.alignment = TextAnchor.MiddleCenter;
+            npcPromptStyle.fontSize = 18;
+            npcPromptStyle.fontStyle = FontStyle.Bold;
+            npcPromptStyle.normal.textColor = new Color(1f, 1f, 1f, 1f);
+
+            npcPromptBgTex = new Texture2D(1, 1);
+            npcPromptBgTex.SetPixel(0, 0, new Color(0.08f, 0.12f, 0.18f, 0.88f));
+            npcPromptBgTex.Apply();
+            npcPromptStyle.normal.background = npcPromptBgTex;
+            npcPromptStyle.padding = new RectOffset(16, 16, 8, 8);
+        }
+
+        string nameToShow = string.IsNullOrEmpty(npcDisplayName) ? GetNPCIdentifier() : npcDisplayName;
+        string message = ThaiTextAdjuster.Adjust($"กด [E] เพื่อพูดคุยกับ {nameToShow}");
+
+        float width = 320f;
+        float height = 44f;
+        float x = (Screen.width - width) / 2f;
+        float y = Screen.height * 0.82f;
+
+        GUI.Label(new Rect(x, y, width, height), message, npcPromptStyle);
     }
 
 #if UNITY_EDITOR

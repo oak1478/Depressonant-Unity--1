@@ -124,6 +124,8 @@ public class SleepSaveMenuController : MonoBehaviour
 
     private void Update()
     {
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
+
         // กด ESC เพื่อปิดหน้าต่างได้หากยังไม่อยากนอน
         if (IsMenuOpen && !isTransitioning)
         {

@@ -17,6 +17,8 @@ public class BedInteraction : MonoBehaviour
 
     void Update()
     {
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
+
         // ถ้าผู้เล่นอยู่ใกล้เตียง แล้วกดปุ่ม E
         if (isPlayerClose && UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
         {

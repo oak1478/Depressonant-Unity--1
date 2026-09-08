@@ -12,10 +12,10 @@ public class NPCAppearanceController : MonoBehaviour
         UpdateAppearance();
     }
 
-    // ⚡ ฟังก์ชันใหม่: สั่งให้อัปเดตการซ่อน/โชว์ตัวได้ตลอดเวลา
+    // ฟังก์ชันสั่งให้อัปเดตการซ่อน/โชว์ตัวได้ตลอดเวลา
     public void UpdateAppearance()
     {
-        // ⚡ ในซีนฉากจบ ให้ NPC ทุกตัวที่วางไว้ในฉากแสดงตัวเสมอ
+        // ในซีนฉากจบ ให้ NPC ทุกตัวที่วางไว้ในฉากแสดงตัวเสมอ
         string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         if (!string.IsNullOrEmpty(currentScene) && currentScene.IndexOf("Ending", System.StringComparison.OrdinalIgnoreCase) >= 0)
         {
