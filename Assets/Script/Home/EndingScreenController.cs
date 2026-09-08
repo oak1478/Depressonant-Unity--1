@@ -295,6 +295,8 @@ public class EndingScreenController : MonoBehaviour
             hintText.color = new Color(c.r, c.g, c.b, alpha);
         }
 
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
+
         // ตรวจจับการกดปุ่มใดๆ หรือคลิกเมาส์
         bool triggerReturn = false;
 

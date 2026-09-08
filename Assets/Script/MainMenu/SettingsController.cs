@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -6,8 +6,23 @@ using TMPro;
 
 public class SettingsController : MonoBehaviour
 {
+    public static SettingsController Instance { get; private set; }
+
     [Header("UI Panels")]
     public GameObject settingsPanel;
+
+    [Header("Category Tabs (หมวดหมู่การตั้งค่า)")]
+    public GameObject audioTabPanel;
+    public GameObject graphicsTabPanel;
+    public GameObject controlsTabPanel;
+
+    public Button audioTabButton;
+    public Button graphicsTabButton;
+    public Button controlsTabButton;
+
+    public Image audioTabIndicator;
+    public Image graphicsTabIndicator;
+    public Image controlsTabIndicator;
 
     [Header("Audio Settings (ระบบเสียง)")]
     public AudioMixer mainMixer;
@@ -18,7 +33,7 @@ public class SettingsController : MonoBehaviour
     public Slider sfxSlider;
     public TextMeshProUGUI sfxValueText;
 
-    [Header("Graphics & Display Settings (การแสดงผล)")]
+    [Header("Graphics and Display Settings (การแสดงผล)")]
     public Toggle fullscreenToggle;
     public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown qualityDropdown;
@@ -30,17 +45,79 @@ public class SettingsController : MonoBehaviour
     public Slider mouseSensitivitySlider;
     public TextMeshProUGUI mouseSensitivityValueText;
 
-    private Resolution[] resolutions;
+    private List<Resolution> filteredResolutions = new List<Resolution>();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
         InitializeResolutions();
         InitializeQualityPresets();
         LoadAllSettings();
+        ShowAudioTab();
 
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(false);
+        }
+    }
+
+    // ==========================================
+    // 0. ระบบสลับแท็บหมวดหมู่ (Tabs Management)
+    // ==========================================
+
+    public void ShowAudioTab()
+    {
+        if (audioTabPanel != null) audioTabPanel.SetActive(true);
+        if (graphicsTabPanel != null) graphicsTabPanel.SetActive(false);
+        if (controlsTabPanel != null) controlsTabPanel.SetActive(false);
+        UpdateTabIndicators(0);
+    }
+
+    public void ShowGraphicsTab()
+    {
+        if (audioTabPanel != null) audioTabPanel.SetActive(false);
+        if (graphicsTabPanel != null) graphicsTabPanel.SetActive(true);
+        if (controlsTabPanel != null) controlsTabPanel.SetActive(false);
+        UpdateTabIndicators(1);
+    }
+
+    public void ShowControlsTab()
+    {
+        if (audioTabPanel != null) audioTabPanel.SetActive(false);
+        if (graphicsTabPanel != null) graphicsTabPanel.SetActive(false);
+        if (controlsTabPanel != null) controlsTabPanel.SetActive(true);
+        UpdateTabIndicators(2);
+    }
+
+    private void UpdateTabIndicators(int activeTabIndex)
+    {
+        Color activeTextColor = Color.white;
+        Color inactiveTextColor = new Color(0.6f, 0.6f, 0.6f, 1f);
+
+        if (audioTabIndicator != null) audioTabIndicator.gameObject.SetActive(activeTabIndex == 0);
+        SetButtonTextColor(audioTabButton, activeTabIndex == 0 ? activeTextColor : inactiveTextColor);
+
+        if (graphicsTabIndicator != null) graphicsTabIndicator.gameObject.SetActive(activeTabIndex == 1);
+        SetButtonTextColor(graphicsTabButton, activeTabIndex == 1 ? activeTextColor : inactiveTextColor);
+
+        if (controlsTabIndicator != null) controlsTabIndicator.gameObject.SetActive(activeTabIndex == 2);
+        SetButtonTextColor(controlsTabButton, activeTabIndex == 2 ? activeTextColor : inactiveTextColor);
+    }
+
+    private void SetButtonTextColor(Button btn, Color color)
+    {
+        if (btn == null) return;
+        TextMeshProUGUI tmp = btn.GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp != null)
+        {
+            tmp.color = color;
         }
     }
 
@@ -51,25 +128,34 @@ public class SettingsController : MonoBehaviour
     {
         if (resolutionDropdown == null) return;
 
-        resolutions = Screen.resolutions;
+        Resolution[] systemResolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
+        filteredResolutions.Clear();
 
         List<string> options = new List<string>();
         int currentResolutionIndex = 0;
 
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + " x " + resolutions[i].height + " @" + resolutions[i].refreshRateRatio.value.ToString("F0") + "Hz";
-            options.Add(option);
+        HashSet<string> seenResolutions = new HashSet<string>();
 
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+        for (int i = 0; i < systemResolutions.Length; i++)
+        {
+            string resKey = systemResolutions[i].width + "x" + systemResolutions[i].height;
+            if (!seenResolutions.Contains(resKey))
             {
-                currentResolutionIndex = i;
+                seenResolutions.Add(resKey);
+                filteredResolutions.Add(systemResolutions[i]);
+
+                string option = systemResolutions[i].width + " x " + systemResolutions[i].height;
+                options.Add(option);
+
+                if (systemResolutions[i].width == Screen.width &&
+                    systemResolutions[i].height == Screen.height)
+                {
+                    currentResolutionIndex = options.Count - 1;
+                }
             }
         }
 
-        // หากตรวจไม่พบความละเอียดมาตรฐานจากจอ ให้ใส่ Resolution 16:9 มาตรฐาน
         if (options.Count == 0)
         {
             options.Add("1920 x 1080");
@@ -81,7 +167,7 @@ public class SettingsController : MonoBehaviour
         resolutionDropdown.AddOptions(options);
 
         int savedResIndex = PlayerPrefs.GetInt("ResolutionIndex", currentResolutionIndex);
-        if (savedResIndex < options.Count)
+        if (savedResIndex >= 0 && savedResIndex < options.Count)
         {
             resolutionDropdown.value = savedResIndex;
             resolutionDropdown.RefreshShownValue();
@@ -99,7 +185,7 @@ public class SettingsController : MonoBehaviour
         List<string> qualityNames = new List<string>(QualitySettings.names);
         if (qualityNames.Count == 0)
         {
-            qualityNames.AddRange(new string[] { "ต่ำ (Low)", "ปานกลาง (Medium)", "สูง (High)", "สวยงามสูงสุด (Ultra)" });
+            qualityNames.AddRange(new string[] { "Very Low", "Low", "Medium", "High", "Very High", "Ultra" });
         }
         qualityDropdown.AddOptions(qualityNames);
 
@@ -113,37 +199,30 @@ public class SettingsController : MonoBehaviour
     // ==========================================
     public void LoadAllSettings()
     {
-        // 1. เสียงหลัก (Master)
         float master = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
         if (masterSlider != null) masterSlider.value = master;
         SetMasterVolume(master);
 
-        // 2. เสียงเพลง (BGM)
         float bgm = PlayerPrefs.GetFloat("BGMVolume", 0.8f);
         if (bgmSlider != null) bgmSlider.value = bgm;
         SetBGMVolume(bgm);
 
-        // 3. เสียงเอฟเฟกต์ (SFX)
         float sfx = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
         if (sfxSlider != null) sfxSlider.value = sfx;
         SetSFXVolume(sfx);
 
-        // 4. เต็มจอ (Fullscreen)
         bool isFull = PlayerPrefs.GetInt("Fullscreen", Screen.fullScreen ? 1 : 0) == 1;
         if (fullscreenToggle != null) fullscreenToggle.isOn = isFull;
         SetFullscreen(isFull);
 
-        // 5. VSync
         bool vsync = PlayerPrefs.GetInt("VSync", 1) == 1;
         if (vSyncToggle != null) vSyncToggle.isOn = vsync;
         SetVSync(vsync);
 
-        // 6. ความไวเมาส์ (Mouse Sensitivity)
         float sens = PlayerPrefs.GetFloat("MouseSensitivity", 1.0f);
         if (mouseSensitivitySlider != null) mouseSensitivitySlider.value = sens;
         SetMouseSensitivity(sens);
 
-        // 7. ความสว่าง (Brightness)
         float bright = PlayerPrefs.GetFloat("Brightness", 1.0f);
         if (brightnessSlider != null) brightnessSlider.value = bright;
         SetBrightness(bright);
@@ -153,6 +232,11 @@ public class SettingsController : MonoBehaviour
     // 4. ฟังก์ชันการตั้งค่าต่างๆ (เชื่อมต่อกับ UI Events)
     // ==========================================
 
+    public void SetVolume(float volume)
+    {
+        SetMasterVolume(volume);
+    }
+
     public void SetMasterVolume(float volume)
     {
         volume = Mathf.Clamp(volume, 0.0001f, 1f);
@@ -161,7 +245,7 @@ public class SettingsController : MonoBehaviour
         if (mainMixer != null)
         {
             float db = Mathf.Log10(volume) * 20f;
-            mainMixer.SetFloat("MasterVolume", db);
+            try { mainMixer.SetFloat("MasterVolume", db); } catch { }
         }
 
         if (masterValueText != null)
@@ -178,7 +262,7 @@ public class SettingsController : MonoBehaviour
         if (mainMixer != null)
         {
             float db = Mathf.Log10(volume) * 20f;
-            mainMixer.SetFloat("BGMVolume", db);
+            try { mainMixer.SetFloat("BGMVolume", db); } catch { }
         }
 
         if (bgmValueText != null)
@@ -195,7 +279,7 @@ public class SettingsController : MonoBehaviour
         if (mainMixer != null)
         {
             float db = Mathf.Log10(volume) * 20f;
-            mainMixer.SetFloat("SFXVolume", db);
+            try { mainMixer.SetFloat("SFXVolume", db); } catch { }
         }
 
         if (sfxValueText != null)
@@ -214,9 +298,9 @@ public class SettingsController : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
-        if (resolutions != null && resolutionIndex < resolutions.Length)
+        if (filteredResolutions != null && resolutionIndex >= 0 && resolutionIndex < filteredResolutions.Count)
         {
-            Resolution res = resolutions[resolutionIndex];
+            Resolution res = filteredResolutions[resolutionIndex];
             Screen.SetResolution(res.width, res.height, Screen.fullScreen);
             PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
         }
@@ -257,7 +341,6 @@ public class SettingsController : MonoBehaviour
         }
     }
 
-    // รีเซ็ตการตั้งค่าทั้งหมดกลับเป็นค่าเริ่มต้น
     public void ResetToDefaults()
     {
         SetMasterVolume(1.0f);
@@ -275,6 +358,10 @@ public class SettingsController : MonoBehaviour
         SetVSync(true);
         if (vSyncToggle != null) vSyncToggle.isOn = true;
 
+        int defaultQuality = QualitySettings.names.Length > 2 ? 2 : 0;
+        SetQuality(defaultQuality);
+        if (qualityDropdown != null) qualityDropdown.value = defaultQuality;
+
         SetMouseSensitivity(1.0f);
         if (mouseSensitivitySlider != null) mouseSensitivitySlider.value = 1.0f;
 
@@ -282,7 +369,7 @@ public class SettingsController : MonoBehaviour
         if (brightnessSlider != null) brightnessSlider.value = 1.0f;
 
         PlayerPrefs.Save();
-        Debug.Log("⚙️ [SettingsController] คืนค่าการตั้งค่าทั้งหมดเป็นค่ามาตรฐานเรียบร้อยแล้ว!");
+        Debug.Log("[SettingsController] คืนค่าการตั้งค่าทั้งหมดเป็นค่ามาตรฐานเรียบร้อยแล้ว");
     }
 
     public void OpenSettings()
@@ -290,13 +377,14 @@ public class SettingsController : MonoBehaviour
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(true);
-            LoadAllSettings(); // รีเฟรชค่าล่าสุดทุกครั้งที่เปิดหน้าต่าง
+            LoadAllSettings();
+            ShowAudioTab();
         }
     }
 
     public void CloseSettings()
     {
-        PlayerPrefs.Save(); // บันทึกค่าลงดิสก์ทันทีเมื่อปิดหน้าต่าง
+        PlayerPrefs.Save();
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(false);

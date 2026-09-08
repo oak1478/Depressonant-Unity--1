@@ -10,17 +10,18 @@ public static class Day13StoryImporter
         EditorApplication.delayCall += ImportAllDay13;
     }
 
-    [MenuItem("Tools/Import Day 13 Story (Momon, Rin, Shia, Park)")]
+    [MenuItem("Tools/Import Day 13 Story (Momon, Rin, Shia, Park, Vipar)")]
     public static void ImportAllDay13()
     {
-        Debug.Log("⏳ [Day13StoryImporter] เริ่มทำการลงข้อมูลเนื้อเรื่อง Day 13...");
+        Debug.Log("[Day13StoryImporter] Starting Day 13 story import...");
         ImportMomon();
         ImportRin();
         ImportShia();
         ImportPrak();
+        ImportVipar();
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-        Debug.Log("🎉 [Day13StoryImporter] บันทึกข้อมูลเนื้อเรื่อง Day 13 (Momon, Rin, Shia, Park) เสร็จสมบูรณ์เรียบร้อย!");
+        Debug.Log("[Day13StoryImporter] Day 13 story import complete!");
     }
 
     private static void ImportMomon()
@@ -238,6 +239,61 @@ public static class Day13StoryImporter
         EditorUtility.SetDirty(npc);
         PrefabUtility.SavePrefabAsset(go);
         Debug.Log("✅ [Park] อัปเดต Day 13 สำเร็จ");
+    }
+
+    private static void ImportVipar()
+    {
+        string path = "Assets/Object/Characters/NPC_Vipar.prefab";
+        GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+        if (go == null) { Debug.LogError("ไม่พบไฟล์: " + path); return; }
+
+        NPCInteraction npc = go.GetComponent<NPCInteraction>();
+        if (npc == null) return;
+
+        DailyDialogue day = GetOrCreateDay(npc.dialoguesByDay, 13);
+        day.dayTitle = "DAY 13";
+        day.dayNumber = 13;
+
+        // --- Intro ---
+        day.introductionStory = new List<DialogueLine>
+        {
+            CreateLine("(เดินเร่งรีบเข้ามาในห้องสมุด สายตากวาดมองหาเอกสารบนโต๊ะ)", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("เนีย! พอดีครูต้องการเอกสารอ้างอิงตารางธาตุเล่มเก่าของหมวดเคมีด่วนมาก ไม่รู้เก็บไว้ไหน...", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("(เดินไปที่ชั้นหมวดเคมีทันที ยื่นมือหยิบหนังสือเล่มที่ต้องการออกมาส่งให้ครูวิภาในเวลาไม่ถึงสิบวินาที)", "Nia", "good1", 0f, 1, SpriteAction.None),
+            CreateLine("เล่มนี้ใช่ไหมคะครูวิภา? หนูแยกหมวดอ้างอิงพิเศษไว้ตรงนี้ค่ะ", "Nia", "good1", 0f, 1, SpriteAction.None),
+            CreateLine("(รับหนังสือไปมองด้วยความทึ่ง ชะงักไปครู่หนึ่งแล้วมองหน้าเนียตรงๆ)", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("หาเจอไวมาก! โทษทีนะ... ครูจำสลับตลอด แต่เธอชื่อ เนีย เลขที่ 7 ใช่ไหม?", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("ขอบใจมากนะเนีย เธอทำหน้าที่บรรณารักษ์ได้เก่งมากจริงๆ ช่วยครูได้เยอะเลย!", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("(OFC ประมวลผลคำชมอย่างตรงไปตรงมา... สัญญาณพลังบวกถูกส่งเข้าสู่สมองเต็มๆ)", "Nia", "good1", 0f, 1, SpriteAction.None),
+            CreateLine("(ครูวิภาจำชื่อเราได้แล้ว... และเธอกำลังชมเราจากผลงานจริงๆ ไม่ใช่คำปลอบใจ)", "Nia", "good1", 0f, 1, SpriteAction.None)
+        };
+
+        // --- Choices ---
+        day.storyChoices = new List<DialogueChoice>
+        {
+            CreateChoice("ขอบคุณค่ะครูวิภา! หนูเนีย เลขที่ 7 ค่ะ มีอะไรให้ช่วยในห้องสมุดบอกหนูได้ตลอดเลยนะคะ", "Nia", "good1", -10f, 1, SpriteAction.None, new List<DialogueLine>
+            {
+                CreateLine("จ้ะเนีย! ไว้ครูจะมาอุดหนุนบริการห้องสมุดบ่อยๆ นะ!", "Vipar", "idle", 0f, 4, SpriteAction.None)
+            }),
+            CreateChoice("ยินดีค่ะครู... หนูจำตำแหน่งหนังสือได้หมดอยู่แล้ว", "Nia", "idle", -5f, 1, SpriteAction.None, new List<DialogueLine>
+            {
+                CreateLine("เยี่ยมมากจ้ะ ทำหน้าที่ได้ดีมากเลยนะ", "Vipar", "idle", 0f, 4, SpriteAction.None)
+            }),
+            CreateChoice("(พยักหน้ารับเบาๆ) ค่ะ...", "Nia", "idle", 0f, 1, SpriteAction.None, new List<DialogueLine>
+            {
+                CreateLine("งั้นครูขอตัวก่อนนะ ขอบใจอีกครั้ง", "Vipar", "idle", 0f, 4, SpriteAction.None)
+            })
+        };
+
+        // --- Conclusion ---
+        day.conclusionStory = new List<DialogueLine>
+        {
+            CreateLine("(รีบถือหนังสือเดินออกจากห้องสมุดไปพร้อมรอยยิ้ม)", "Vipar", "idle", 0f, 4, SpriteAction.None)
+        };
+
+        EditorUtility.SetDirty(npc);
+        PrefabUtility.SavePrefabAsset(go);
+        Debug.Log("[Vipar] Day 13 import complete");
     }
 
     private static DailyDialogue GetOrCreateDay(List<DailyDialogue> list, int dayNum)

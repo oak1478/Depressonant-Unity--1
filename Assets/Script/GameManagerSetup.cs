@@ -232,7 +232,7 @@ public class GameManagerSetup : MonoBehaviour
                 continue;
 
             // 2. ยกเว้นตัวละครผู้เล่น และ NPC
-            if (go.CompareTag("Player") || go.CompareTag("NPC") ||
+            if (go.CompareTag("Player") || go.tag == "NPC" ||
                 go.GetComponent<NPCInteraction>() != null || go.GetComponentInParent<NPCInteraction>() != null ||
                 go.GetComponent<CharacterController>() != null || go.GetComponent<PlayerMovement>() != null)
                 continue;
