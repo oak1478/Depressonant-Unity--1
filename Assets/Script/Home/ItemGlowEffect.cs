@@ -24,7 +24,7 @@ public class ItemGlowEffect : MonoBehaviour
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<MeshRenderer>() ?? GetComponentInChildren<MeshRenderer>();
         pointLight = GetComponentInChildren<Light>();
 
         if (spriteRenderer != null)
@@ -34,7 +34,11 @@ public class ItemGlowEffect : MonoBehaviour
         else if (meshRenderer != null && meshRenderer.material != null)
         {
             instanceMaterial = meshRenderer.material; // สร้างอินสแตนซ์วัสดุแยกป้องกันแก้ไขไฟลต้นฉบับ
-            if (instanceMaterial.HasProperty("_Color"))
+            if (instanceMaterial.HasProperty("_BaseColor"))
+            {
+                originalColor = instanceMaterial.GetColor("_BaseColor");
+            }
+            else if (instanceMaterial.HasProperty("_Color"))
             {
                 originalColor = instanceMaterial.color;
             }
@@ -63,6 +67,11 @@ public class ItemGlowEffect : MonoBehaviour
                 instanceMaterial.SetColor("_EmissionColor", glowColor * currentIntensity);
                 instanceMaterial.EnableKeyword("_EMISSION");
             }
+            else if (instanceMaterial.HasProperty("_BaseColor"))
+            {
+                Color lerpedColor = Color.Lerp(originalColor, glowColor, wave * 0.5f);
+                instanceMaterial.SetColor("_BaseColor", lerpedColor);
+            }
             else if (instanceMaterial.HasProperty("_Color"))
             {
                 Color lerpedColor = Color.Lerp(originalColor, glowColor, wave * 0.5f);
@@ -82,5 +91,16 @@ public class ItemGlowEffect : MonoBehaviour
     {
         // คืนค่าสีเดิมเมื่อปิดการทำงาน
         if (spriteRenderer != null) spriteRenderer.color = originalColor;
+        if (instanceMaterial != null)
+        {
+            if (instanceMaterial.HasProperty("_BaseColor"))
+            {
+                instanceMaterial.SetColor("_BaseColor", originalColor);
+            }
+            else if (instanceMaterial.HasProperty("_Color"))
+            {
+                instanceMaterial.color = originalColor;
+            }
+        }
     }
 }

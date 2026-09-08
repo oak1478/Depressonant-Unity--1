@@ -16767,12 +16767,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1473693825}
     m_Modifications:
     - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
+      propertyPath: minDay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
       propertyPath: spawnDays.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
       propertyPath: 'spawnDays.Array.data[0]'
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
+      propertyPath: 'spawnDays.Array.data[1]'
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6658930247183840851, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
       propertyPath: m_Name

@@ -12,6 +12,12 @@ public class PickupItem : MonoBehaviour
     [Header("รหัสเฉพาะของไอเทม (หากปล่อยว่างระบบจะอิงตามชื่อและตำแหน่งเกิดอัตโนมัติ)")]
     [SerializeField] private string uniqueItemID;
 
+    public string UniqueItemID
+    {
+        get => uniqueItemID;
+        set => uniqueItemID = value;
+    }
+
     [Header("เสียงเวลาเก็บไอเทม (SFX)")]
     public AudioClip pickupSound;
 
@@ -140,7 +146,8 @@ public class PickupItem : MonoBehaviour
         InventoryManager inv = InventoryManager.Instance != null ? InventoryManager.Instance : Object.FindAnyObjectByType<InventoryManager>();
         if (inv != null)
         {
-            bool isPickedUp = inv.AddItem(itemIcon, itemType);
+            Sprite iconToGive = itemIcon != null ? itemIcon : inv.GetSpriteForItemType(itemType);
+            bool isPickedUp = inv.AddItem(iconToGive, itemType);
             if (isPickedUp)
             {
                 // เล่นเสียงเก็บไอเทม

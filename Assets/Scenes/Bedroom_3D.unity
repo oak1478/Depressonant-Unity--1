@@ -1841,13 +1841,100 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ccd5110cc45a14f4d8dfea183ec2b48f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1113931540}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ccd5110cc45a14f4d8dfea183ec2b48f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1113931541}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ccd5110cc45a14f4d8dfea183ec2b48f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1113931542}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ccd5110cc45a14f4d8dfea183ec2b48f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1113931543}
   m_SourcePrefab: {fileID: 100100000, guid: ccd5110cc45a14f4d8dfea183ec2b48f, type: 3}
 --- !u!4 &1113931538 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ccd5110cc45a14f4d8dfea183ec2b48f, type: 3}
   m_PrefabInstance: {fileID: 1113931537}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1113931539 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ccd5110cc45a14f4d8dfea183ec2b48f, type: 3}
+  m_PrefabInstance: {fileID: 1113931537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1113931540
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113931539}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 1, z: 4}
+  m_Center: {x: 0, y: 0, z: 0.7}
+--- !u!114 &1113931541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113931539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823ca33c8641ca342adbcdd2feb82866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  itemType: 3
+  itemIcon: {fileID: -1404484970, guid: 9e047aa0930678e47b2a87f5cc14cfe1, type: 3}
+  uniqueItemID: Cozy_Books_Diary
+  pickupSound: {fileID: 8300000, guid: d41a1221e3ee47545b31e4285318d655, type: 3}
+  interactionRadius: 0.1
+  maxVerticalDistance: 0.1
+--- !u!114 &1113931542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113931539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ded0ab6917af5418400f6a86920234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemAppearanceController
+  spawnDays: 
+  spawnFromDayOnward: 1
+  minDay: 1
+--- !u!114 &1113931543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113931539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641d35c2ef9d43449a04b715353bac48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemGlowEffect
+  pulseSpeed: 2.5
+  minGlow: 0.4
+  maxGlow: 1
+  glowColor: {r: 1, g: 0.9, b: 0.4, a: 1}
 --- !u!4 &1149658086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5055866883162553104, guid: 24a70dee38273d843a4a29fa864383fe, type: 3}
