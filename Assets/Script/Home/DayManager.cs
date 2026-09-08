@@ -61,8 +61,8 @@ public class DayManager : MonoBehaviour
                 GameManagerSetup.Instance.currentDay = currentDay;
             }
 
-            // ⚡ หากข้ามวันมาจนถึงวันที่ 17 ให้ทำระบบตัดสินฉากจบปกติ
-            if (currentDay >= 17)
+            // หากข้ามวันเกินวันที่ 17 ให้ทำระบบตัดสินฉากจบปกติ
+            if (currentDay > 17)
             {
                 TriggerEnding();
                 return;
@@ -134,8 +134,8 @@ public class DayManager : MonoBehaviour
         }
     }
 
-    // ⚡ [เพิ่มใหม่] ฟังก์ชันตัดสินฉากจบตามข้อกำหนดรายงาน
-    private void TriggerEnding()
+    // ฟังก์ชันคำนวณชื่อฉากจบตามข้อกำหนด
+    public static string GetCalculatedEndingScene()
     {
         float finalStress = 0f;
         bool hasRainDrawing = false;
@@ -158,22 +158,26 @@ public class DayManager : MonoBehaviour
             hasRainDrawing = InventoryManager.Instance.HasItem(ItemType.RainDrawing);
         }
 
-        Debug.Log($"[Ending Triggered] finalStress: {finalStress} | hasRainDrawing: {hasRainDrawing}");
+        Debug.Log($"[Ending Calculation] finalStress: {finalStress} | hasRainDrawing: {hasRainDrawing}");
 
         if (finalStress <= 30f && hasRainDrawing)
         {
-            Debug.Log("🎉 Good Ending: The Sun After the Storm (ความเครียดต่ำกว่า 30% และมีภาพวาดเรน)");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Good");
+            return "Ending_Good";
         }
         else if (finalStress <= 70f)
         {
-            Debug.Log("🎭 Normal Ending: สมดุลชีวิตใหม่ (ความเครียด 31-70% หรือ ความเครียดต่ำกว่า 30% แต่ไม่มีภาพวาดเรน)");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Normal");
+            return "Ending_Normal";
         }
         else
         {
-            Debug.Log("🥀 Bad Ending: ความมืดมิด (ความเครียด 71-100%)");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending_Bad");
+            return "Ending_Bad";
         }
+    }
+
+    public void TriggerEnding()
+    {
+        string endingScene = GetCalculatedEndingScene();
+        Debug.Log($"[Ending Triggered] กำลังสลับไปฉากจบ: {endingScene}");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(endingScene);
     }
 }

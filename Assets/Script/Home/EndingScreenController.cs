@@ -29,6 +29,19 @@ public class EndingScreenController : MonoBehaviour
     private bool canAcceptInput = false;
     private bool isTransitioningToMenu = false;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private GameObject canvasObj;
     private Image blackOverlay;
     private CanvasGroup contentCanvasGroup;
@@ -98,33 +111,33 @@ public class EndingScreenController : MonoBehaviour
         canvasObj.AddComponent<GraphicRaycaster>();
 
         // 1. พื้นหลังสีดำ (Black Overlay)
-        GameObject bgObj = new GameObject("BlackOverlay");
+        GameObject bgObj = new GameObject("BlackOverlay", typeof(RectTransform));
         bgObj.transform.SetParent(canvasObj.transform, false);
         bgObj.AddComponent<CanvasRenderer>();
         blackOverlay = bgObj.AddComponent<Image>();
         blackOverlay.color = new Color(0f, 0f, 0f, 0f); // เริ่มต้นที่โปร่งใส 0
         blackOverlay.raycastTarget = true;
 
-        RectTransform bgRt = bgObj.GetComponent<RectTransform>();
+        RectTransform bgRt = bgObj.GetComponent<RectTransform>() ?? bgObj.AddComponent<RectTransform>();
         bgRt.anchorMin = Vector2.zero;
         bgRt.anchorMax = Vector2.one;
         bgRt.sizeDelta = Vector2.zero;
         bgRt.anchoredPosition = Vector2.zero;
 
         // 2. คอนเทนเนอร์รวมข้อความและปุ่ม (Ending Content)
-        GameObject contentObj = new GameObject("EndingContent");
+        GameObject contentObj = new GameObject("EndingContent", typeof(RectTransform));
         contentObj.transform.SetParent(canvasObj.transform, false);
         contentCanvasGroup = contentObj.AddComponent<CanvasGroup>();
         contentCanvasGroup.alpha = 0f; // เริ่มต้นที่โปร่งใส 0
 
-        RectTransform contentRt = contentObj.GetComponent<RectTransform>();
+        RectTransform contentRt = contentObj.GetComponent<RectTransform>() ?? contentObj.AddComponent<RectTransform>();
         contentRt.anchorMin = Vector2.zero;
         contentRt.anchorMax = Vector2.one;
         contentRt.sizeDelta = Vector2.zero;
         contentRt.anchoredPosition = Vector2.zero;
 
         // 3. ข้อความหลัก "THE END"
-        GameObject titleObj = new GameObject("TitleText");
+        GameObject titleObj = new GameObject("TitleText", typeof(RectTransform));
         titleObj.transform.SetParent(contentObj.transform, false);
         titleObj.AddComponent<CanvasRenderer>();
         TextMeshProUGUI titleTmp = titleObj.AddComponent<TextMeshProUGUI>();
@@ -136,7 +149,7 @@ public class EndingScreenController : MonoBehaviour
         titleTmp.color = Color.white;
         titleTmp.raycastTarget = false;
 
-        RectTransform titleRt = titleObj.GetComponent<RectTransform>();
+        RectTransform titleRt = titleObj.GetComponent<RectTransform>() ?? titleObj.AddComponent<RectTransform>();
         titleRt.anchorMin = new Vector2(0.5f, 0.5f);
         titleRt.anchorMax = new Vector2(0.5f, 0.5f);
         titleRt.pivot = new Vector2(0.5f, 0.5f);
@@ -144,7 +157,7 @@ public class EndingScreenController : MonoBehaviour
         titleRt.anchoredPosition = new Vector2(0, 90);
 
         // 4. ข้อความรองระบุตอนจบ (Good / Bad / Normal Ending)
-        GameObject subtitleObj = new GameObject("SubtitleText");
+        GameObject subtitleObj = new GameObject("SubtitleText", typeof(RectTransform));
         subtitleObj.transform.SetParent(contentObj.transform, false);
         subtitleObj.AddComponent<CanvasRenderer>();
         TextMeshProUGUI subtitleTmp = subtitleObj.AddComponent<TextMeshProUGUI>();
@@ -171,7 +184,7 @@ public class EndingScreenController : MonoBehaviour
         subtitleTmp.color = subColor;
         subtitleTmp.raycastTarget = false;
 
-        RectTransform subRt = subtitleObj.GetComponent<RectTransform>();
+        RectTransform subRt = subtitleObj.GetComponent<RectTransform>() ?? subtitleObj.AddComponent<RectTransform>();
         subRt.anchorMin = new Vector2(0.5f, 0.5f);
         subRt.anchorMax = new Vector2(0.5f, 0.5f);
         subRt.pivot = new Vector2(0.5f, 0.5f);
@@ -179,7 +192,7 @@ public class EndingScreenController : MonoBehaviour
         subRt.anchoredPosition = new Vector2(0, -10);
 
         // 5. ปุ่มกลับสู่หน้าหลัก (Main Menu Button)
-        GameObject btnObj = new GameObject("ReturnButton");
+        GameObject btnObj = new GameObject("ReturnButton", typeof(RectTransform));
         btnObj.transform.SetParent(contentObj.transform, false);
         btnObj.AddComponent<CanvasRenderer>();
         Image btnImg = btnObj.AddComponent<Image>();
@@ -194,7 +207,7 @@ public class EndingScreenController : MonoBehaviour
         btn.colors = colors;
         btn.onClick.AddListener(ReturnToMainMenu);
 
-        RectTransform btnRt = btnObj.GetComponent<RectTransform>();
+        RectTransform btnRt = btnObj.GetComponent<RectTransform>() ?? btnObj.AddComponent<RectTransform>();
         btnRt.anchorMin = new Vector2(0.5f, 0.5f);
         btnRt.anchorMax = new Vector2(0.5f, 0.5f);
         btnRt.pivot = new Vector2(0.5f, 0.5f);
@@ -202,7 +215,7 @@ public class EndingScreenController : MonoBehaviour
         btnRt.anchoredPosition = new Vector2(0, -150);
 
         // ข้อความบนปุ่ม
-        GameObject btnTextObj = new GameObject("Text");
+        GameObject btnTextObj = new GameObject("Text", typeof(RectTransform));
         btnTextObj.transform.SetParent(btnObj.transform, false);
         btnTextObj.AddComponent<CanvasRenderer>();
         TextMeshProUGUI btnTmp = btnTextObj.AddComponent<TextMeshProUGUI>();
@@ -214,14 +227,14 @@ public class EndingScreenController : MonoBehaviour
         btnTmp.color = Color.white;
         btnTmp.raycastTarget = false;
 
-        RectTransform btnTextRt = btnTextObj.GetComponent<RectTransform>();
+        RectTransform btnTextRt = btnTextObj.GetComponent<RectTransform>() ?? btnTextObj.AddComponent<RectTransform>();
         btnTextRt.anchorMin = Vector2.zero;
         btnTextRt.anchorMax = Vector2.one;
         btnTextRt.sizeDelta = Vector2.zero;
         btnTextRt.anchoredPosition = Vector2.zero;
 
         // 6. ข้อความคำใบ้ด้านล่าง (Hint Text)
-        GameObject hintObj = new GameObject("HintText");
+        GameObject hintObj = new GameObject("HintText", typeof(RectTransform));
         hintObj.transform.SetParent(contentObj.transform, false);
         hintObj.AddComponent<CanvasRenderer>();
         hintText = hintObj.AddComponent<TextMeshProUGUI>();
@@ -232,7 +245,7 @@ public class EndingScreenController : MonoBehaviour
         hintText.color = new Color(0.75f, 0.75f, 0.75f, 0.8f);
         hintText.raycastTarget = false;
 
-        RectTransform hintRt = hintObj.GetComponent<RectTransform>();
+        RectTransform hintRt = hintObj.GetComponent<RectTransform>() ?? hintObj.AddComponent<RectTransform>();
         hintRt.anchorMin = new Vector2(0.5f, 0.5f);
         hintRt.anchorMax = new Vector2(0.5f, 0.5f);
         hintRt.pivot = new Vector2(0.5f, 0.5f);
@@ -281,6 +294,24 @@ public class EndingScreenController : MonoBehaviour
         // หน่วงเล็กน้อยก่อนเริ่มเปิดรับการกดปุ่ม (ป้องกันการกดข้ามโดยไม่ตั้งใจ)
         yield return new WaitForSecondsRealtime(0.5f);
         canAcceptInput = true;
+
+        // นับเวลาถอยหลังเพื่อดีดกลับสู่ MainMenu อัตโนมัติ (6 วินาที)
+        float countdown = 6f;
+        while (countdown > 0f && !isTransitioningToMenu)
+        {
+            countdown -= Time.unscaledDeltaTime;
+            if (hintText != null)
+            {
+                int sec = Mathf.Max(1, Mathf.CeilToInt(countdown));
+                hintText.text = $"[ จะกลับสู่เมนูหลักในอีก {sec} วินาที | หรือคลิกหน้าจอ / กด Space / Enter เพื่อกลับทันที ]";
+            }
+            yield return null;
+        }
+
+        if (!isTransitioningToMenu)
+        {
+            ReturnToMainMenu();
+        }
     }
 
     void Update()
@@ -329,11 +360,17 @@ public class EndingScreenController : MonoBehaviour
 
         Debug.Log("[EndingScreenController] กำลังเปลี่ยนฉากกลับสู่ MainMenu...");
 
+        if (canvasObj != null)
+        {
+            Destroy(canvasObj);
+        }
+
         Time.timeScale = 1f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
         SceneManager.LoadScene("MainMenu");
+        Destroy(gameObject, 1f);
     }
 
     private TMP_FontAsset GetBestFont()

@@ -7,6 +7,9 @@ using TMPro;
 public class SettingsController : MonoBehaviour
 {
     public static SettingsController Instance { get; private set; }
+    public static AudioMixerGroup MasterGroup { get; private set; }
+    public static AudioMixerGroup BGMGroup { get; private set; }
+    public static AudioMixerGroup SFXGroup { get; private set; }
 
     [Header("UI Panels")]
     public GameObject settingsPanel;
@@ -52,6 +55,63 @@ public class SettingsController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+        }
+
+        RefreshMixerGroups();
+    }
+
+    public void RefreshMixerGroups()
+    {
+        if (mainMixer != null)
+        {
+            var master = mainMixer.FindMatchingGroups("Master");
+            if (master != null && master.Length > 0) MasterGroup = master[0];
+
+            var bgm = mainMixer.FindMatchingGroups("BGM");
+            if (bgm != null && bgm.Length > 0) BGMGroup = bgm[0];
+
+            var sfx = mainMixer.FindMatchingGroups("SFX");
+            if (sfx != null && sfx.Length > 0) SFXGroup = sfx[0];
+        }
+    }
+
+    public static void RouteToSFX(AudioSource source)
+    {
+        if (source != null && source.outputAudioMixerGroup == null)
+        {
+            if (SFXGroup != null)
+            {
+                source.outputAudioMixerGroup = SFXGroup;
+            }
+            else if (Instance != null && Instance.mainMixer != null)
+            {
+                var sfx = Instance.mainMixer.FindMatchingGroups("SFX");
+                if (sfx != null && sfx.Length > 0)
+                {
+                    SFXGroup = sfx[0];
+                    source.outputAudioMixerGroup = SFXGroup;
+                }
+            }
+        }
+    }
+
+    public static void RouteToBGM(AudioSource source)
+    {
+        if (source != null && source.outputAudioMixerGroup == null)
+        {
+            if (BGMGroup != null)
+            {
+                source.outputAudioMixerGroup = BGMGroup;
+            }
+            else if (Instance != null && Instance.mainMixer != null)
+            {
+                var bgm = Instance.mainMixer.FindMatchingGroups("BGM");
+                if (bgm != null && bgm.Length > 0)
+                {
+                    BGMGroup = bgm[0];
+                    source.outputAudioMixerGroup = BGMGroup;
+                }
+            }
         }
     }
 

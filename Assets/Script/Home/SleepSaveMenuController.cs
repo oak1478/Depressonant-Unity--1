@@ -272,17 +272,21 @@ public class SleepSaveMenuController : MonoBehaviour
             if (saveSys != null && saveSys.HasSaveFile(slotIdx))
             {
                 SaveData data = saveSys.LoadGame(slotIdx);
-                if (data != null)
+                if (data != null && data.currentDay > 0)
                 {
                     string sceneName = GetSceneName(data.currentSceneIndex);
                     string playTimeStr = FormatPlayTime(data.playTime);
 
                     slotTexts[i].text = $"Nia\t\t\t\t{sceneName}\nDAY {data.currentDay}\t\t\t\tPlay Time {playTimeStr}";
                 }
+                else
+                {
+                    slotTexts[i].text = "";
+                }
             }
             else
             {
-                slotTexts[i].text = $"SLOT {slotIdx}\t\t\t\t[ EMPTY ]\nDAY -\t\t\t\tPlay Time -";
+                slotTexts[i].text = "";
             }
 
             if (slotButtons[i] != null)

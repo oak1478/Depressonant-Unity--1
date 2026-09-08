@@ -583,20 +583,22 @@ public class DialogueManager : MonoBehaviour
         Cursor.visible = !is3DScene;
         Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
 
-        // ตรวจสอบหากอยู่ในฉากจบ (Ending_Good, Ending_Bad, Ending_Normal) ให้เข้าสู่หน้าจอดำและขึ้น The End
+        // ตรวจสอบเงื่อนไขฉากจบ:
+        // 1) สนทนากับ แม่ (Mom) ในวันที่ 17 ขึ้นไป ซึ่งเป็นบทสนทนาสรุปเรื่องราวสุดท้ายของเกม
+        // 2) หรืออยู่ในฉากจบที่ขึ้นต้นด้วย Ending_ (เช่น Ending_Good, Ending_Normal, Ending_Bad)
         string activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (activeScene.StartsWith("Ending_", System.StringComparison.OrdinalIgnoreCase) && activeScene != "GameOver_Stress")
-        {
-            bool isEndingStory = string.IsNullOrEmpty(currentNPCName) || 
-                                 currentNPCName.Equals("Mom", System.StringComparison.OrdinalIgnoreCase) || 
-                                 currentNPCName.Equals("แม่", System.StringComparison.OrdinalIgnoreCase) ||
-                                 (currentActiveStory != null && currentActiveStory.Count > 1);
+        int currentDay = DayManager.Instance != null ? DayManager.Instance.currentDay : (GameManagerSetup.Instance != null ? GameManagerSetup.Instance.currentDay : 1);
+        bool isMomEndingDialogue = currentDay >= 17 && !string.IsNullOrEmpty(currentNPCName) && 
+                                   (currentNPCName.Equals("Mom", System.StringComparison.OrdinalIgnoreCase) || 
+                                    currentNPCName.Equals("แม่", System.StringComparison.OrdinalIgnoreCase));
+        bool isEndingScene = activeScene.StartsWith("Ending_", System.StringComparison.OrdinalIgnoreCase) && activeScene != "GameOver_Stress";
 
-            if (isEndingStory)
-            {
-                EndingScreenController.ShowEnding(activeScene);
-                return;
-            }
+        if (isMomEndingDialogue || isEndingScene)
+        {
+            string endingSceneToDisplay = isEndingScene ? activeScene : DayManager.GetCalculatedEndingScene();
+            Debug.Log($"[DialogueManager] จบบทสรุปเรื่องราวฉากจบ! แสดง Ending Screen ({endingSceneToDisplay})");
+            EndingScreenController.ShowEnding(endingSceneToDisplay);
+            return;
         }
 
         if (TutorialManager.Instance != null)

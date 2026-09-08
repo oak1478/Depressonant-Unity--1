@@ -167,6 +167,9 @@ public class GameManagerSetup : MonoBehaviour
         // ตรวจสอบและติดตั้ง Collider ให้กับเฟอร์นิเจอร์และสิ่งก่อสร้างที่ยังไม่มี Collider เพื่อป้องกันการเดินทะลุ
         EnsureSceneColliders();
 
+        // ตรวจสอบและเชื่อมต่อ AudioSource ทั้งหมดในฉากเข้ากับ Mixer SFX Group อัตโนมัติ
+        EnsureAudioRouting();
+
         // หากมีข้อมูลเซฟรออยู่ใน Pending Data ให้อัปเดตข้อมูลกลางทันที
         UnpackPendingSaveData();
 
@@ -189,6 +192,37 @@ public class GameManagerSetup : MonoBehaviour
                 esObj.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
                 Debug.Log("[GameManagerSetup] ตรวจไม่พบ EventSystem ในฉาก ได้สร้าง EventSystem_Auto ให้อัตโนมัติ");
             }
+        }
+    }
+
+    public void EnsureAudioRouting()
+    {
+        UnityEngine.Audio.AudioMixerGroup sfxGroup = SettingsController.SFXGroup;
+        if (sfxGroup == null && SettingsController.Instance != null && SettingsController.Instance.mainMixer != null)
+        {
+            var groups = SettingsController.Instance.mainMixer.FindMatchingGroups("SFX");
+            if (groups != null && groups.Length > 0) sfxGroup = groups[0];
+        }
+
+        if (sfxGroup == null) return;
+
+        AudioSource[] sources = Object.FindObjectsByType<AudioSource>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        int routedCount = 0;
+        foreach (var src in sources)
+        {
+            if (src != null && src.outputAudioMixerGroup == null)
+            {
+                string objName = src.gameObject.name.ToLower();
+                if (!objName.Contains("bgm") && !objName.Contains("music"))
+                {
+                    src.outputAudioMixerGroup = sfxGroup;
+                    routedCount++;
+                }
+            }
+        }
+        if (routedCount > 0)
+        {
+            Debug.Log($"[GameManagerSetup] เชื่อมต่อ AudioSource จำนวน {routedCount} ตัวเข้ากับกลุ่ม SFX สำเร็จ");
         }
     }
 

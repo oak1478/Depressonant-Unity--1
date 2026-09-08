@@ -11,8 +11,31 @@ public class CameraFollow : MonoBehaviour
     // ความนุ่มนวลในการเลื่อนตาม (ยิ่งค่าน้อย กล้องจะยิ่งนุ่มและหน่วงตามเบาๆ)
     public float smoothSpeed = 0.125f; 
 
+    void Start()
+    {
+        FindTargetIfMissing();
+    }
+
+    private void FindTargetIfMissing()
+    {
+        if (target == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null) player = GameObject.Find("Player");
+            if (player != null)
+            {
+                target = player.transform;
+            }
+        }
+    }
+
     void LateUpdate()
     {
+        if (target == null)
+        {
+            FindTargetIfMissing();
+        }
+
         if (target != null)
         {
             // คำนวณตำแหน่งที่กล้องควรจะไปอยู่

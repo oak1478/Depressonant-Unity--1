@@ -60,6 +60,7 @@ public class MainMenuController : MonoBehaviour
         }
         audioSource.spatialBlend = 0f; // 2D UI sound
         audioSource.playOnAwake = false;
+        SettingsController.RouteToSFX(audioSource);
     }
 
     void Start()
@@ -277,7 +278,7 @@ public class MainMenuController : MonoBehaviour
             if (hasSave)
             {
                 SaveData data = saveSystem.LoadGame(slotIdx);
-                if (data != null)
+                if (data != null && data.currentDay > 0)
                 {
                     // จัดข้อความตามโครงสร้างในรูปภาพ:
                     // แถวแรก: ชื่อตัวละคร และชื่อสถานที่ (เช่น Nia       MY ROOM)
@@ -290,14 +291,22 @@ public class MainMenuController : MonoBehaviour
                         // การเว้นช่องว่าง \t ช่วยดันข้อความให้ห่างกันซ้ายขวาตามภาพต้นฉบับ
                         slotTexts[i].text = $"Nia\t\t\t\t{sceneName}\nDAY {data.currentDay}\t\t\t\tPlay Time {formattedTime}";
                     }
+                    slotButtons[i].interactable = true;
                 }
-                slotButtons[i].interactable = true;
+                else
+                {
+                    if (slotTexts[i] != null)
+                    {
+                        slotTexts[i].text = "";
+                    }
+                    slotButtons[i].interactable = false;
+                }
             }
             else
             {
                 if (slotTexts[i] != null)
                 {
-                    slotTexts[i].text = $"SLOT {slotIdx}\nEMPTY";
+                    slotTexts[i].text = "";
                 }
                 slotButtons[i].interactable = false; // ไม่มีเซฟกดโหลดไม่ได้
             }

@@ -124,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
             footstepAudioSource.playOnAwake = false;
             footstepAudioSource.loop = false;
             footstepAudioSource.spatialBlend = 0f;
+            SettingsController.RouteToSFX(footstepAudioSource);
         }
 
         cachedDialogueManager = Object.FindAnyObjectByType<DialogueManager>();

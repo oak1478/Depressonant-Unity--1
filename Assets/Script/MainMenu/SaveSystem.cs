@@ -141,9 +141,22 @@ public class SaveSystem : MonoBehaviour
         return data;
     }
 
-    // เช็กว่ามีไฟล์เซฟสำหรับสล็อตนี้หรือเปล่า
+    // เช็กว่ามีไฟล์เซฟสำหรับสล็อตนี้หรือเปล่า (ต้องมีไฟล์จริงและมีการบันทึกวัน currentDay > 0)
     public bool HasSaveFile(int slotIndex)
     {
-        return File.Exists(GetSaveFilePath(slotIndex));
+        string path = GetSaveFilePath(slotIndex);
+        if (!File.Exists(path)) return false;
+
+        try
+        {
+            string json = File.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(json)) return false;
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+            return data != null && data.currentDay > 0;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
