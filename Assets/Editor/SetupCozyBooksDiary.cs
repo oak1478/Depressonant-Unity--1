@@ -11,10 +11,13 @@ public static class SetupCozyBooksDiary
 {
     static SetupCozyBooksDiary()
     {
-        EditorApplication.delayCall += () =>
-        {
-            ExecuteSetup(false);
-        };
+        EditorApplication.delayCall += AutoRun;
+    }
+
+    private static void AutoRun()
+    {
+        if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isPlaying || Application.isPlaying || EditorApplication.isCompiling) return;
+        ExecuteSetup(false);
     }
 
     [MenuItem("Tools/Depressonant/Setup Cozy Books Diary")]
@@ -25,6 +28,8 @@ public static class SetupCozyBooksDiary
 
     public static void ExecuteSetup(bool force)
     {
+        if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isPlaying || Application.isPlaying) return;
+
         string scenePath = "Assets/Scenes/Bedroom_3D.unity";
         if (!File.Exists(scenePath)) return;
 
