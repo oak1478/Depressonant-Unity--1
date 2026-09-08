@@ -210,13 +210,13 @@ public class InventoryManager : MonoBehaviour
         // [เพิ่มใหม่] โหลดไอเทมข้ามฉอกจาก GameManager เข้ามาแสดงผลใน UI
         LoadFromGlobal();
 
-        // กำหนด SortingOrder ของ Canvas กระเป๋าเป้ให้อยู่เหนือเควส HUD และข้อความทั่วไป (15)
+        // กำหนด SortingOrder ของ Canvas กระเป๋าเป้ให้อยู่ระดับ 8 (อยู่เหนือเควส 5 แต่อยู่ใต้ Tutorial 12 และ Effects 15)
         Canvas myCanvas = GetComponentInParent<Canvas>();
         if (myCanvas == null) myCanvas = GetComponent<Canvas>();
-        if (myCanvas != null && myCanvas.sortingOrder < 15)
+        if (myCanvas != null)
         {
-            myCanvas.sortingOrder = 15;
-            Debug.Log($"[InventoryManager] ปรับ SortingOrder ของ Canvas '{myCanvas.name}' เป็น 15 เพื่อให้อยู่ด้านหน้าเควสและ HUD");
+            myCanvas.overrideSorting = true;
+            myCanvas.sortingOrder = 8;
         }
 
         if (diaryStressText != null) diaryStressText.gameObject.SetActive(false);

@@ -83,6 +83,31 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialUI = Object.FindAnyObjectByType<TutorialUI>(FindObjectsInactive.Include);
         }
+
+        if (tutorialUI != null)
+        {
+            Canvas tutCanvas = tutorialUI.GetComponentInParent<Canvas>();
+            if (tutCanvas != null)
+            {
+                tutCanvas.overrideSorting = true;
+                tutCanvas.sortingOrder = 12;
+            }
+        }
+    }
+
+    public void SkipTutorial()
+    {
+        isTutorialActive = false;
+        currentStep = TutorialStep.Completed;
+        if (tutorialUI != null)
+        {
+            tutorialUI.HideTutorial();
+        }
+        if (DailyQuestManager.Instance != null)
+        {
+            DailyQuestManager.Instance.SetVisible(true);
+        }
+        Debug.Log("[TutorialManager] ข้ามช่วงสอนเล่น (Tutorial) สำเร็จ");
     }
 
     /// <summary>
@@ -160,7 +185,7 @@ public class TutorialManager : MonoBehaviour
 
     void HandleWASDStep()
     {
-        if (Keyboard.current == null) return;
+        if (Keyboard.current == null || (DevConsole.Instance != null && DevConsole.Instance.IsOpen)) return;
 
         bool isMoving = Keyboard.current.wKey.isPressed || Keyboard.current.aKey.isPressed || 
                         Keyboard.current.sKey.isPressed || Keyboard.current.dKey.isPressed ||

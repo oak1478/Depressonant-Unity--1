@@ -126,6 +126,12 @@ public class DayManager : MonoBehaviour
                 Debug.LogError($"[DayManager] เกิดความเสียหายระหว่างอัปเดต Item: {item.name} - {e.Message}");
             }
         }
+
+        // รีเฟรชไอเทมลับประจำวันในฉากปัจจุบัน
+        if (DailySecretItemManager.Instance != null)
+        {
+            DailySecretItemManager.Instance.RefreshSecretItems();
+        }
     }
 
     // ⚡ [เพิ่มใหม่] ฟังก์ชันตัดสินฉากจบตามข้อกำหนดรายงาน

@@ -108,21 +108,21 @@ public class DailyQuestManager : MonoBehaviour
             questSchedule = new List<DailyNPCQuestSchedule>
             {
                 new DailyNPCQuestSchedule(1, "Mom"),
-                new DailyNPCQuestSchedule(2, "Mom", "Rein", "Den", "Jin"),
+                new DailyNPCQuestSchedule(2, "Rein", "Jin", "Den"),
                 new DailyNPCQuestSchedule(3, "Mom", "Rein", "Dad"),
-                new DailyNPCQuestSchedule(4, "Mom", "Dad", "Den", "Jin", "Shirou"),
-                new DailyNPCQuestSchedule(5, "Rin", "Vipar"),
-                new DailyNPCQuestSchedule(6, "Momon", "Rin", "Shia", "Vipar"),
-                new DailyNPCQuestSchedule(7, "Momon", "Shia"),
-                new DailyNPCQuestSchedule(8, "Park", "Rin", "Shia", "Vipar"),
+                new DailyNPCQuestSchedule(4, "Dad", "Mom", "Jin", "Den", "Shirou"),
+                new DailyNPCQuestSchedule(5, "Vipar", "Rin"),
+                new DailyNPCQuestSchedule(6, "Rin", "Vipar", "Shia", "Momon"),
+                new DailyNPCQuestSchedule(7, "Shia", "Momon"),
+                new DailyNPCQuestSchedule(8, "Rin", "Shia", "Vipar", "Park"),
                 new DailyNPCQuestSchedule(9, "Park", "Shia", "Vipar"),
                 new DailyNPCQuestSchedule(10, "Mom", "Dad", "Rein"),
-                new DailyNPCQuestSchedule(11, "Mom", "Dad", "Rein", "Jin"),
-                new DailyNPCQuestSchedule(12, "Park", "Rin", "Shia"),
-                new DailyNPCQuestSchedule(13, "Momon", "Park", "Rin", "Shia"),
+                new DailyNPCQuestSchedule(11, "Mom", "Dad", "Jin", "Rein"),
+                new DailyNPCQuestSchedule(12, "Rin", "Park", "Shia"),
+                new DailyNPCQuestSchedule(13, "Momon", "Vipar", "Rin", "Shia", "Park"),
                 new DailyNPCQuestSchedule(14, "Den", "Park", "Shia", "Vipar"),
-                new DailyNPCQuestSchedule(15, "Park", "Rin", "Shia", "Vipar"),
-                new DailyNPCQuestSchedule(16, "Momon", "Park", "Rin", "Shia", "Vipar"),
+                new DailyNPCQuestSchedule(15, "Vipar", "Rin", "Shia", "Park"),
+                new DailyNPCQuestSchedule(16, "Momon", "Vipar", "Rin", "Park", "Shia"),
                 new DailyNPCQuestSchedule(17, "Mom")
             };
         }
@@ -257,6 +257,28 @@ public class DailyQuestManager : MonoBehaviour
                         if (hasEither) continue;
                     }
 
+                    // ป้องกันการเพิ่ม Sasha หรือ Egon ซ้ำหากมี Den อยู่แล้ว
+                    bool isDenFamily = string.Equals(id, "Den", System.StringComparison.OrdinalIgnoreCase) ||
+                                       string.Equals(id, "Sasha", System.StringComparison.OrdinalIgnoreCase) ||
+                                       string.Equals(id, "Egon", System.StringComparison.OrdinalIgnoreCase);
+                    if (isDenFamily)
+                    {
+                        bool hasAnyDen = targetNPCsToday.Exists(n => string.Equals(n, "Den", System.StringComparison.OrdinalIgnoreCase) ||
+                                                                     string.Equals(n, "Sasha", System.StringComparison.OrdinalIgnoreCase) ||
+                                                                     string.Equals(n, "Egon", System.StringComparison.OrdinalIgnoreCase));
+                        if (hasAnyDen) continue;
+                    }
+
+                    // ป้องกันการเพิ่ม Hong ซ้ำหากมี Shia อยู่แล้ว
+                    bool isShiaFamily = string.Equals(id, "Shia", System.StringComparison.OrdinalIgnoreCase) ||
+                                        string.Equals(id, "Hong", System.StringComparison.OrdinalIgnoreCase);
+                    if (isShiaFamily)
+                    {
+                        bool hasAnyShia = targetNPCsToday.Exists(n => string.Equals(n, "Shia", System.StringComparison.OrdinalIgnoreCase) ||
+                                                                      string.Equals(n, "Hong", System.StringComparison.OrdinalIgnoreCase));
+                        if (hasAnyShia) continue;
+                    }
+
                     if (!targetNPCsToday.Contains(id))
                     {
                         targetNPCsToday.Add(id);
@@ -269,7 +291,7 @@ public class DailyQuestManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ตรวจสอบว่าได้พูดคุยกับ NPC คนนี้แล้วหรือยังในวันนี้ (รองรับระบบคู่ Ben & Jin)
+    /// ตรวจสอบว่าได้พูดคุยกับ NPC คนนี้แล้วหรือยังในวันนี้ (รองรับระบบคู่และชื่อแฝง)
     /// </summary>
     public bool IsNPCTalkedToday(string npcName, int today)
     {
@@ -304,6 +326,64 @@ public class DailyQuestManager : MonoBehaviour
             }
         }
 
+        // เชื่อมโยงชื่อ Rein / Rain / Ren
+        bool isRainOrRein = string.Equals(npcName, "Rein", System.StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(npcName, "Rain", System.StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(npcName, "Ren", System.StringComparison.OrdinalIgnoreCase);
+
+        if (isRainOrRein && GameManagerSetup.Instance != null)
+        {
+            if (GameManagerSetup.Instance.HasTalkedToNPCToday("Rein") ||
+                GameManagerSetup.Instance.HasTalkedToNPCToday("Rain") ||
+                GameManagerSetup.Instance.HasTalkedToNPCToday("Ren"))
+            {
+                return true;
+            }
+        }
+
+        // เชื่อมโยงชื่อ Shirou / Stranger
+        bool isShirouOrStranger = string.Equals(npcName, "Shirou", System.StringComparison.OrdinalIgnoreCase) ||
+                                  string.Equals(npcName, "Stranger", System.StringComparison.OrdinalIgnoreCase) ||
+                                  string.Equals(npcName, "A stranger", System.StringComparison.OrdinalIgnoreCase);
+
+        if (isShirouOrStranger && GameManagerSetup.Instance != null)
+        {
+            if (GameManagerSetup.Instance.HasTalkedToNPCToday("Shirou") ||
+                GameManagerSetup.Instance.HasTalkedToNPCToday("Stranger") ||
+                GameManagerSetup.Instance.HasTalkedToNPCToday("A stranger"))
+            {
+                return true;
+            }
+        }
+
+        // เชื่อมโยงกลุ่ม Den / Sasha / Egon
+        bool isDenGroup = string.Equals(npcName, "Den", System.StringComparison.OrdinalIgnoreCase) ||
+                          string.Equals(npcName, "Sasha", System.StringComparison.OrdinalIgnoreCase) ||
+                          string.Equals(npcName, "Egon", System.StringComparison.OrdinalIgnoreCase);
+
+        if (isDenGroup && GameManagerSetup.Instance != null)
+        {
+            if (GameManagerSetup.Instance.HasTalkedToNPCToday("Den") ||
+                GameManagerSetup.Instance.HasTalkedToNPCToday("Sasha") ||
+                GameManagerSetup.Instance.HasTalkedToNPCToday("Egon"))
+            {
+                return true;
+            }
+        }
+
+        // เชื่อมโยงคู่ Shia & Hong
+        bool isShiaOrHong = string.Equals(npcName, "Shia", System.StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(npcName, "Hong", System.StringComparison.OrdinalIgnoreCase);
+
+        if (isShiaOrHong && GameManagerSetup.Instance != null)
+        {
+            if (GameManagerSetup.Instance.HasTalkedToNPCToday("Shia") ||
+                GameManagerSetup.Instance.HasTalkedToNPCToday("Hong"))
+            {
+                return true;
+            }
+        }
+
         // ตรวจสอบกับ instance ในฉากปัจจุบัน
         NPCInteraction[] allNPCInteractions = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (NPCInteraction npc in allNPCInteractions)
@@ -325,6 +405,30 @@ public class DailyQuestManager : MonoBehaviour
                 }
             }
 
+            if (isRainOrRein)
+            {
+                if (string.Equals(id, "Rein", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(id, "Rain", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(id, "Ren", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(npc.npcDisplayName, "Rein", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(npc.npcDisplayName, "Rain", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(npc.npcDisplayName, "Ren", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    matches = true;
+                }
+            }
+
+            if (isShirouOrStranger)
+            {
+                if (string.Equals(id, "Shirou", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(id, "Stranger", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(npc.npcDisplayName, "Shirou", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(npc.npcDisplayName, "A stranger", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    matches = true;
+                }
+            }
+
             if (matches && npc.lastTalkedDay == today)
             {
                 return true;
@@ -337,6 +441,32 @@ public class DailyQuestManager : MonoBehaviour
                                      string.Equals(npc.npcDisplayName, "Jin", System.StringComparison.OrdinalIgnoreCase) ||
                                      string.Equals(npc.npcDisplayName, "Ben", System.StringComparison.OrdinalIgnoreCase);
                 if (npcIsBenOrJin && npc.lastTalkedDay == today)
+                {
+                    return true;
+                }
+            }
+
+            if (isDenGroup)
+            {
+                bool npcIsDenGroup = string.Equals(id, "Den", System.StringComparison.OrdinalIgnoreCase) ||
+                                     string.Equals(id, "Sasha", System.StringComparison.OrdinalIgnoreCase) ||
+                                     string.Equals(id, "Egon", System.StringComparison.OrdinalIgnoreCase) ||
+                                     string.Equals(npc.npcDisplayName, "Den", System.StringComparison.OrdinalIgnoreCase) ||
+                                     string.Equals(npc.npcDisplayName, "Sasha", System.StringComparison.OrdinalIgnoreCase) ||
+                                     string.Equals(npc.npcDisplayName, "Egon", System.StringComparison.OrdinalIgnoreCase);
+                if (npcIsDenGroup && npc.lastTalkedDay == today)
+                {
+                    return true;
+                }
+            }
+
+            if (isShiaOrHong)
+            {
+                bool npcIsShiaOrHong = string.Equals(id, "Shia", System.StringComparison.OrdinalIgnoreCase) ||
+                                       string.Equals(id, "Hong", System.StringComparison.OrdinalIgnoreCase) ||
+                                       string.Equals(npc.npcDisplayName, "Shia", System.StringComparison.OrdinalIgnoreCase) ||
+                                       string.Equals(npc.npcDisplayName, "Hong", System.StringComparison.OrdinalIgnoreCase);
+                if (npcIsShiaOrHong && npc.lastTalkedDay == today)
                 {
                     return true;
                 }
@@ -374,48 +504,76 @@ public class DailyQuestManager : MonoBehaviour
         switch (npcName.ToLowerInvariant())
         {
             case "mom":
-                desc = "พูดคุยกับ แม่ (Mom) ในบ้าน";
+                if (day == 11) desc = "พูดคุยกับ แม่ (Mom) ในครัว";
+                else if (day == 17) desc = "พูดคุยกับ แม่ (Mom) บทสรุปเรื่องราว";
+                else desc = "พูดคุยกับ แม่ (Mom) ในบ้าน";
                 break;
             case "dad":
-                desc = (day == 3) ? "พูดคุยกับ พ่อ (Dad) ที่ป้ายรถบัส" : "พูดคุยกับ พ่อ (Dad) ในบ้าน";
+                if (day == 3) desc = "พูดคุยกับ พ่อ (Dad) ที่ป้ายรถบัส";
+                else if (day == 11) desc = "พูดคุยกับ พ่อ (Dad) ที่โต๊ะกินข้าว";
+                else desc = "พูดคุยกับ พ่อ (Dad) ในบ้าน";
                 break;
             case "rein":
-                desc = "พูดคุยกับ Rein ในบ้าน";
+            case "rain":
+            case "ren":
+                if (day == 10 || day == 11) desc = "พูดคุยกับ เรน (Rain) ในห้องนอน";
+                else desc = "พูดคุยกับ เรน (Rain) ในบ้าน";
                 break;
             case "den":
-                desc = "พูดคุยกับ Den นอกบ้าน";
+                if (day == 14) desc = "พูดคุยกับ เดน (Den) และเด็กๆ ที่โต๊ะม้านั่ง";
+                else desc = "พูดคุยกับ เดน (Den) และเพื่อนๆ นอกบ้าน";
                 break;
             case "jin":
             case "ben":
-                desc = "พูดคุยกับ Jin & Ben ที่สวน";
+                if (day == 11) desc = "พูดคุยกับ ป้าจิน และ ลุงเบน (Jin & Ben) หน้าบ้าน";
+                else desc = "พูดคุยกับ ป้าจิน และ ลุงเบน (Jin & Ben) ที่สวน";
                 break;
             case "shirou":
-                desc = "พูดคุยกับ Shirou นอกบ้าน";
+            case "stranger":
+            case "a stranger":
+                desc = "พูดคุยกับ คนแปลกหน้า (Shirou) นอกบ้าน";
                 break;
             case "egon":
-                desc = "พูดคุยกับ Egon นอกบ้าน";
+                desc = "พูดคุยกับ อีกอน (Egon) นอกบ้าน";
                 break;
             case "sasha":
-                desc = "พูดคุยกับ Sasha นอกบ้าน";
+                desc = "พูดคุยกับ ซาช่า (Sasha) นอกบ้าน";
                 break;
             case "rin":
-                desc = "พูดคุยกับ Rin ที่โรงเรียน";
+                if (day == 6 || day == 13) desc = "พูดคุยกับ ริน (Rin) ในห้องสมุด";
+                else if (day == 16) desc = "พูดคุยกับ ริน (Rin) หน้าอาคารเรียน";
+                else desc = "พูดคุยกับ ริน (Rin) ที่โรงเรียน";
                 break;
             case "vipar":
-                desc = "พูดคุยกับ Vipar ที่โรงเรียน";
+                if (day == 9) desc = "พูดคุยกับ ครูวิภา (Vipar) ที่โถงทางเดิน";
+                else if (day == 13) desc = "พูดคุยกับ ครูวิภา (Vipar) ในห้องสมุด";
+                else if (day == 14) desc = "พูดคุยกับ ครูวิภา (Vipar) หน้าห้องเรียน";
+                else if (day == 15) desc = "รับผลคะแนนจาก ครูวิภา (Vipar) ในห้องเรียน";
+                else if (day == 16) desc = "พูดคุยกับ ครูวิภา (Vipar) หน้าโรงเรียน";
+                else desc = "พูดคุยกับ ครูวิภา (Vipar) ที่โรงเรียน";
                 break;
             case "momon":
-                desc = "พูดคุยกับ Momon ที่โรงเรียน";
+                if (day == 6 || day == 13) desc = "พูดคุยกับ ครูโมม่อน (Momon) ในห้องสมุด";
+                else if (day == 16) desc = "คืนกุญแจให้ ครูโมม่อน (Momon) ในห้องสมุด";
+                else desc = "พูดคุยกับ ครูโมม่อน (Momon) ที่โรงเรียน";
                 break;
             case "shia":
-                desc = "พูดคุยกับ Shia ที่โรงเรียน";
+                if (day == 7) desc = "พูดคุยกับ ชีอ่า (Shia) ในห้องเรียน";
+                else if (day == 12) desc = "พูดคุยกับ ชีอ่า (Shia) ที่โต๊ะเรียน";
+                else if (day == 13) desc = "พูดคุยกับ ชีอ่า (Shia) ในห้องสมุด";
+                else if (day == 14) desc = "พูดคุยกับ ชีอ่า (Shia) เรื่องเวรทำความสะอาด";
+                else if (day == 16) desc = "พูดคุยกับ ชีอ่า (Shia) หน้าโรงเรียน";
+                else desc = "พูดคุยกับ ชีอ่า (Shia) ที่โรงเรียน";
                 break;
             case "park":
             case "prak":
-                desc = "พูดคุยกับ Park ที่โรงเรียน";
+                if (day == 9) desc = "พูดคุยกับ ป้าก (Park) ที่บอร์ดคะแนน";
+                else if (day == 12 || day == 16) desc = "พูดคุยกับ ป้าก (Park) ข้างสนามบาส";
+                else if (day == 13) desc = "พูดคุยกับ ป้าก (Park) ในห้องสมุด";
+                else desc = "พูดคุยกับ ป้าก (Park) ที่โรงเรียน";
                 break;
             case "hong":
-                desc = "พูดคุยกับ Hong ที่โรงเรียน";
+                desc = "พูดคุยกับ หงส์ (Hong) ที่โรงเรียน";
                 break;
             default:
                 desc = $"พูดคุยกับ {npcName}";

@@ -130,6 +130,8 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+        if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
+
         if (dialogueCanvas != null && dialogueCanvas.activeSelf && !isWaitingForChoice)
         {
             bool advancePressed = false;
@@ -154,14 +156,26 @@ public class DialogueManager : MonoBehaviour
 
     public void StartCustomDialogue(string npcName, Sprite playerImg, Sprite npcImg, List<DialogueLine> intro, List<DialogueChoice> choices, List<DialogueLine> conclusion)
     {
+        if ((intro == null || intro.Count == 0) &&
+            (choices == null || choices.Count == 0) &&
+            (conclusion == null || conclusion.Count == 0))
+        {
+            Debug.LogWarning($"[DialogueManager] No dialogue lines to display for {npcName}. Cancelling dialogue.");
+            return;
+        }
+
         currentNPCName = npcName;
-        currentActiveStory = new List<DialogueLine>(intro);
-        currentChoicesData = choices;
-        conclusionStoryData = conclusion;
+        currentActiveStory = intro != null ? new List<DialogueLine>(intro) : new List<DialogueLine>();
+        currentChoicesData = choices != null ? choices : new List<DialogueChoice>();
+        conclusionStoryData = conclusion != null ? conclusion : new List<DialogueLine>();
         
         dialogueStep = 0;
         isWaitingForChoice = false;
         currentPhase = StoryPhase.Intro;
+
+        if (nameText != null) nameText.text = "";
+        if (bodyText != null) bodyText.text = "";
+        targetText = "";
 
         SetupSlots();
 
@@ -173,7 +187,7 @@ public class DialogueManager : MonoBehaviour
         if (choicePanel != null) choicePanel.SetActive(false);
         if (dialogueCanvas != null) dialogueCanvas.SetActive(true);
 
-        //  ซ่อนหน้าต่างเควสรายวันเมื่อเริ่มบทสนทนา
+        // ซ่อนหน้าต่างเควสรายวันเมื่อเริ่มบทสนทนา
         if (DailyQuestManager.Instance != null)
         {
             DailyQuestManager.Instance.SetVisible(false);
@@ -556,11 +570,20 @@ public class DialogueManager : MonoBehaviour
         currentFallbackNpcImg = null;
         Time.timeScale = 1f; 
 
+        if (nameText != null) nameText.text = "";
+        if (bodyText != null) bodyText.text = "";
+        targetText = "";
+        if (currentActiveStory != null) currentActiveStory.Clear();
+        if (currentChoicesData != null) currentChoicesData.Clear();
+        if (conclusionStoryData != null) conclusionStoryData.Clear();
+        dialogueStep = 0;
+        isTyping = false;
+
         bool is3DScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Bedroom_3D";
         Cursor.visible = !is3DScene;
         Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
 
-        //  ตรวจสอบหากอยู่ในฉากจบ (Ending_Good, Ending_Bad, Ending_Normal) ให้เข้าสู่หน้าจอดำและขึ้น The End
+        // ตรวจสอบหากอยู่ในฉากจบ (Ending_Good, Ending_Bad, Ending_Normal) ให้เข้าสู่หน้าจอดำและขึ้น The End
         string activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         if (activeScene.StartsWith("Ending_", System.StringComparison.OrdinalIgnoreCase) && activeScene != "GameOver_Stress")
         {

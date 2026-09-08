@@ -61,6 +61,8 @@ public class DevConsole : MonoBehaviour
         isConsoleOpen = false;
     }
 
+    private bool clearOnNextFrame = false;
+
     private void Update()
     {
         if (Keyboard.current != null)
@@ -91,6 +93,23 @@ public class DevConsole : MonoBehaviour
                 {
                     NavigateHistory(1);
                 }
+                else if (inputField != null && !inputField.isFocused && Keyboard.current.anyKey.wasPressedThisFrame)
+                {
+                    inputField.ActivateInputField();
+                }
+            }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (clearOnNextFrame)
+        {
+            clearOnNextFrame = false;
+            if (inputField != null)
+            {
+                inputField.text = string.Empty;
+                inputField.ActivateInputField();
             }
         }
     }
@@ -112,6 +131,7 @@ public class DevConsole : MonoBehaviour
         EnsureConsoleUI();
 
         isConsoleOpen = true;
+        clearOnNextFrame = true;
         if (consolePanel != null)
         {
             consolePanel.SetActive(true);
@@ -136,10 +156,26 @@ public class DevConsole : MonoBehaviour
             consolePanel.SetActive(false);
         }
 
-        // ปรับการล็อกเมาส์กลับตามประเภทของฉากปัจจุบัน
+        // ปรับการล็อกเมาส์กลับตามประเภทของฉากปัจจุบันและสถานะบทสนทนา
         bool is3DScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Bedroom_3D";
-        Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !is3DScene;
+        
+        bool isDialogueActive = false;
+        DialogueManager dm = UnityEngine.Object.FindAnyObjectByType<DialogueManager>();
+        if (dm != null && dm.IsDialogueActive())
+        {
+            isDialogueActive = true;
+        }
+
+        if (isDialogueActive)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = is3DScene ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !is3DScene;
+        }
     }
 
     private void NavigateHistory(int direction)
@@ -274,6 +310,17 @@ public class DevConsole : MonoBehaviour
                 HandleSpeedCommand(parts);
                 break;
 
+            case "warp":
+            case "tp":
+                HandleWarpCommand(parts);
+                break;
+
+            case "skiptutorial":
+            case "skiptut":
+            case "skip":
+                HandleSkipTutorialCommand();
+                break;
+
             case "close":
             case "exit":
                 CloseConsole();
@@ -299,6 +346,8 @@ public class DevConsole : MonoBehaviour
         Log(" <color=#E5C07B>cls / clear</color> : ล้างข้อความบนหน้าจอ Console");
         Log(" <color=#E5C07B>talked</color> : ดูรายชื่อ NPC ที่คุยจบแล้วในวันนี้");
         Log(" <color=#E5C07B>resettalk</color> : รีเซ็ตสถานะการคุย NPC วันนี้ทั้งหมดให้กลับมาคุยใหม่ได้");
+        Log(" <color=#E5C07B>warp <scene|x y z></color> : วาร์ปข้ามฉาก (home, school, outside, bedroom) หรือวาร์ปพิกัด X Y Z");
+        Log(" <color=#E5C07B>skiptutorial / skip</color> : ข้ามขั้นตอนสอนเล่น (Tutorial) ทันที");
         Log(" <color=#E5C07B>close / exit</color> : ปิดหน้าต่าง Command Prompt (หรือกด ~ / ESC)");
     }
 
@@ -416,6 +465,24 @@ public class DevConsole : MonoBehaviour
         if (DailyQuestManager.Instance != null)
         {
             DailyQuestManager.Instance.ForceRefresh();
+        }
+
+        // อัปเดตการแสดงผลของไอเทมและ NPC ในฉากปัจจุบันตามวันที่เปลี่ยนทันที
+        ItemAppearanceController[] allItems = UnityEngine.Object.FindObjectsByType<ItemAppearanceController>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None);
+        foreach (var itm in allItems)
+        {
+            if (itm != null) itm.UpdateItemAppearance();
+        }
+
+        NPCAppearanceController[] allNPCs = UnityEngine.Object.FindObjectsByType<NPCAppearanceController>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None);
+        foreach (var npc in allNPCs)
+        {
+            if (npc != null) npc.UpdateAppearance();
+        }
+
+        if (DailySecretItemManager.Instance != null)
+        {
+            DailySecretItemManager.Instance.RefreshSecretItems();
         }
 
         Log($"<color=#98C379>[Success] ปรับเปลี่ยนวันในเกมเป็น Day {targetDay} เรียบร้อย!</color>");
@@ -825,5 +892,112 @@ public class DevConsole : MonoBehaviour
         // ข้อความต้อนรับ
         Log("<color=#61AFEF>Depressonant Developer Console v1.0 พร้อมใช้งาน</color>");
         Log("<color=#ABB2BF>พิมพ์ <color=#E5C07B>help</color> เพื่อดูรายชื่อคำสั่งทั้งหมด หรือกด <color=#E5C07B>~</color> / <color=#E5C07B>ESC</color> เพื่อปิดหน้าต่าง</color>");
+    }
+
+    private void HandleWarpCommand(string[] parts)
+    {
+        if (parts.Length < 2)
+        {
+            Log("<color=#E06C75>[Usage] warp <home|school|outside|bedroom|mainmenu> หรือ warp <x> <y> <z></color>");
+            return;
+        }
+
+        // กรณีระบุพิกัด X Y Z
+        if (parts.Length >= 4 && float.TryParse(parts[1], out float x) && float.TryParse(parts[2], out float y) && float.TryParse(parts[3], out float z))
+        {
+            CharacterController cc = UnityEngine.Object.FindAnyObjectByType<CharacterController>();
+            if (cc != null)
+            {
+                cc.enabled = false;
+                cc.transform.position = new Vector3(x, y, z);
+                cc.enabled = true;
+                Log($"<color=#98C379>[Success] วาร์ปตัวละครไปยังพิกัด ({x:F2}, {y:F2}, {z:F2}) สำเร็จ!</color>");
+            }
+            else
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                if (player == null) player = GameObject.Find("Player");
+                if (player != null)
+                {
+                    player.transform.position = new Vector3(x, y, z);
+                    Log($"<color=#98C379>[Success] วาร์ปตัวละครไปยังพิกัด ({x:F2}, {y:F2}, {z:F2}) สำเร็จ!</color>");
+                }
+                else
+                {
+                    Log("<color=#E06C75>[Error] ไม่พบตัวละคร Player ในฉากปัจจุบัน</color>");
+                }
+            }
+            return;
+        }
+
+        string target = parts[1].ToLower();
+        string sceneName = "";
+        string spawnPoint = "Player_Spawn_Point";
+
+        switch (target)
+        {
+            case "home":
+            case "house":
+                sceneName = "Home";
+                spawnPoint = "Spawn_From_Bedroom";
+                break;
+
+            case "school":
+                sceneName = "School";
+                spawnPoint = "Player_Spawn_Point";
+                break;
+
+            case "outside":
+            case "park":
+            case "street":
+                sceneName = "OutSide";
+                spawnPoint = "Player_Spawn_Point";
+                break;
+
+            case "bedroom":
+            case "room":
+            case "3d":
+                sceneName = "Bedroom_3D";
+                spawnPoint = "Player_Spawn_Point";
+                break;
+
+            case "mainmenu":
+            case "menu":
+                sceneName = "MainMenu";
+                spawnPoint = "";
+                break;
+
+            default:
+                sceneName = parts[1];
+                break;
+        }
+
+        Log($"<color=#98C379>[Warp] กำลังวาร์ปไปยังฉาก '{sceneName}'...</color>");
+        CloseConsole();
+
+        if (string.IsNullOrEmpty(spawnPoint))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            SceneTransitionManager.LoadSceneWithSpawn(sceneName, spawnPoint);
+        }
+    }
+
+    private void HandleSkipTutorialCommand()
+    {
+        TutorialManager tm = TutorialManager.Instance;
+        if (tm == null) tm = UnityEngine.Object.FindAnyObjectByType<TutorialManager>();
+
+        if (tm != null)
+        {
+            tm.SkipTutorial();
+            Log("<color=#98C379>[Success] ข้ามช่วงสอนเล่น (Tutorial) เรียบร้อยแล้ว!</color>");
+        }
+        else
+        {
+            Log("<color=#E5C07B>[Notice] ไม่พบตัวจัดการ Tutorial ในฉากนี้ หรือช่วงสอนเล่นเสร็จสิ้นไปแล้ว</color>");
+        }
     }
 }
