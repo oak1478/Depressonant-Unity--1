@@ -12,15 +12,15 @@ public struct GlobalInventoryItem
 
 public class GameManagerSetup : MonoBehaviour
 {
-    // ⚡ ระบบ Singleton เพื่อการเรียกใช้งานข้ามคลาสที่ง่ายขึ้น
+    // ระบบ Singleton เพื่อการเรียกใช้งานข้ามคลาสที่ง่ายขึ้น
     public static GameManagerSetup Instance { get; private set; }
 
     [Header("Global Game State")]
     [Range(0, 100)] public float currentStress = 0f; // ค่าความเครียดสะสมหลัก
     [Range(1, 20)] public int currentDay = 1;         // วันปัจจุบัน
     public int consecutiveMaxStressDays = 0;          // จำนวนวันที่ความเครียดเต็ม 100% ติดต่อกัน
-    public int activeSaveSlot = 1; // ⚡ สล็อตเซฟปัจจุบัน (1-4)
-    public float playTime = 0f;    // ⚡ เก็บเวลาเล่นรวมสะสม (หน่วยเป็นวินาที)
+    public int activeSaveSlot = 1; // สล็อตเซฟปัจจุบัน (1-4)
+    public float playTime = 0f;    // เก็บเวลาเล่นรวมสะสม (หน่วยเป็นวินาที)
 
     [Header("Player Load State")]
     public bool hasLoadedPosition = false;
@@ -164,6 +164,9 @@ public class GameManagerSetup : MonoBehaviour
         // ตรวจสอบและสร้าง EventSystem อัตโนมัติหากฉากนั้นไม่มี เพื่อให้ UI และการใช้ไอเทมทำงานได้ 100%
         EnsureEventSystem();
 
+        // ตรวจสอบและติดตั้ง Collider ให้กับเฟอร์นิเจอร์และสิ่งก่อสร้างที่ยังไม่มี Collider เพื่อป้องกันการเดินทะลุ
+        EnsureSceneColliders();
+
         // หากมีข้อมูลเซฟรออยู่ใน Pending Data ให้อัปเดตข้อมูลกลางทันที
         UnpackPendingSaveData();
 
@@ -187,6 +190,122 @@ public class GameManagerSetup : MonoBehaviour
                 Debug.Log("[GameManagerSetup] ตรวจไม่พบ EventSystem ในฉาก ได้สร้าง EventSystem_Auto ให้อัตโนมัติ");
             }
         }
+    }
+
+    public void EnsureSceneColliders()
+    {
+        string[] targetContainerNames = new string[] { "Furniture", "Furnitur", "Building", "Mapwall", "Lamps", "Fences" };
+        int collidersAddedCount = 0;
+
+        foreach (string containerName in targetContainerNames)
+        {
+            GameObject[] matchingObjects = Object.FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (GameObject targetObj in matchingObjects)
+            {
+                if (targetObj != null && targetObj.name.Equals(containerName, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    bool isBuildingOrWall = containerName.Equals("Building", System.StringComparison.OrdinalIgnoreCase) || 
+                                           containerName.Equals("Mapwall", System.StringComparison.OrdinalIgnoreCase);
+                    collidersAddedCount += AddCollidersToHierarchy(targetObj.transform, isBuildingOrWall);
+                }
+            }
+        }
+
+        if (collidersAddedCount > 0)
+        {
+            Debug.Log($"[GameManagerSetup] ติดตั้ง Collider อัตโนมัติให้เฟอร์นิเจอร์/สิ่งก่อสร้างสำเร็จ {collidersAddedCount} ชิ้น");
+        }
+    }
+
+    private int AddCollidersToHierarchy(Transform root, bool isBuildingOrWall)
+    {
+        int added = 0;
+        MeshRenderer[] renderers = root.GetComponentsInChildren<MeshRenderer>(true);
+
+        foreach (MeshRenderer mr in renderers)
+        {
+            if (mr == null) continue;
+            GameObject go = mr.gameObject;
+
+            // 1. ยกเว้นไอเทมเก็บได้ (PickupItem)
+            if (go.GetComponent<PickupItem>() != null || go.GetComponentInParent<PickupItem>() != null)
+                continue;
+
+            // 2. ยกเว้นตัวละครผู้เล่น และ NPC
+            if (go.CompareTag("Player") || go.CompareTag("NPC") ||
+                go.GetComponent<NPCInteraction>() != null || go.GetComponentInParent<NPCInteraction>() != null ||
+                go.GetComponent<CharacterController>() != null || go.GetComponent<PlayerMovement>() != null)
+                continue;
+
+            // 3. ยกเว้นจุดวาร์ปหรือประตูเชื่อมฉาก
+            if (go.GetComponent<TriggerSceneWarp>() != null || go.GetComponent<RoomWarp>() != null)
+                continue;
+
+            // 4. ตรวจสอบว่ามี Collider แบบทึบ (isTrigger == false) อยู่แล้วหรือไม่
+            Collider[] colliders = go.GetComponents<Collider>();
+            bool hasSolidCollider = false;
+            foreach (Collider c in colliders)
+            {
+                if (c != null && !c.isTrigger)
+                {
+                    hasSolidCollider = true;
+                    break;
+                }
+            }
+
+            if (hasSolidCollider) continue;
+
+            // 5. ติดตั้ง Collider
+            MeshFilter mf = go.GetComponent<MeshFilter>();
+            if (mf != null && mf.sharedMesh != null)
+            {
+                Vector3 meshSize = mf.sharedMesh.bounds.size;
+                if (meshSize.magnitude < 0.08f) continue;
+
+                bool meshColliderSuccess = false;
+                if (isBuildingOrWall)
+                {
+                    try
+                    {
+                        MeshCollider mc = go.AddComponent<MeshCollider>();
+                        mc.sharedMesh = mf.sharedMesh;
+                        mc.convex = false;
+                        meshColliderSuccess = true;
+                        added++;
+                    }
+                    catch
+                    {
+                        meshColliderSuccess = false;
+                    }
+                }
+
+                if (!meshColliderSuccess)
+                {
+                    BoxCollider bc = go.AddComponent<BoxCollider>();
+                    bc.center = mf.sharedMesh.bounds.center;
+                    bc.size = mf.sharedMesh.bounds.size;
+                    added++;
+                }
+            }
+            else
+            {
+                Bounds b = mr.bounds;
+                if (b.size.magnitude >= 0.08f)
+                {
+                    BoxCollider bc = go.AddComponent<BoxCollider>();
+                    Vector3 ls = go.transform.lossyScale;
+                    bc.center = go.transform.InverseTransformPoint(b.center);
+                    bc.size = new Vector3(
+                        b.size.x / Mathf.Max(0.001f, Mathf.Abs(ls.x)),
+                        b.size.y / Mathf.Max(0.001f, Mathf.Abs(ls.y)),
+                        b.size.z / Mathf.Max(0.001f, Mathf.Abs(ls.z))
+                    );
+                    added++;
+                }
+            }
+        }
+
+        return added;
     }
 
     public void UnpackPendingSaveData()
@@ -231,11 +350,12 @@ public class GameManagerSetup : MonoBehaviour
 
     void Start()
     {
+        EnsureSceneColliders();
     }
 
     void Update()
     {
-        // ⚡ สะสมเวลาเล่นรวมของเซฟเกม
+        // สะสมเวลาเล่นรวมของเซฟเกม
         playTime += Time.deltaTime;
     }
 }
