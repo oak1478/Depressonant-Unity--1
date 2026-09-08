@@ -8,6 +8,7 @@ TagManager:
   - Dirt
   - Wood
   - Concrete
+  - NPC
   layers:
   - Default
   - TransparentFX
