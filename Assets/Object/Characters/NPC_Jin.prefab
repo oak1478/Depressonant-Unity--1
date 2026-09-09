@@ -401,6 +401,10 @@ MonoBehaviour:
     portraits:
     - portraitName: idle
       sprite: {fileID: 21300000, guid: f81b9925f70815b4ab1355465fc913a8, type: 3}
+  - npcName: Ben
+    portraits:
+    - portraitName: idle
+      sprite: {fileID: 21300000, guid: a66cc8e580a52f147bed94e2bab92c8b, type: 3}
   dialoguesByDay:
   - dayTitle: DAY 2
     dayNumber: 2

@@ -3771,6 +3771,14 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 1309805493991385820, guid: abbe1e79c614b254c85154420aa8e06e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565586062988218456, guid: abbe1e79c614b254c85154420aa8e06e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 794fe20480d79c3439a6a2372b7fb3e3, type: 3}
     - target: {fileID: 7840535721830944518, guid: abbe1e79c614b254c85154420aa8e06e, type: 3}
       propertyPath: m_Name
       value: SleepSaveCanvas

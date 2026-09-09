@@ -94447,10 +94447,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC_Jin
       objectReference: {fileID: 0}
-    - target: {fileID: 4046482694224239396, guid: ed1a950e6a0767c41bb7b9dcfd95202d, type: 3}
-      propertyPath: dialoguesByDay.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4939773011039692340, guid: ed1a950e6a0767c41bb7b9dcfd95202d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.4314651

@@ -314,12 +314,35 @@ public class NPCInteraction : MonoBehaviour
             }
 
             DailyDialogue todaysDialogue = null;
-            foreach (var dialog in dialoguesByDay)
+            string activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            string targetEnding = activeScene.StartsWith("Ending_", System.StringComparison.OrdinalIgnoreCase) && activeScene != "GameOver_Stress"
+                ? activeScene
+                : (today >= 17 ? DayManager.GetCalculatedEndingScene() : null);
+
+            if (!string.IsNullOrEmpty(targetEnding))
             {
-                if (dialog != null && dialog.dayNumber == today)
+                foreach (var dialog in dialoguesByDay)
                 {
-                    todaysDialogue = dialog;
-                    break;
+                    if (dialog != null && dialog.dayNumber == today)
+                    {
+                        if (!string.IsNullOrEmpty(dialog.dayTitle) && dialog.dayTitle.IndexOf(targetEnding, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            todaysDialogue = dialog;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (todaysDialogue == null)
+            {
+                foreach (var dialog in dialoguesByDay)
+                {
+                    if (dialog != null && dialog.dayNumber == today)
+                    {
+                        todaysDialogue = dialog;
+                        break;
+                    }
                 }
             }
 
@@ -572,7 +595,10 @@ public class NPCInteraction : MonoBehaviour
             foreach (var daily in dialoguesByDay)
             {
                 // อัปเดตชื่อหัวข้อวันใน Inspector
-                daily.dayTitle = $"DAY {daily.dayNumber}";
+                if (string.IsNullOrEmpty(daily.dayTitle) || !daily.dayTitle.StartsWith("Ending_"))
+                {
+                    daily.dayTitle = $"DAY {daily.dayNumber}";
+                }
                 
                 SanitizeDialogueLines(daily, daily.introductionStory);
                 SanitizeDialogueLines(daily, daily.conclusionStory);

@@ -11691,11 +11691,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
       propertyPath: dialoguesByDay.Array.data[0].dayTitle
-      value: DAY 2
+      value: DAY 1
       objectReference: {fileID: 0}
     - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
       propertyPath: dialoguesByDay.Array.data[0].dayNumber
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7430847696601987279, guid: 93f656766e6a0464e92fe5142d84a7b5, type: 3}
       propertyPath: npcProfiles.Array.data[0].portraits.Array.size
@@ -16373,15 +16373,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
       propertyPath: spawnDays.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
-      propertyPath: 'spawnDays.Array.data[0]'
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
+      propertyPath: 'spawnDays.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247784770225694561, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
       propertyPath: 'spawnDays.Array.data[1]'
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6658930247183840851, guid: 6c70388ea1a31934c86f62a9fa6242b4, type: 3}
       propertyPath: m_Name
@@ -18547,6 +18547,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 64209843215626822, guid: abbe1e79c614b254c85154420aa8e06e, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291949311
+      objectReference: {fileID: 0}
+    - target: {fileID: 64209843215626822, guid: abbe1e79c614b254c85154420aa8e06e, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 7840535721830944518, guid: abbe1e79c614b254c85154420aa8e06e, type: 3}
       propertyPath: m_Name
       value: SleepSaveCanvas

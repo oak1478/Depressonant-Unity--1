@@ -7677,11 +7677,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DailyQuestManager
   npcListContainer: {fileID: 5082747603116553042}
-  npcRowPrefab: {fileID: 1987563390385431026, guid: 251df63083ac6364a8d072be538409ef, type: 3}
+  npcRowPrefab: {fileID: 4447496603711433513, guid: 25701814fbb74c04087dd3eab0fb4340, type: 3}
   titleObjectToHide: {fileID: 7257964029638888750}
   questUIRoot: {fileID: 2983833591177719970}
-  bulletIcon: {fileID: 0}
-  completedIcon: {fileID: 0}
+  bulletIcon: {fileID: 21300000, guid: 38a5cc597dbaa4c4291a288572a6a240, type: 3}
+  completedIcon: {fileID: 21300000, guid: 38a5cc597dbaa4c4291a288572a6a240, type: 3}
   questSchedule: []
   refreshInterval: 1
 --- !u!1 &4792306102281204999

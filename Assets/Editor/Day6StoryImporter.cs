@@ -39,26 +39,31 @@ public static class Day6StoryImporter
         // --- Intro ---
         day.introductionStory = new List<DialogueLine>
         {
-            CreateLine("เนีย! มาเร็ว วันนี้งานจัดชั้นหนังสือในห้องสมุดเยอะเลย", "Rin", "idle", 0f, 4, SpriteAction.Jump),
-            CreateLine("ถ้าได้เธอช่วย ต้องเสร็จทันก่อนคาบบ่ายแน่ๆ", "Rin", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("เนีย! วันนี้งานจัดชั้นหนังสือในห้องสมุดเยอะเลยถ้าได้เธอช่วย ต้องเสร็จทันแน่ๆ", "Rin", "idle", 0f, 4, SpriteAction.Jump),
             CreateLine("อื้ม... เดี๋ยวฉันช่วยเอง", "Nia", "idle", 0f, 1, SpriteAction.None),
-            CreateLine("(ฉันเป็นบรรณารักษ์นะ... เรื่องแค่นี้ฉันทำได้ดีอยู่แล้ว)", "Nia", "idle", 0f, 1, SpriteAction.None),
-            CreateLine("(...แต่ทำได้ดีแล้วยังไงล่ะ? สุดท้ายเธอก็แค่เด็กเรียกลูกมือไม่ใช่หรือไง)", "Nia", "bad1", 0f, 1, SpriteAction.None),
+            CreateLine("(ที่จริงฉันเป็นบรรณารักษ์นะ ฉันต้องทำอยู่แล้ว)", "Nia", "idle", 0f, 1, SpriteAction.None),
+            CreateLine("(แต่ทำได้ดีแล้วยังไงล่ะ? ที่จริงก็ต้องให้รินช่วยเตือนตลอด บางทีนางก็ทำงานที่ฉันลืมด้วย)", "Nia", "bad1", 0f, 1, SpriteAction.None),
             CreateLine("เนีย? ยืนเหม่ออะไรอยู่เหรอ? เป็นอะไรรึเปล่า?", "Rin", "idle", 0f, 4, SpriteAction.None)
         };
 
         // --- Choices ---
         day.storyChoices = new List<DialogueChoice>
         {
-            CreateChoice("เปล่าหรอก แค่กำลังคิดว่าจะเริ่มจัดหมวดไหนก่อนดี", "Nia", "good1", -5f, 1, SpriteAction.None, null),
-            CreateChoice("ฉันแค่... รู้สึกว่าทำไปก็คงไม่มีใครสนหรอก", "Nia", "bad1", 0f, 1, SpriteAction.None, null),
-            CreateChoice("ถามอยู่นั่นแหละ! ฉันจัดคนเดียวได้น่า!", "Nia", "bad1", 10f, 1, SpriteAction.Shake, null)
+            CreateChoice("ไม่มีอะไร", "Nia", "idle", 0f, 1, SpriteAction.None, null),
+            CreateChoice("เปล่าหรอก แค่กำลังคิดว่าจะเริ่มจัดหมวดไหนก่อนดี", "Nia", "good1", 0f, 1, SpriteAction.None, new List<DialogueLine>
+            {
+                CreateLine("มีความตั้งใจดีนะ", "Rin", "idle", -5f, 4, SpriteAction.Jump)
+            }),
+            CreateChoice("ที่จริงแล้ว ฉันจัดคนเดียวได้น่า! เดิมทีก็งานฉันนะ", "Nia", "bad1", 0f, 1, SpriteAction.Shake, new List<DialogueLine>
+            {
+                CreateLine("โถ่ อุส่าห์จะช่วยแท้ ๆ", "Rin", "idle", 10f, 4, SpriteAction.Shake)
+            })
         };
 
         // --- Conclusion ---
         day.conclusionStory = new List<DialogueLine>
         {
-            CreateLine("งั้นเหรอ... งั้นฉันฝากหมวดวิทยาศาสตร์นะ พอดีครูวิภาสั่งไว้", "Rin", "idle", 0f, 4, SpriteAction.None)
+            CreateLine("งั้นเหรอ... งั้นฉันฝากด้วยนะ พอดีครูวิภาเร่งฉันไปรอบนึงแล้วนะ", "Rin", "idle", 0f, 4, SpriteAction.None)
         };
 
         EditorUtility.SetDirty(npc);
@@ -82,25 +87,34 @@ public static class Day6StoryImporter
         // --- Intro ---
         day.introductionStory = new List<DialogueLine>
         {
-            CreateLine("อ้าว ริน จัดหนังสือเสร็จหรือยัง?", "Vipar", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("ครูต้องการเล่มที่มีเนื้อหาเคมีตารางธาตุด่วนเลยนะ", "Vipar", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("เรียบร้อยแล้วค่ะครู เนียเป็นคนช่วยจัดหมวดนั้นให้พอดีเลยค่ะ!", "Rin", "idle", 0f, 6, SpriteAction.Jump),
-            CreateLine("อ้อ... งั้นเหรอ ขอบใจมากนะริน ช่วยได้เยอะเลย", "Vipar", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("(เดินหยิบหนังสือแล้วเดินออกไปโดยไม่มองเนียแม้แต่น้อย)", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("อ้าว เนีย วันนี้จัดหนังสือเสร็จหรือยัง?", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("ยังเลยค่ะครู", "Nia", "idle", 0f, 1, SpriteAction.None),
+            CreateLine("อ้อ... งั้นเหรอ บางทีรินอาจช่วยได้เยอะเลย ลองไปถามดูซิ แล้วก็ฉันไปรู้บางอย่างมานะ", "Vipar", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("ดูเหมือนเธอจะมีอาการซึมเศร้าเล็กน้อยซินะ ไม่ต้องห่วงหรอกนะฉันไม่บอกใครหรอก", "Vipar", "idle", 0f, 4, SpriteAction.None),
             CreateLine("...", "Nia", "bad1", 0f, 1, SpriteAction.None),
-            CreateLine("(เห็นไหมล่ะ... เขาไม่เห็นหัวเธอด้วยซ้ำ รินเป็นคนได้หน้าทั้งหมด: เสียงในหัว)", "Nia", "bad1", 0f, 1, SpriteAction.None),
-            CreateLine("(กระจกมันฝ้ามัวไปหมด mPFC พังยับ... ฉันไม่มีตัวตนจริงๆ ในสายตาใครเลย)", "Nia", "bad1", 0f, 1, SpriteAction.None)
+            CreateLine("(พ่อสินะ เขาไม่เห็นหัวฉันด้วยซ้ำ)", "Nia", "bad1", 5f, 1, SpriteAction.None)
         };
 
         // --- Choices ---
         day.storyChoices = new List<DialogueChoice>
         {
-            CreateChoice("(เงียบไว้... ครูคงแค่รีบเฉยๆ)", "Nia", "bad1", 0f, 1, SpriteAction.None, null),
-            CreateChoice("ครูคะ! หนูเป็นคนจัดกองนั้นคนเดียวนะคะ!", "Nia", "bad1", 10f, 1, SpriteAction.Shake, new List<DialogueLine>
+            CreateChoice("ที่จริงแล้วมันไม่ใช่นะค่ะ", "Nia", "idle", 0f, 1, SpriteAction.None, new List<DialogueLine>
             {
-                CreateLine("อ้าวเหรอจ๊ะ? จ้าๆ ขอบใจนะเนีย (พูดแบบไม่ใส่ใจก่อนเดินไป)", "Vipar", "idle", 5f, 4, SpriteAction.None)
+                CreateLine("อ้าวเหรอ? งั้นช่างมันเถอะ", "Vipar", "idle", 0f, 4, SpriteAction.None),
+                CreateLine("ครูขอตัวก่อนนะ", "Vipar", "idle", 0f, 4, SpriteAction.None),
+                CreateLine("รอดไปที", "Nia", "idle", 0f, 1, SpriteAction.None)
             }),
-            CreateChoice("ริน... ฉันขอตัวไปห้องน้ำก่อนนะ", "Nia", "bad1", 5f, 1, SpriteAction.None, null)
+            CreateChoice("ครูคะ! หนูว่ามีคนโกหกครูแล้วละคะ!", "Nia", "idle", 0f, 1, SpriteAction.None, new List<DialogueLine>
+            {
+                CreateLine("อ้าวเหรอ? งั้นช่างมันเถอะ", "Vipar", "idle", 0f, 4, SpriteAction.None),
+                CreateLine("ครูขอตัวก่อนนะ", "Vipar", "idle", 0f, 4, SpriteAction.None),
+                CreateLine("รอดไปที", "Nia", "idle", 0f, 1, SpriteAction.None)
+            }),
+            CreateChoice("ขอบคุณมากค่ะที่เก็บเอาไว้", "Nia", "bad1", 5f, 1, SpriteAction.None, new List<DialogueLine>
+            {
+                CreateLine("งั้นครูขอตัวด่อนละ พอดงานเยอะน่ะ", "Vipar", "idle", 0f, 4, SpriteAction.None),
+                CreateLine("ค่ะ", "Nia", "idle", 0f, 1, SpriteAction.None)
+            })
         };
 
         // --- Conclusion ---
@@ -123,6 +137,28 @@ public static class Day6StoryImporter
         NPCInteraction npc = go.GetComponent<NPCInteraction>();
         if (npc == null) return;
 
+        // Ensure Hong profile exists
+        bool hasHong = false;
+        foreach (var p in npc.npcProfiles)
+        {
+            if (p.npcName == "Hong") { hasHong = true; break; }
+        }
+        if (!hasHong)
+        {
+            Sprite hongSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Character/Dialog/Hong.png");
+            if (hongSprite != null)
+            {
+                npc.npcProfiles.Add(new NPCProfile
+                {
+                    npcName = "Hong",
+                    portraits = new List<PortraitEntry>
+                    {
+                        new PortraitEntry { portraitName = "idle", sprite = hongSprite }
+                    }
+                });
+            }
+        }
+
         DailyDialogue day = GetOrCreateDay(npc.dialoguesByDay, 6);
         day.dayTitle = "DAY 6";
         day.dayNumber = 6;
@@ -131,34 +167,34 @@ public static class Day6StoryImporter
         day.introductionStory = new List<DialogueLine>
         {
             CreateLine("อ้าว เนีย เดินหน้าซีดออกมาเชียว", "Shia", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("การจัดหนังสือมันเหนื่อยขนาดนั้นเลยเหรอ?", "Hong", "", 0f, 6, SpriteAction.None),
-            CreateLine("พวกเธออย่าทักเนียแบบนั้นสิ เนียเขาตั้งใจทำงานมากเลยนะ!", "Rin", "idle", 0f, 7, SpriteAction.Jump),
-            CreateLine("(ทำงานมาก? ตั้งใจ? เสียงของรินฟังดูปลอมชะมัด... OFC dysfunction)", "Nia", "bad1", 0f, 1, SpriteAction.None),
+            CreateLine("การเจออะไรมาเหนื่อยขนาดนั้น?", "Hong", "idle", 0f, 6, SpriteAction.None),
+            CreateLine("(ทำงานมาก? เจอเรื่องแย่ๆ? แต่ไม่ได้อยากโดนพวกเธอปลอบเลย)", "Nia", "bad1", 0f, 1, SpriteAction.None),
+            CreateLine("เอาเถอะ เธอดูแลห้องสมุดด้วยหนิ เก่งแล้วละ", "Shia", "idle", 0f, 4, SpriteAction.None),
             CreateLine("(ชมตามมารยาทล่ะสิ... สมเพชฉันอยู่ใช่ไหม? ปลอบใจเด็กห่วยๆ คนนึงอยู่สินะ)", "Nia", "bad1", 0f, 1, SpriteAction.None),
             CreateLine("หางานหาการทำก็ดีแล้ว ดีกว่านั่งซึมเป็นเป็ดหลงฝูงอยู่ในห้องเรียน", "Shia", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("ชีอ่า... พูดแรงไปแล้วนะ", "Hong", "", 0f, 6, SpriteAction.None),
-            CreateLine("ก็มันเรื่องจริงนี่ สมองขี้เลื่อยแบบนั้น วันๆ เอาแต่หมกตัว ไม่รู้จะมาโรงเรียนทำไม", "Shia", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("!!", "Nia", "bad1", 0f, 1, SpriteAction.Shake),
-            CreateLine("(pgACC ทำงานหนักขึ้น... ความขัดแย้งเล็กๆ โดนขยายใหญ่จนหูอื้อ)", "Nia", "bad1", 0f, 1, SpriteAction.None),
-            CreateLine("(ใช่... ชีอ่าพูดถูกแล้ว ฉันมันไร้ค่า ทำอะไรก็ล้มเหลว)", "Nia", "bad1", 0f, 1, SpriteAction.None),
+            CreateLine("เชีย... พูดแรงไปแล้วนะ", "Hong", "idle", 0f, 6, SpriteAction.None),
+            CreateLine("จริงนี่ วันๆ เอาแต่หมกตัวด้วย", "Shia", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("นั่นสินะ ก็จริง!!", "Nia", "bad1", 10f, 1, SpriteAction.Shake),
+            CreateLine("(ใช่... เชียพูดถูกแล้ว ฉันมันไร้ค่า ทำอะไรก็ล้มเหลว)", "Nia", "bad1", 0f, 1, SpriteAction.None),
             CreateLine("(ขยะ... ไร้ประโยชน์... อยากหายไปซะตอนนี้เลย)", "Nia", "bad1", 0f, 1, SpriteAction.None)
         };
 
         // --- Choices ---
         day.storyChoices = new List<DialogueChoice>
         {
-            CreateChoice("(นิ่งเงียบ กดความรู้สึกทั้งหมดไว้ข้างใน)", "Nia", "bad1", 10f, 1, SpriteAction.None, null),
-            CreateChoice("พวกเธอจะไปเข้าใจอะไรล่ะ!", "Nia", "bad1", -15f, 1, SpriteAction.Shake, new List<DialogueLine>
+            CreateChoice("(นิ่งเงียบ)", "Nia", "bad1", 10f, 1, SpriteAction.None, null),
+            CreateChoice("พวกเธอจะไปเข้าใจอะไรล่ะ!", "Nia", "good1", -15f, 1, SpriteAction.None, new List<DialogueLine>
             {
-                CreateLine("เหรอ? งั้นก็ทำให้ดูสิว่าเข้าใจอะไรบ้าง!", "Shia", "idle", 10f, 4, SpriteAction.Shake)
+                CreateLine("เหรอ? งั้นก็ทำให้ดูสิว่าเข้าใจอะไรบ้าง!", "Shia", "idle", 0f, 4, SpriteAction.None)
             }),
-            CreateChoice("ขอโทษนะ... ฉันมันแย่เอง", "Nia", "bad1", 5f, 1, SpriteAction.None, null)
+            CreateChoice("ขอโทษนะ...", "Nia", "bad1", 5f, 1, SpriteAction.None, null)
         };
 
         // --- Conclusion ---
         day.conclusionStory = new List<DialogueLine>
         {
-            CreateLine("อือ", "Nia", "bad1", 0f, 1, SpriteAction.None)
+            CreateLine("(ออกมาดีกว่า)", "Nia", "bad1", 0f, 1, SpriteAction.None),
+            CreateLine("หนีซะละ", "Shia", "idle", 0f, 4, SpriteAction.None)
         };
 
         EditorUtility.SetDirty(npc);
@@ -183,29 +219,27 @@ public static class Day6StoryImporter
         day.introductionStory = new List<DialogueLine>
         {
             CreateLine("...", "Momon", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("(เดินถือแก้วกาแฟเข้ามาเงียบๆ ด้านหลังเนีย)", "Momon", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("จัดชั้นหนังสือหมวดวิทยาศาสตร์เสร็จไวเหมือนเดิมเลยนะเนีย", "Momon", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("ครูโมม่อน...", "Nia", "idle", 0f, 1, SpriteAction.None),
-            CreateLine("ตรงนี้มุมระเบียบดีขึ้นเยอะ ปกติชั้นนี้ยุ่งเหยิงตลอดถ้าเธอไม่อยู่", "Momon", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("(ครูแค่พูดไปงั้นๆ แหละ... เขาคงแค่เกรงใจ ปลอบใจเด็กห่วยๆ คนนึงอยู่สินะ)", "Nia", "bad1", 0f, 1, SpriteAction.None),
-            CreateLine("เงียบทำไมล่ะ? กาแฟดำเข้าตาเหรอ?", "Momon", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("จัดชั้นหนังสือได้ไวเหมือนเดิมเลยนะเนีย", "Momon", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("ครูโมม่อน", "Nia", "idle", 0f, 1, SpriteAction.None),
+            CreateLine("ตรงมุมการ์ตูนดีขึ้นเยอะ ปกติชั้นนี้ยุ่งเหยิงตลอดถ้าเธอไม่อยู่", "Momon", "idle", 0f, 4, SpriteAction.None),
+            CreateLine("ไม่หรอกค่ะ แค่เรื่องงั้น ๆ", "Nia", "bad1", 0f, 1, SpriteAction.None),
+            CreateLine("ทำไมล่ะ?", "Momon", "idle", 0f, 4, SpriteAction.None),
             CreateLine("เปล่าค่ะ... แค่คิดว่า ใครๆ ก็ทำได้", "Nia", "idle", 0f, 1, SpriteAction.None),
             CreateLine("...", "Momon", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("คนอื่นทำได้ แต่เธอทำมัน ใส่ใจ กว่าคนอื่น เนีย", "Momon", "idle", 0f, 4, SpriteAction.None),
-            CreateLine("ห้องสมุดนี้ ถ้าไม่มีเธอคอยดูแล ป่านนี้หนังสือคงสลับหมวดจนครูวิภาหาไม่เจอสักเล่มแล้ว", "Momon", "idle", 0f, 4, SpriteAction.None)
+            CreateLine("คนอื่นทำได้ แต่เธอทำมัน ใส่ใจตัวเองกว่านี้หน่อยสิห้องสมุดนี้ ถ้าไม่มีเธอคอยดูแลฉันก็ต้องปล่อยมันทิ้งไว้ให้รกต่อไปละนะ", "Momon", "idle", 0f, 4, SpriteAction.None)
         };
 
         // --- Choices ---
         day.storyChoices = new List<DialogueChoice>
         {
             CreateChoice("ขอบคุณค่ะครู... หนูจะพยายามดูแลให้ดีขึ้นอีก", "Nia", "good1", -15f, 1, SpriteAction.None, null),
-            CreateChoice("ครูพูดประชดหนูหรือเปล่าคะ?", "Nia", "bad1", 0f, 1, SpriteAction.None, new List<DialogueLine>
+            CreateChoice("ครูพูดปลอบใจหนูหรือเปล่าคะ?", "Nia", "bad1", 0f, 1, SpriteAction.None, new List<DialogueLine>
             {
-                CreateLine("หน้าครูดูเหมือนคนชอบพูดประชดขนาดนั้นเลยเหรอ?", "Momon", "idle", 5f, 4, SpriteAction.None)
+                CreateLine("หน้าครูดูเหมือนคนชอบพูดไปแบบงั้น ๆ ขนาดนั้นเลยเหรอ?", "Momon", "idle", 0f, 4, SpriteAction.None)
             }),
             CreateChoice("(ก้มหน้าไม่พูดอะไร)", "Nia", "bad1", 0f, 1, SpriteAction.None, new List<DialogueLine>
             {
-                CreateLine("เอาเถอะ ขอบใจมากนะ", "Momon", "idle", 0f, 4, SpriteAction.None)
+                CreateLine("เอาเถอะ ขอบใจมากนะ", "Momon", "idle", -5f, 4, SpriteAction.None)
             })
         };
 
