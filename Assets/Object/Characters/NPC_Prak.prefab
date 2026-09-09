@@ -1314,7 +1314,7 @@ MonoBehaviour:
   - dayTitle: DAY 16
     dayNumber: 16
     introductionStory:
-    - text: "ไง! สรุปว่ารอดตายจากสัปดาห์มหาโหดมาได้แบบครบสามสิบสองนะ"
+    - text: "\u0E44\u0E07! \u0E2A\u0E23\u0E38\u0E1B\u0E27\u0E48\u0E32\u0E23\u0E2D\u0E14\u0E15\u0E32\u0E22\u0E08\u0E32\u0E01\u0E2A\u0E31\u0E1B\u0E14\u0E32\u0E2B\u0E4C\u0E21\u0E2B\u0E32\u0E42\u0E2B\u0E14\u0E21\u0E32\u0E44\u0E14\u0E49\u0E41\u0E1A\u0E1A\u0E04\u0E23\u0E1A\u0E2A\u0E32\u0E21\u0E2A\u0E34\u0E1A\u0E2A\u0E2D\u0E07\u0E19\u0E30"
       speakerName: Park
       portraitName: idle
       stressChange: 0
@@ -1322,7 +1322,8 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "เออ... จะว่าไป พอเธอเลิกทำตัวเป็นหินเดินได้ โรงเรียนก็ดูน่าอยู่ขึ้นเยอะเหมือนกันนะเนี่ย"
+    - text: "\u0E40\u0E2D\u0E2D... \u0E08\u0E30\u0E27\u0E48\u0E32\u0E44\u0E1B \u0E1E\u0E2D\u0E40\u0E18\u0E2D\u0E40\u0E25\u0E34\u0E01\u0E17\u0E33\u0E15\u0E31\u0E27\u0E40\u0E1B\u0E47\u0E19\u0E2B\u0E34\u0E19\u0E40\u0E14\u0E34\u0E19\u0E44\u0E14\u0E49
+        \u0E42\u0E23\u0E07\u0E40\u0E23\u0E35\u0E22\u0E19\u0E01\u0E47\u0E14\u0E39\u0E19\u0E48\u0E32\u0E2D\u0E22\u0E39\u0E48\u0E02\u0E36\u0E49\u0E19\u0E40\u0E22\u0E2D\u0E30\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E31\u0E19\u0E19\u0E30\u0E40\u0E19\u0E35\u0E48\u0E22"
       speakerName: Park
       portraitName: idle
       stressChange: 0
@@ -1330,7 +1331,8 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "คราวหน้าคราวหลังมีเรื่องอะไรก็พูดออกมาตรงๆ แบบนี้แหละง่ายดี"
+    - text: "\u0E04\u0E23\u0E32\u0E27\u0E2B\u0E19\u0E49\u0E32\u0E04\u0E23\u0E32\u0E27\u0E2B\u0E25\u0E31\u0E07\u0E21\u0E35\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2D\u0E30\u0E44\u0E23\u0E01\u0E47\u0E1E\u0E39\u0E14\u0E2D\u0E2D\u0E01\u0E21\u0E32\u0E15\u0E23\u0E07\u0E46
+        \u0E41\u0E1A\u0E1A\u0E19\u0E35\u0E49\u0E41\u0E2B\u0E25\u0E30\u0E07\u0E48\u0E32\u0E22\u0E14\u0E35"
       speakerName: Park
       portraitName: idle
       stressChange: 0
@@ -1339,7 +1341,8 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
     storyChoices:
-    - choiceButtonText: "ถ้าฉันดีขึ้น นายก็ไม่มีคนให้แขวะพอดีสิ"
+    - choiceButtonText: "\u0E16\u0E49\u0E32\u0E09\u0E31\u0E19\u0E14\u0E35\u0E02\u0E36\u0E49\u0E19
+        \u0E19\u0E32\u0E22\u0E01\u0E47\u0E44\u0E21\u0E48\u0E21\u0E35\u0E04\u0E19\u0E43\u0E2B\u0E49\u0E41\u0E02\u0E27\u0E30\u0E1E\u0E2D\u0E14\u0E35\u0E2A\u0E34"
       stressChange: -15
       speakerName: Nia
       portraitName: good1
@@ -1348,7 +1351,7 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "ฮ่าๆๆ! เถียงคำไม่ตกฟากแบบนี้สิค่อยสนุกหน่อย!"
+      - text: "\u0E2E\u0E48\u0E32\u0E46\u0E46! \u0E40\u0E16\u0E35\u0E22\u0E07\u0E04\u0E33\u0E44\u0E21\u0E48\u0E15\u0E01\u0E1F\u0E32\u0E01\u0E41\u0E1A\u0E1A\u0E19\u0E35\u0E49\u0E2A\u0E34\u0E04\u0E48\u0E2D\u0E22\u0E2A\u0E19\u0E38\u0E01\u0E2B\u0E19\u0E48\u0E2D\u0E22!"
         speakerName: Park
         portraitName: idle
         stressChange: 0
@@ -1356,7 +1359,8 @@ MonoBehaviour:
         activeSlotIndex: 4
         motionEffect: 1
         voiceSoundName: 
-    - choiceButtonText: "ขอบใจนะป้าก... ที่ทักเตือนสติฉันวันก่อน"
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E43\u0E08\u0E19\u0E30\u0E1B\u0E49\u0E32\u0E01...
+        \u0E17\u0E35\u0E48\u0E17\u0E31\u0E01\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E2A\u0E15\u0E34\u0E09\u0E31\u0E19\u0E27\u0E31\u0E19\u0E01\u0E48\u0E2D\u0E19"
       stressChange: 0
       speakerName: Nia
       portraitName: idle
@@ -1365,7 +1369,8 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "เออๆ ไงก็ได้แหละ กันในฐานะเพื่อนร่วมห้อง"
+      - text: "\u0E40\u0E2D\u0E2D\u0E46 \u0E44\u0E07\u0E01\u0E47\u0E44\u0E14\u0E49\u0E41\u0E2B\u0E25\u0E30
+          \u0E01\u0E31\u0E19\u0E43\u0E19\u0E10\u0E32\u0E19\u0E30\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19\u0E23\u0E48\u0E27\u0E21\u0E2B\u0E49\u0E2D\u0E07"
         speakerName: Park
         portraitName: idle
         stressChange: 0
@@ -1373,7 +1378,7 @@ MonoBehaviour:
         activeSlotIndex: 4
         motionEffect: 0
         voiceSoundName: 
-    - choiceButtonText: "นายก็เลิกปากเสียให้ได้ก่อนเถอะป้าก!"
+    - choiceButtonText: "\u0E19\u0E32\u0E22\u0E01\u0E47\u0E40\u0E25\u0E34\u0E01\u0E1B\u0E32\u0E01\u0E40\u0E2A\u0E35\u0E22\u0E43\u0E2B\u0E49\u0E44\u0E14\u0E49\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E16\u0E2D\u0E30\u0E1B\u0E49\u0E32\u0E01!"
       stressChange: 5
       speakerName: Nia
       portraitName: bad1
@@ -1382,7 +1387,8 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "เห้อ... อุตส่าห์คุยดีๆ ด้วยนะเนี่ย"
+      - text: "\u0E40\u0E2B\u0E49\u0E2D... \u0E2D\u0E38\u0E15\u0E2A\u0E48\u0E32\u0E2B\u0E4C\u0E04\u0E38\u0E22\u0E14\u0E35\u0E46
+          \u0E14\u0E49\u0E27\u0E22\u0E19\u0E30\u0E40\u0E19\u0E35\u0E48\u0E22"
         speakerName: Park
         portraitName: idle
         stressChange: 0
@@ -1391,7 +1397,7 @@ MonoBehaviour:
         motionEffect: 0
         voiceSoundName: 
     conclusionStory:
-    - text: "จะไปไหนก็ไปเถอะ"
+    - text: "\u0E08\u0E30\u0E44\u0E1B\u0E44\u0E2B\u0E19\u0E01\u0E47\u0E44\u0E1B\u0E40\u0E16\u0E2D\u0E30"
       speakerName: Park
       portraitName: idle
       stressChange: 0

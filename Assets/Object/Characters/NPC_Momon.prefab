@@ -584,7 +584,7 @@ MonoBehaviour:
   - dayTitle: DAY 6
     dayNumber: 6
     introductionStory:
-    - text: "..."
+    - text: ...
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -592,7 +592,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "จัดชั้นหนังสือได้ไวเหมือนเดิมเลยนะเนีย"
+    - text: "\u0E08\u0E31\u0E14\u0E0A\u0E31\u0E49\u0E19\u0E2B\u0E19\u0E31\u0E07\u0E2A\u0E37\u0E2D\u0E44\u0E14\u0E49\u0E44\u0E27\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E40\u0E14\u0E34\u0E21\u0E40\u0E25\u0E22\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22"
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "ครูโมม่อน"
+    - text: "\u0E04\u0E23\u0E39\u0E42\u0E21\u0E21\u0E48\u0E2D\u0E19"
       speakerName: Nia
       portraitName: idle
       stressChange: 0
@@ -608,7 +608,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "ตรงมุมการ์ตูนดีขึ้นเยอะ ปกติชั้นนี้ยุ่งเหยิงตลอดถ้าเธอไม่อยู่"
+    - text: "\u0E15\u0E23\u0E07\u0E21\u0E38\u0E21\u0E01\u0E32\u0E23\u0E4C\u0E15\u0E39\u0E19\u0E14\u0E35\u0E02\u0E36\u0E49\u0E19\u0E40\u0E22\u0E2D\u0E30
+        \u0E1B\u0E01\u0E15\u0E34\u0E0A\u0E31\u0E49\u0E19\u0E19\u0E35\u0E49\u0E22\u0E38\u0E48\u0E07\u0E40\u0E2B\u0E22\u0E34\u0E07\u0E15\u0E25\u0E2D\u0E14\u0E16\u0E49\u0E32\u0E40\u0E18\u0E2D\u0E44\u0E21\u0E48\u0E2D\u0E22\u0E39\u0E48"
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -616,7 +617,8 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "ไม่หรอกค่ะ แค่เรื่องงั้น ๆ"
+    - text: "\u0E44\u0E21\u0E48\u0E2B\u0E23\u0E2D\u0E01\u0E04\u0E48\u0E30 \u0E41\u0E04\u0E48\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E07\u0E31\u0E49\u0E19
+        \u0E46"
       speakerName: Nia
       portraitName: bad1
       stressChange: 0
@@ -624,7 +626,7 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "ทำไมล่ะ?"
+    - text: "\u0E17\u0E33\u0E44\u0E21\u0E25\u0E48\u0E30?"
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -632,7 +634,8 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "เปล่าค่ะ... แค่คิดว่า ใครๆ ก็ทำได้"
+    - text: "\u0E40\u0E1B\u0E25\u0E48\u0E32\u0E04\u0E48\u0E30... \u0E41\u0E04\u0E48\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32
+        \u0E43\u0E04\u0E23\u0E46 \u0E01\u0E47\u0E17\u0E33\u0E44\u0E14\u0E49"
       speakerName: Nia
       portraitName: idle
       stressChange: 0
@@ -640,7 +643,7 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "..."
+    - text: ...
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -648,7 +651,9 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "คนอื่นทำได้ แต่เธอทำมัน ใส่ใจตัวเองกว่านี้หน่อยสิห้องสมุดนี้ ถ้าไม่มีเธอคอยดูแลฉันก็ต้องปล่อยมันทิ้งไว้ให้รกต่อไปละนะ"
+    - text: "\u0E04\u0E19\u0E2D\u0E37\u0E48\u0E19\u0E17\u0E33\u0E44\u0E14\u0E49 \u0E41\u0E15\u0E48\u0E40\u0E18\u0E2D\u0E17\u0E33\u0E21\u0E31\u0E19
+        \u0E43\u0E2A\u0E48\u0E43\u0E08\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E01\u0E27\u0E48\u0E32\u0E19\u0E35\u0E49\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E2A\u0E34\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E19\u0E35\u0E49
+        \u0E16\u0E49\u0E32\u0E44\u0E21\u0E48\u0E21\u0E35\u0E40\u0E18\u0E2D\u0E04\u0E2D\u0E22\u0E14\u0E39\u0E41\u0E25\u0E09\u0E31\u0E19\u0E01\u0E47\u0E15\u0E49\u0E2D\u0E07\u0E1B\u0E25\u0E48\u0E2D\u0E22\u0E21\u0E31\u0E19\u0E17\u0E34\u0E49\u0E07\u0E44\u0E27\u0E49\u0E43\u0E2B\u0E49\u0E23\u0E01\u0E15\u0E48\u0E2D\u0E44\u0E1B\u0E25\u0E30\u0E19\u0E30"
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -657,7 +662,8 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
     storyChoices:
-    - choiceButtonText: "ขอบคุณค่ะครู... หนูจะพยายามดูแลให้ดีขึ้นอีก"
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E04\u0E48\u0E30\u0E04\u0E23\u0E39...
+        \u0E2B\u0E19\u0E39\u0E08\u0E30\u0E1E\u0E22\u0E32\u0E22\u0E32\u0E21\u0E14\u0E39\u0E41\u0E25\u0E43\u0E2B\u0E49\u0E14\u0E35\u0E02\u0E36\u0E49\u0E19\u0E2D\u0E35\u0E01"
       stressChange: -15
       speakerName: Nia
       portraitName: good1
@@ -666,7 +672,7 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines: []
-    - choiceButtonText: "ครูพูดปลอบใจหนูหรือเปล่าคะ?"
+    - choiceButtonText: "\u0E04\u0E23\u0E39\u0E1E\u0E39\u0E14\u0E1B\u0E25\u0E2D\u0E1A\u0E43\u0E08\u0E2B\u0E19\u0E39\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E1B\u0E25\u0E48\u0E32\u0E04\u0E30?"
       stressChange: 0
       speakerName: Nia
       portraitName: bad1
@@ -675,7 +681,8 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "หน้าครูดูเหมือนคนชอบพูดไปแบบงั้น ๆ ขนาดนั้นเลยเหรอ?"
+      - text: "\u0E2B\u0E19\u0E49\u0E32\u0E04\u0E23\u0E39\u0E14\u0E39\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E04\u0E19\u0E0A\u0E2D\u0E1A\u0E1E\u0E39\u0E14\u0E44\u0E1B\u0E41\u0E1A\u0E1A\u0E07\u0E31\u0E49\u0E19
+          \u0E46 \u0E02\u0E19\u0E32\u0E14\u0E19\u0E31\u0E49\u0E19\u0E40\u0E25\u0E22\u0E40\u0E2B\u0E23\u0E2D?"
         speakerName: Momon
         portraitName: idle
         stressChange: 0
@@ -683,7 +690,7 @@ MonoBehaviour:
         activeSlotIndex: 4
         motionEffect: 0
         voiceSoundName: 
-    - choiceButtonText: "(ก้มหน้าไม่พูดอะไร)"
+    - choiceButtonText: "(\u0E01\u0E49\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E44\u0E21\u0E48\u0E1E\u0E39\u0E14\u0E2D\u0E30\u0E44\u0E23)"
       stressChange: 0
       speakerName: Nia
       portraitName: bad1
@@ -692,7 +699,7 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "เอาเถอะ ขอบใจมากนะ"
+      - text: "\u0E40\u0E2D\u0E32\u0E40\u0E16\u0E2D\u0E30 \u0E02\u0E2D\u0E1A\u0E43\u0E08\u0E21\u0E32\u0E01\u0E19\u0E30"
         speakerName: Momon
         portraitName: idle
         stressChange: -5
@@ -701,7 +708,7 @@ MonoBehaviour:
         motionEffect: 0
         voiceSoundName: 
     conclusionStory:
-    - text: "ขอตัวก่อนนะค่ะ"
+    - text: "\u0E02\u0E2D\u0E15\u0E31\u0E27\u0E01\u0E48\u0E2D\u0E19\u0E19\u0E30\u0E04\u0E48\u0E30"
       speakerName: Nia
       portraitName: idle
       stressChange: 0
@@ -952,7 +959,8 @@ MonoBehaviour:
   - dayTitle: DAY 16
     dayNumber: 16
     introductionStory:
-    - text: "ไงเนีย สัปดาห์นี้เธอทำหน้าที่ได้ยอดเยี่ยมมากนะเนี่ย... ทำให้ห้องสมุดกลับมามีชีวิตชีวาขึ้นเยอะเลย"
+    - text: "\u0E44\u0E07\u0E40\u0E19\u0E35\u0E22 \u0E2A\u0E31\u0E1B\u0E14\u0E32\u0E2B\u0E4C\u0E19\u0E35\u0E49\u0E40\u0E18\u0E2D\u0E17\u0E33\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E44\u0E14\u0E49\u0E22\u0E2D\u0E14\u0E40\u0E22\u0E35\u0E48\u0E22\u0E21\u0E21\u0E32\u0E01\u0E19\u0E30\u0E40\u0E19\u0E35\u0E48\u0E22...
+        \u0E17\u0E33\u0E43\u0E2B\u0E49\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E01\u0E25\u0E31\u0E1A\u0E21\u0E32\u0E21\u0E35\u0E0A\u0E35\u0E27\u0E34\u0E15\u0E0A\u0E35\u0E27\u0E32\u0E02\u0E36\u0E49\u0E19\u0E40\u0E22\u0E2D\u0E30\u0E40\u0E25\u0E22"
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -960,7 +968,9 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "ถึงถึงแม้จะเป็นซึมเศร้า แต่เธอสู้กับความรู้สึกตัวเองจนก้าวผ่านมันมาได้ ครูภูมิใจในตัวเธอนะ"
+    - text: "\u0E16\u0E36\u0E07\u0E16\u0E36\u0E07\u0E41\u0E21\u0E49\u0E08\u0E30\u0E40\u0E1B\u0E47\u0E19\u0E0B\u0E36\u0E21\u0E40\u0E28\u0E23\u0E49\u0E32
+        \u0E41\u0E15\u0E48\u0E40\u0E18\u0E2D\u0E2A\u0E39\u0E49\u0E01\u0E31\u0E1A\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E08\u0E19\u0E01\u0E49\u0E32\u0E27\u0E1C\u0E48\u0E32\u0E19\u0E21\u0E31\u0E19\u0E21\u0E32\u0E44\u0E14\u0E49
+        \u0E04\u0E23\u0E39\u0E20\u0E39\u0E21\u0E34\u0E43\u0E08\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E18\u0E2D\u0E19\u0E30"
       speakerName: Momon
       portraitName: idle
       stressChange: -15
@@ -968,7 +978,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "... ครูค่ะ หนูมีอะไรจะบอก"
+    - text: "... \u0E04\u0E23\u0E39\u0E04\u0E48\u0E30 \u0E2B\u0E19\u0E39\u0E21\u0E35\u0E2D\u0E30\u0E44\u0E23\u0E08\u0E30\u0E1A\u0E2D\u0E01"
       speakerName: Nia
       portraitName: idle
       stressChange: 0
@@ -977,7 +987,11 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
     storyChoices:
-    - choiceButtonText: "ขอบคุณมากๆ ค่ะครูโมม่อน! ถ้าครูไม่พูดว่าเชื่อในตัวหนู หนูคงจะไม่มาโรงเรียนแล้ว ขอบคุณที่ช่วยนะคะ!"
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E21\u0E32\u0E01\u0E46
+        \u0E04\u0E48\u0E30\u0E04\u0E23\u0E39\u0E42\u0E21\u0E21\u0E48\u0E2D\u0E19!
+        \u0E16\u0E49\u0E32\u0E04\u0E23\u0E39\u0E44\u0E21\u0E48\u0E1E\u0E39\u0E14\u0E27\u0E48\u0E32\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E43\u0E19\u0E15\u0E31\u0E27\u0E2B\u0E19\u0E39
+        \u0E2B\u0E19\u0E39\u0E04\u0E07\u0E08\u0E30\u0E44\u0E21\u0E48\u0E21\u0E32\u0E42\u0E23\u0E07\u0E40\u0E23\u0E35\u0E22\u0E19\u0E41\u0E25\u0E49\u0E27
+        \u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E17\u0E35\u0E48\u0E0A\u0E48\u0E27\u0E22\u0E19\u0E30\u0E04\u0E30!"
       stressChange: -15
       speakerName: Nia
       portraitName: good1
@@ -986,7 +1000,8 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "เธอทำได้ด้วยตัวเธอเองต่างหากเนีย... จำความรู้สึกนี้ไว้นะ"
+      - text: "\u0E40\u0E18\u0E2D\u0E17\u0E33\u0E44\u0E14\u0E49\u0E14\u0E49\u0E27\u0E22\u0E15\u0E31\u0E27\u0E40\u0E18\u0E2D\u0E40\u0E2D\u0E07\u0E15\u0E48\u0E32\u0E07\u0E2B\u0E32\u0E01\u0E40\u0E19\u0E35\u0E22...
+          \u0E08\u0E33\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E19\u0E35\u0E49\u0E44\u0E27\u0E49\u0E19\u0E30"
         speakerName: Momon
         portraitName: idle
         stressChange: 0
@@ -994,7 +1009,8 @@ MonoBehaviour:
         activeSlotIndex: 4
         motionEffect: 0
         voiceSoundName: 
-    - choiceButtonText: "ขอบคุณสำหรับทุกอย่างนะคะครู... หนูดีใจมากที่ได้ช่วยงานห้องสมุด"
+    - choiceButtonText: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E38\u0E01\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E19\u0E30\u0E04\u0E30\u0E04\u0E23\u0E39...
+        \u0E2B\u0E19\u0E39\u0E14\u0E35\u0E43\u0E08\u0E21\u0E32\u0E01\u0E17\u0E35\u0E48\u0E44\u0E14\u0E49\u0E0A\u0E48\u0E27\u0E22\u0E07\u0E32\u0E19\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14"
       stressChange: -5
       speakerName: Nia
       portraitName: good1
@@ -1003,7 +1019,8 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "ยินดีเสมอเนีย ห้องสมุดต้อนรับเธอเสมอทุกเมื่อนะ"
+      - text: "\u0E22\u0E34\u0E19\u0E14\u0E35\u0E40\u0E2A\u0E21\u0E2D\u0E40\u0E19\u0E35\u0E22
+          \u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E21\u0E38\u0E14\u0E15\u0E49\u0E2D\u0E19\u0E23\u0E31\u0E1A\u0E40\u0E18\u0E2D\u0E40\u0E2A\u0E21\u0E2D\u0E17\u0E38\u0E01\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E19\u0E30"
         speakerName: Momon
         portraitName: idle
         stressChange: 0
@@ -1011,7 +1028,8 @@ MonoBehaviour:
         activeSlotIndex: 4
         motionEffect: 0
         voiceSoundName: 
-    - choiceButtonText: "หนู... หนูแค่ทำตามที่ครูสั่งน่ะค่ะ ไม่ได้เก่งอะไรขนาดนั้น"
+    - choiceButtonText: "\u0E2B\u0E19\u0E39... \u0E2B\u0E19\u0E39\u0E41\u0E04\u0E48\u0E17\u0E33\u0E15\u0E32\u0E21\u0E17\u0E35\u0E48\u0E04\u0E23\u0E39\u0E2A\u0E31\u0E48\u0E07\u0E19\u0E48\u0E30\u0E04\u0E48\u0E30
+        \u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E40\u0E01\u0E48\u0E07\u0E2D\u0E30\u0E44\u0E23\u0E02\u0E19\u0E32\u0E14\u0E19\u0E31\u0E49\u0E19"
       stressChange: 0
       speakerName: Nia
       portraitName: bad1
@@ -1020,7 +1038,9 @@ MonoBehaviour:
       motionEffect: 0
       voiceSoundName: 
       nextDialogueLines:
-      - text: "ยังถ่อมอยู่อีก มั่นใจในตัวเองหน่อยสิเนีย ยอมรับมันเถอะนะ"
+      - text: "\u0E22\u0E31\u0E07\u0E16\u0E48\u0E2D\u0E21\u0E2D\u0E22\u0E39\u0E48\u0E2D\u0E35\u0E01
+          \u0E21\u0E31\u0E48\u0E19\u0E43\u0E08\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E2A\u0E34\u0E40\u0E19\u0E35\u0E22
+          \u0E22\u0E2D\u0E21\u0E23\u0E31\u0E1A\u0E21\u0E31\u0E19\u0E40\u0E16\u0E2D\u0E30\u0E19\u0E30"
         speakerName: Momon
         portraitName: idle
         stressChange: 0
@@ -1029,7 +1049,8 @@ MonoBehaviour:
         motionEffect: 0
         voiceSoundName: 
     conclusionStory:
-    - text: "งั้นกลับบ้านดีๆ ล่ะเนีย เสาร์อาทิตย์นี้ก็พักผ่อนให้เต็มที่นะ"
+    - text: "\u0E07\u0E31\u0E49\u0E19\u0E01\u0E25\u0E31\u0E1A\u0E1A\u0E49\u0E32\u0E19\u0E14\u0E35\u0E46
+        \u0E25\u0E48\u0E30\u0E40\u0E19\u0E35\u0E22 \u0E40\u0E2A\u0E32\u0E23\u0E4C\u0E2D\u0E32\u0E17\u0E34\u0E15\u0E22\u0E4C\u0E19\u0E35\u0E49\u0E01\u0E47\u0E1E\u0E31\u0E01\u0E1C\u0E48\u0E2D\u0E19\u0E43\u0E2B\u0E49\u0E40\u0E15\u0E47\u0E21\u0E17\u0E35\u0E48\u0E19\u0E30"
       speakerName: Momon
       portraitName: idle
       stressChange: 0
@@ -1037,7 +1058,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "ค่ะ"
+    - text: "\u0E04\u0E48\u0E30"
       speakerName: Nia
       portraitName: good1
       stressChange: 0

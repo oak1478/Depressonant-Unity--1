@@ -937,7 +937,8 @@ MonoBehaviour:
   - dayTitle: Ending_Normal
     dayNumber: 17
     introductionStory:
-    - text: "เนีย มานี่สิ พ่อกับแม่มีเรื่องอยากจะคุยด้วยหน่อย"
+    - text: "\u0E40\u0E19\u0E35\u0E22 \u0E21\u0E32\u0E19\u0E35\u0E48\u0E2A\u0E34
+        \u0E1E\u0E48\u0E2D\u0E01\u0E31\u0E1A\u0E41\u0E21\u0E48\u0E21\u0E35\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2D\u0E22\u0E32\u0E01\u0E08\u0E30\u0E04\u0E38\u0E22\u0E14\u0E49\u0E27\u0E22\u0E2B\u0E19\u0E48\u0E2D\u0E22"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -945,7 +946,9 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "หลายวันที่ผ่านมา แม่เห็นว่าแกดูโอเคขึ้นนะ เกิดอะไรขึ้นหรอ"
+    - text: "\u0E2B\u0E25\u0E32\u0E22\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48\u0E1C\u0E48\u0E32\u0E19\u0E21\u0E32
+        \u0E41\u0E21\u0E48\u0E40\u0E2B\u0E47\u0E19\u0E27\u0E48\u0E32\u0E41\u0E01\u0E14\u0E39\u0E42\u0E2D\u0E40\u0E04\u0E02\u0E36\u0E49\u0E19\u0E19\u0E30
+        \u0E40\u0E01\u0E34\u0E14\u0E2D\u0E30\u0E44\u0E23\u0E02\u0E36\u0E49\u0E19\u0E2B\u0E23\u0E2D"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -953,7 +956,9 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "พ่อกับแม่คุยกันแล้วนะเนีย มีเรื่องโรคซึมเศร้านั้นด้วย เราก็ไม่อยากกดดันแกมาก"
+    - text: "\u0E1E\u0E48\u0E2D\u0E01\u0E31\u0E1A\u0E41\u0E21\u0E48\u0E04\u0E38\u0E22\u0E01\u0E31\u0E19\u0E41\u0E25\u0E49\u0E27\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22
+        \u0E21\u0E35\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E42\u0E23\u0E04\u0E0B\u0E36\u0E21\u0E40\u0E28\u0E23\u0E49\u0E32\u0E19\u0E31\u0E49\u0E19\u0E14\u0E49\u0E27\u0E22
+        \u0E40\u0E23\u0E32\u0E01\u0E47\u0E44\u0E21\u0E48\u0E2D\u0E22\u0E32\u0E01\u0E01\u0E14\u0E14\u0E31\u0E19\u0E41\u0E01\u0E21\u0E32\u0E01"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -961,7 +966,7 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "พี่เนีย เกิดอะไรขึ้นหรอ?"
+    - text: "\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22 \u0E40\u0E01\u0E34\u0E14\u0E2D\u0E30\u0E44\u0E23\u0E02\u0E36\u0E49\u0E19\u0E2B\u0E23\u0E2D?"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -969,7 +974,7 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 0
       voiceSoundName: 
-    - text: "..."
+    - text: ...
       speakerName: Nia
       portraitName: idle
       stressChange: 0
@@ -977,7 +982,9 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "หนูเองก็ต้องขอโทษที่เอาแต่ขังตัวเองค่ะ... ต่อจากนี้มีอะไรหนูจะพูดตรงๆ นะคะ"
+    - text: "\u0E2B\u0E19\u0E39\u0E40\u0E2D\u0E07\u0E01\u0E47\u0E15\u0E49\u0E2D\u0E07\u0E02\u0E2D\u0E42\u0E17\u0E29\u0E17\u0E35\u0E48\u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E02\u0E31\u0E07\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07\u0E04\u0E48\u0E30...
+        \u0E15\u0E48\u0E2D\u0E08\u0E32\u0E01\u0E19\u0E35\u0E49\u0E21\u0E35\u0E2D\u0E30\u0E44\u0E23\u0E2B\u0E19\u0E39\u0E08\u0E30\u0E1E\u0E39\u0E14\u0E15\u0E23\u0E07\u0E46
+        \u0E19\u0E30\u0E04\u0E30"
       speakerName: Nia
       portraitName: good1
       stressChange: 0
@@ -985,7 +992,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "งั้นวันนี้เราไปหาอะไรอร่อยๆ กินกันทั้งบ้านเลยดีไหมคะ!"
+    - text: "\u0E07\u0E31\u0E49\u0E19\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E40\u0E23\u0E32\u0E44\u0E1B\u0E2B\u0E32\u0E2D\u0E30\u0E44\u0E23\u0E2D\u0E23\u0E48\u0E2D\u0E22\u0E46
+        \u0E01\u0E34\u0E19\u0E01\u0E31\u0E19\u0E17\u0E31\u0E49\u0E07\u0E1A\u0E49\u0E32\u0E19\u0E40\u0E25\u0E22\u0E14\u0E35\u0E44\u0E2B\u0E21\u0E04\u0E30!"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -993,7 +1001,7 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 1
       voiceSoundName: 
-    - text: "ช่วยดูบรรยากาศหน่อยสิ"
+    - text: "\u0E0A\u0E48\u0E27\u0E22\u0E14\u0E39\u0E1A\u0E23\u0E23\u0E22\u0E32\u0E01\u0E32\u0E28\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E2A\u0E34"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1001,7 +1009,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "ไม่เห็นเป็นไรเลย"
+    - text: "\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E47\u0E19\u0E40\u0E1B\u0E47\u0E19\u0E44\u0E23\u0E40\u0E25\u0E22"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -1009,7 +1017,7 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 0
       voiceSoundName: 
-    - text: "นั่นสินานๆทีไปกินด้วยกันบ้างก็ไม่เลว"
+    - text: "\u0E19\u0E31\u0E48\u0E19\u0E2A\u0E34\u0E19\u0E32\u0E19\u0E46\u0E17\u0E35\u0E44\u0E1B\u0E01\u0E34\u0E19\u0E14\u0E49\u0E27\u0E22\u0E01\u0E31\u0E19\u0E1A\u0E49\u0E32\u0E07\u0E01\u0E47\u0E44\u0E21\u0E48\u0E40\u0E25\u0E27"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1017,7 +1025,7 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "เนอะ เนีย?"
+    - text: "\u0E40\u0E19\u0E2D\u0E30 \u0E40\u0E19\u0E35\u0E22?"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1025,7 +1033,7 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "..."
+    - text: ...
       speakerName: Nia
       portraitName: idle
       stressChange: 0
@@ -1033,7 +1041,7 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "ไปกินด้วยกันเถอะค่ะ"
+    - text: "\u0E44\u0E1B\u0E01\u0E34\u0E19\u0E14\u0E49\u0E27\u0E22\u0E01\u0E31\u0E19\u0E40\u0E16\u0E2D\u0E30\u0E04\u0E48\u0E30"
       speakerName: Nia
       portraitName: good1
       stressChange: 0
@@ -1041,7 +1049,7 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "เย้ ต้องงี้สิพี่เนีย"
+    - text: "\u0E40\u0E22\u0E49 \u0E15\u0E49\u0E2D\u0E07\u0E07\u0E35\u0E49\u0E2A\u0E34\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -1054,7 +1062,8 @@ MonoBehaviour:
   - dayTitle: Ending_Bad
     dayNumber: 17
     introductionStory:
-    - text: "เนีย มานี่สิ พ่อกับแม่มีเรื่องต้องคุยให้ชัดเจน"
+    - text: "\u0E40\u0E19\u0E35\u0E22 \u0E21\u0E32\u0E19\u0E35\u0E48\u0E2A\u0E34
+        \u0E1E\u0E48\u0E2D\u0E01\u0E31\u0E1A\u0E41\u0E21\u0E48\u0E21\u0E35\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E15\u0E49\u0E2D\u0E07\u0E04\u0E38\u0E22\u0E43\u0E2B\u0E49\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1062,7 +1071,9 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "เรื่องที่โรงเรียนติดต่อมา... เรื่องที่แกบอกว่าเป็นซึมเศร้าน่ะ มันคืออะไรกันแน่?"
+    - text: "\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E42\u0E23\u0E07\u0E40\u0E23\u0E35\u0E22\u0E19\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E21\u0E32...
+        \u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E41\u0E01\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E40\u0E1B\u0E47\u0E19\u0E0B\u0E36\u0E21\u0E40\u0E28\u0E23\u0E49\u0E32\u0E19\u0E48\u0E30
+        \u0E21\u0E31\u0E19\u0E04\u0E37\u0E2D\u0E2D\u0E30\u0E44\u0E23\u0E01\u0E31\u0E19\u0E41\u0E19\u0E48?"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1070,7 +1081,9 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "วันๆ เอาแต่เก็บตัว ทำตัวมีปัญหา แกคิดว่าคนอื่นเขาไม่เหนื่อยกันหรือไง?"
+    - text: "\u0E27\u0E31\u0E19\u0E46 \u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E40\u0E01\u0E47\u0E1A\u0E15\u0E31\u0E27
+        \u0E17\u0E33\u0E15\u0E31\u0E27\u0E21\u0E35\u0E1B\u0E31\u0E0D\u0E2B\u0E32
+        \u0E41\u0E01\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32\u0E04\u0E19\u0E2D\u0E37\u0E48\u0E19\u0E40\u0E02\u0E32\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E19\u0E37\u0E48\u0E2D\u0E22\u0E01\u0E31\u0E19\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E07?"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1078,7 +1091,9 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "พ่อทำงานหาเงินงกๆ แทบตาย แกมีหน้าที่แค่เรียนแท้ๆ จะมาเครียดอะไรนักหนา"
+    - text: "\u0E1E\u0E48\u0E2D\u0E17\u0E33\u0E07\u0E32\u0E19\u0E2B\u0E32\u0E40\u0E07\u0E34\u0E19\u0E07\u0E01\u0E46
+        \u0E41\u0E17\u0E1A\u0E15\u0E32\u0E22 \u0E41\u0E01\u0E21\u0E35\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E41\u0E04\u0E48\u0E40\u0E23\u0E35\u0E22\u0E19\u0E41\u0E17\u0E49\u0E46
+        \u0E08\u0E30\u0E21\u0E32\u0E40\u0E04\u0E23\u0E35\u0E22\u0E14\u0E2D\u0E30\u0E44\u0E23\u0E19\u0E31\u0E01\u0E2B\u0E19\u0E32"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1086,7 +1101,9 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "พ่อคะ... แม่คะ... อย่าดุพี่เนียเลย พี่เนียไม่สบายอยู่นะคะ"
+    - text: "\u0E1E\u0E48\u0E2D\u0E04\u0E30... \u0E41\u0E21\u0E48\u0E04\u0E30...
+        \u0E2D\u0E22\u0E48\u0E32\u0E14\u0E38\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22\u0E40\u0E25\u0E22
+        \u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22\u0E44\u0E21\u0E48\u0E2A\u0E1A\u0E32\u0E22\u0E2D\u0E22\u0E39\u0E48\u0E19\u0E30\u0E04\u0E30"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -1094,7 +1111,9 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 0
       voiceSoundName: 
-    - text: "เรน เงียบไปเลย! อย่าให้ท้ายพี่เขา เดี๋ยวก็เคยตัวจนไม่ทำอะไรพอดี"
+    - text: "\u0E40\u0E23\u0E19 \u0E40\u0E07\u0E35\u0E22\u0E1A\u0E44\u0E1B\u0E40\u0E25\u0E22!
+        \u0E2D\u0E22\u0E48\u0E32\u0E43\u0E2B\u0E49\u0E17\u0E49\u0E32\u0E22\u0E1E\u0E35\u0E48\u0E40\u0E02\u0E32
+        \u0E40\u0E14\u0E35\u0E4B\u0E22\u0E27\u0E01\u0E47\u0E40\u0E04\u0E22\u0E15\u0E31\u0E27\u0E08\u0E19\u0E44\u0E21\u0E48\u0E17\u0E33\u0E2D\u0E30\u0E44\u0E23\u0E1E\u0E2D\u0E14\u0E35"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1102,7 +1121,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 2
       voiceSoundName: 
-    - text: "..."
+    - text: ...
       speakerName: Nia
       portraitName: bad1
       stressChange: 0
@@ -1110,7 +1129,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "หนูไม่ได้แกล้งทำนะคะ... ข้างในหนูมันทรมานจริงๆ..."
+    - text: "\u0E2B\u0E19\u0E39\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E41\u0E01\u0E25\u0E49\u0E07\u0E17\u0E33\u0E19\u0E30\u0E04\u0E30...
+        \u0E02\u0E49\u0E32\u0E07\u0E43\u0E19\u0E2B\u0E19\u0E39\u0E21\u0E31\u0E19\u0E17\u0E23\u0E21\u0E32\u0E19\u0E08\u0E23\u0E34\u0E07\u0E46..."
       speakerName: Nia
       portraitName: bad1
       stressChange: 0
@@ -1118,7 +1138,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 2
       voiceSoundName: 
-    - text: "ถ้าเหนื่อยนักก็หัดมองคนที่เขาลำบากกว่าบ้างสิ! เลิกทำตัวอ่อนแอเรียกร้องความสนใจสักที!"
+    - text: "\u0E16\u0E49\u0E32\u0E40\u0E2B\u0E19\u0E37\u0E48\u0E2D\u0E22\u0E19\u0E31\u0E01\u0E01\u0E47\u0E2B\u0E31\u0E14\u0E21\u0E2D\u0E07\u0E04\u0E19\u0E17\u0E35\u0E48\u0E40\u0E02\u0E32\u0E25\u0E33\u0E1A\u0E32\u0E01\u0E01\u0E27\u0E48\u0E32\u0E1A\u0E49\u0E32\u0E07\u0E2A\u0E34!
+        \u0E40\u0E25\u0E34\u0E01\u0E17\u0E33\u0E15\u0E31\u0E27\u0E2D\u0E48\u0E2D\u0E19\u0E41\u0E2D\u0E40\u0E23\u0E35\u0E22\u0E01\u0E23\u0E49\u0E2D\u0E07\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E19\u0E43\u0E08\u0E2A\u0E31\u0E01\u0E17\u0E35!"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1126,7 +1147,7 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 2
       voiceSoundName: 
-    - text: "..."
+    - text: ...
       speakerName: Nia
       portraitName: bad1
       stressChange: 0
@@ -1134,7 +1155,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "นั่นสิคะ... หนูคงเป็นตัวปัญหาจริงๆ ขอโทษที่เกิดมาเป็นภาระนะคะ"
+    - text: "\u0E19\u0E31\u0E48\u0E19\u0E2A\u0E34\u0E04\u0E30... \u0E2B\u0E19\u0E39\u0E04\u0E07\u0E40\u0E1B\u0E47\u0E19\u0E15\u0E31\u0E27\u0E1B\u0E31\u0E0D\u0E2B\u0E32\u0E08\u0E23\u0E34\u0E07\u0E46
+        \u0E02\u0E2D\u0E42\u0E17\u0E29\u0E17\u0E35\u0E48\u0E40\u0E01\u0E34\u0E14\u0E21\u0E32\u0E40\u0E1B\u0E47\u0E19\u0E20\u0E32\u0E23\u0E30\u0E19\u0E30\u0E04\u0E30"
       speakerName: Nia
       portraitName: bad1
       stressChange: 0
@@ -1142,7 +1164,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "เนีย! พูดจาแบบนี้หมายความว่าไง ประชดพ่อแม่เหรอ?!"
+    - text: "\u0E40\u0E19\u0E35\u0E22! \u0E1E\u0E39\u0E14\u0E08\u0E32\u0E41\u0E1A\u0E1A\u0E19\u0E35\u0E49\u0E2B\u0E21\u0E32\u0E22\u0E04\u0E27\u0E32\u0E21\u0E27\u0E48\u0E32\u0E44\u0E07
+        \u0E1B\u0E23\u0E30\u0E0A\u0E14\u0E1E\u0E48\u0E2D\u0E41\u0E21\u0E48\u0E40\u0E2B\u0E23\u0E2D?!"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1150,7 +1173,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 2
       voiceSoundName: 
-    - text: "พี่เนีย... อย่าร้องไห้นะพี่..."
+    - text: "\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22... \u0E2D\u0E22\u0E48\u0E32\u0E23\u0E49\u0E2D\u0E07\u0E44\u0E2B\u0E49\u0E19\u0E30\u0E1E\u0E35\u0E48..."
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -1158,7 +1181,7 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 0
       voiceSoundName: 
-    - text: "ขอตัวนะคะ..."
+    - text: "\u0E02\u0E2D\u0E15\u0E31\u0E27\u0E19\u0E30\u0E04\u0E30..."
       speakerName: Nia
       portraitName: bad1
       stressChange: 0
@@ -1166,7 +1189,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "จะเดินหนีไปไหน! กลับมาคุยให้รู้เรื่องเดี๋ยวนี้นะเนีย!"
+    - text: "\u0E08\u0E30\u0E40\u0E14\u0E34\u0E19\u0E2B\u0E19\u0E35\u0E44\u0E1B\u0E44\u0E2B\u0E19!
+        \u0E01\u0E25\u0E31\u0E1A\u0E21\u0E32\u0E04\u0E38\u0E22\u0E43\u0E2B\u0E49\u0E23\u0E39\u0E49\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E40\u0E14\u0E35\u0E4B\u0E22\u0E27\u0E19\u0E35\u0E49\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22!"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1179,7 +1203,8 @@ MonoBehaviour:
   - dayTitle: Ending_Good
     dayNumber: 17
     introductionStory:
-    - text: "เนีย มานั่งตรงนี้สิลูก วันนี้แม่เขาทำของโปรดไว้ให้เต็มโต๊ะเลย"
+    - text: "\u0E40\u0E19\u0E35\u0E22 \u0E21\u0E32\u0E19\u0E31\u0E48\u0E07\u0E15\u0E23\u0E07\u0E19\u0E35\u0E49\u0E2A\u0E34\u0E25\u0E39\u0E01
+        \u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E41\u0E21\u0E48\u0E40\u0E02\u0E32\u0E17\u0E33\u0E02\u0E2D\u0E07\u0E42\u0E1B\u0E23\u0E14\u0E44\u0E27\u0E49\u0E43\u0E2B\u0E49\u0E40\u0E15\u0E47\u0E21\u0E42\u0E15\u0E4A\u0E30\u0E40\u0E25\u0E22"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1187,7 +1212,9 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "เนีย... หลายวันที่ผ่านมา แม่เห็นความพยายามของแกนะ แล้วแม่ก็... ไปหาข้อมูลเรื่องซึมเศร้ามาด้วย"
+    - text: "\u0E40\u0E19\u0E35\u0E22... \u0E2B\u0E25\u0E32\u0E22\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48\u0E1C\u0E48\u0E32\u0E19\u0E21\u0E32
+        \u0E41\u0E21\u0E48\u0E40\u0E2B\u0E47\u0E19\u0E04\u0E27\u0E32\u0E21\u0E1E\u0E22\u0E32\u0E22\u0E32\u0E21\u0E02\u0E2D\u0E07\u0E41\u0E01\u0E19\u0E30
+        \u0E41\u0E25\u0E49\u0E27\u0E41\u0E21\u0E48\u0E01\u0E47... \u0E44\u0E1B\u0E2B\u0E32\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E0B\u0E36\u0E21\u0E40\u0E28\u0E23\u0E49\u0E32\u0E21\u0E32\u0E14\u0E49\u0E27\u0E22"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1195,7 +1222,10 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "แม่ขอโทษนะลูก ที่ผ่านมาแม่เอาแต่กดดัน เอาแต่เปรียบเทียบ จนลืมถามว่าเนียรู้สึกยังไง..."
+    - text: "\u0E41\u0E21\u0E48\u0E02\u0E2D\u0E42\u0E17\u0E29\u0E19\u0E30\u0E25\u0E39\u0E01
+        \u0E17\u0E35\u0E48\u0E1C\u0E48\u0E32\u0E19\u0E21\u0E32\u0E41\u0E21\u0E48\u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E01\u0E14\u0E14\u0E31\u0E19
+        \u0E40\u0E2D\u0E32\u0E41\u0E15\u0E48\u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A
+        \u0E08\u0E19\u0E25\u0E37\u0E21\u0E16\u0E32\u0E21\u0E27\u0E48\u0E32\u0E40\u0E19\u0E35\u0E22\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E22\u0E31\u0E07\u0E44\u0E07..."
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1203,7 +1233,9 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "พ่อเองก็ขอโทษนะเนีย พ่อเอาความเครียดข้างนอกมาลงกับบ้าน ละเลยความรู้สึกของลูกไปมากจริงๆ"
+    - text: "\u0E1E\u0E48\u0E2D\u0E40\u0E2D\u0E07\u0E01\u0E47\u0E02\u0E2D\u0E42\u0E17\u0E29\u0E19\u0E30\u0E40\u0E19\u0E35\u0E22
+        \u0E1E\u0E48\u0E2D\u0E40\u0E2D\u0E32\u0E04\u0E27\u0E32\u0E21\u0E40\u0E04\u0E23\u0E35\u0E22\u0E14\u0E02\u0E49\u0E32\u0E07\u0E19\u0E2D\u0E01\u0E21\u0E32\u0E25\u0E07\u0E01\u0E31\u0E1A\u0E1A\u0E49\u0E32\u0E19
+        \u0E25\u0E30\u0E40\u0E25\u0E22\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E2A\u0E36\u0E01\u0E02\u0E2D\u0E07\u0E25\u0E39\u0E01\u0E44\u0E1B\u0E21\u0E32\u0E01\u0E08\u0E23\u0E34\u0E07\u0E46"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1211,7 +1243,8 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "ขอบใจนะที่สู้มาจนถึงวันนี้ พ่อภูมิใจในตัวเนียมากนะลูก"
+    - text: "\u0E02\u0E2D\u0E1A\u0E43\u0E08\u0E19\u0E30\u0E17\u0E35\u0E48\u0E2A\u0E39\u0E49\u0E21\u0E32\u0E08\u0E19\u0E16\u0E36\u0E07\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49
+        \u0E1E\u0E48\u0E2D\u0E20\u0E39\u0E21\u0E34\u0E43\u0E08\u0E43\u0E19\u0E15\u0E31\u0E27\u0E40\u0E19\u0E35\u0E22\u0E21\u0E32\u0E01\u0E19\u0E30\u0E25\u0E39\u0E01"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1219,7 +1252,8 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "พี่เนีย! ดูนี่สิ หนูวาดรูปครอบครัวเรามาให้ด้วยล่ะ!"
+    - text: "\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22! \u0E14\u0E39\u0E19\u0E35\u0E48\u0E2A\u0E34
+        \u0E2B\u0E19\u0E39\u0E27\u0E32\u0E14\u0E23\u0E39\u0E1B\u0E04\u0E23\u0E2D\u0E1A\u0E04\u0E23\u0E31\u0E27\u0E40\u0E23\u0E32\u0E21\u0E32\u0E43\u0E2B\u0E49\u0E14\u0E49\u0E27\u0E22\u0E25\u0E48\u0E30!"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -1227,7 +1261,7 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 1
       voiceSoundName: 
-    - text: "หนูอยากให้พี่เนียยิ้มได้แบบในรูปทุกวันเลยนะ!"
+    - text: "\u0E2B\u0E19\u0E39\u0E2D\u0E22\u0E32\u0E01\u0E43\u0E2B\u0E49\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22\u0E22\u0E34\u0E49\u0E21\u0E44\u0E14\u0E49\u0E41\u0E1A\u0E1A\u0E43\u0E19\u0E23\u0E39\u0E1B\u0E17\u0E38\u0E01\u0E27\u0E31\u0E19\u0E40\u0E25\u0E22\u0E19\u0E30!"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -1235,7 +1269,7 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 1
       voiceSoundName: 
-    - text: "..."
+    - text: ...
       speakerName: Nia
       portraitName: idle
       stressChange: 0
@@ -1243,7 +1277,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "ขอบคุณนะคะพ่อ... แม่... เรน..."
+    - text: "\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E19\u0E30\u0E04\u0E30\u0E1E\u0E48\u0E2D...
+        \u0E41\u0E21\u0E48... \u0E40\u0E23\u0E19..."
       speakerName: Nia
       portraitName: good1
       stressChange: 0
@@ -1251,7 +1286,8 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "หนูคิดว่าไม่มีใครต้องการหนูแล้วซะอีก... ขอบคุณที่ยอมรับฟังหนูนะคะ"
+    - text: "\u0E2B\u0E19\u0E39\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32\u0E44\u0E21\u0E48\u0E21\u0E35\u0E43\u0E04\u0E23\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E2B\u0E19\u0E39\u0E41\u0E25\u0E49\u0E27\u0E0B\u0E30\u0E2D\u0E35\u0E01...
+        \u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E17\u0E35\u0E48\u0E22\u0E2D\u0E21\u0E23\u0E31\u0E1A\u0E1F\u0E31\u0E07\u0E2B\u0E19\u0E39\u0E19\u0E30\u0E04\u0E30"
       speakerName: Nia
       portraitName: good1
       stressChange: 0
@@ -1259,7 +1295,10 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 0
       voiceSoundName: 
-    - text: "ลูกของแม่ทั้งคน ทำไมจะไม่ต้องการล่ะ... จากนี้ไปมีอะไรเราคุยกันนะ ไม่ต้องแบกคนเดียวแล้ว"
+    - text: "\u0E25\u0E39\u0E01\u0E02\u0E2D\u0E07\u0E41\u0E21\u0E48\u0E17\u0E31\u0E49\u0E07\u0E04\u0E19
+        \u0E17\u0E33\u0E44\u0E21\u0E08\u0E30\u0E44\u0E21\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E25\u0E48\u0E30...
+        \u0E08\u0E32\u0E01\u0E19\u0E35\u0E49\u0E44\u0E1B\u0E21\u0E35\u0E2D\u0E30\u0E44\u0E23\u0E40\u0E23\u0E32\u0E04\u0E38\u0E22\u0E01\u0E31\u0E19\u0E19\u0E30
+        \u0E44\u0E21\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E41\u0E1A\u0E01\u0E04\u0E19\u0E40\u0E14\u0E35\u0E22\u0E27\u0E41\u0E25\u0E49\u0E27"
       speakerName: Mom
       portraitName: idle
       stressChange: 0
@@ -1267,7 +1306,7 @@ MonoBehaviour:
       activeSlotIndex: 4
       motionEffect: 0
       voiceSoundName: 
-    - text: "ใช่แล้ว! พวกเราอยู่ข้างพี่เนียเสมอนะ!"
+    - text: "\u0E43\u0E0A\u0E48\u0E41\u0E25\u0E49\u0E27! \u0E1E\u0E27\u0E01\u0E40\u0E23\u0E32\u0E2D\u0E22\u0E39\u0E48\u0E02\u0E49\u0E32\u0E07\u0E1E\u0E35\u0E48\u0E40\u0E19\u0E35\u0E22\u0E40\u0E2A\u0E21\u0E2D\u0E19\u0E30!"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0
@@ -1275,7 +1314,9 @@ MonoBehaviour:
       activeSlotIndex: 7
       motionEffect: 1
       voiceSoundName: 
-    - text: "เอาล่ะ เลิกทำหน้าเศร้ากันได้แล้ว มาลงมือกินข้าวกันดีกว่า เดี๋ยวจะเย็นหมดนะ"
+    - text: "\u0E40\u0E2D\u0E32\u0E25\u0E48\u0E30 \u0E40\u0E25\u0E34\u0E01\u0E17\u0E33\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E28\u0E23\u0E49\u0E32\u0E01\u0E31\u0E19\u0E44\u0E14\u0E49\u0E41\u0E25\u0E49\u0E27
+        \u0E21\u0E32\u0E25\u0E07\u0E21\u0E37\u0E2D\u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E01\u0E31\u0E19\u0E14\u0E35\u0E01\u0E27\u0E48\u0E32
+        \u0E40\u0E14\u0E35\u0E4B\u0E22\u0E27\u0E08\u0E30\u0E40\u0E22\u0E47\u0E19\u0E2B\u0E21\u0E14\u0E19\u0E30"
       speakerName: Dad
       portraitName: idle
       stressChange: 0
@@ -1283,7 +1324,7 @@ MonoBehaviour:
       activeSlotIndex: 5
       motionEffect: 0
       voiceSoundName: 
-    - text: "ค่ะ! มากินด้วยกันนะคะ"
+    - text: "\u0E04\u0E48\u0E30! \u0E21\u0E32\u0E01\u0E34\u0E19\u0E14\u0E49\u0E27\u0E22\u0E01\u0E31\u0E19\u0E19\u0E30\u0E04\u0E30"
       speakerName: Nia
       portraitName: good1
       stressChange: 0
@@ -1291,7 +1332,7 @@ MonoBehaviour:
       activeSlotIndex: 1
       motionEffect: 1
       voiceSoundName: 
-    - text: "เย้! หนูขอน่องไก่ชิ้นใหญ่นะคะ!"
+    - text: "\u0E40\u0E22\u0E49! \u0E2B\u0E19\u0E39\u0E02\u0E2D\u0E19\u0E48\u0E2D\u0E07\u0E44\u0E01\u0E48\u0E0A\u0E34\u0E49\u0E19\u0E43\u0E2B\u0E0D\u0E48\u0E19\u0E30\u0E04\u0E30!"
       speakerName: Rain
       portraitName: Idle
       stressChange: 0

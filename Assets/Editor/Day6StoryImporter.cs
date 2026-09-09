@@ -151,9 +151,9 @@ public static class Day6StoryImporter
                 npc.npcProfiles.Add(new NPCProfile
                 {
                     npcName = "Hong",
-                    portraits = new List<PortraitEntry>
+                    portraits = new List<NPCPortrait>
                     {
-                        new PortraitEntry { portraitName = "idle", sprite = hongSprite }
+                        new NPCPortrait { portraitName = "idle", sprite = hongSprite }
                     }
                 });
             }
