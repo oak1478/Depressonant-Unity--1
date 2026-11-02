@@ -16,10 +16,12 @@ public class CameraFollow : MonoBehaviour
         FindTargetIfMissing();
     }
 
+    private float lastSearchTime = -1f;
     private void FindTargetIfMissing()
     {
-        if (target == null)
+        if (target == null && (lastSearchTime < 0f || Time.time - lastSearchTime > 0.5f))
         {
+            lastSearchTime = Time.time;
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player == null) player = GameObject.Find("Player");
             if (player != null)
@@ -42,7 +44,8 @@ public class CameraFollow : MonoBehaviour
             Vector3 desiredPosition = target.position + offset;
             
             // ทำให้กล้องเลื่อนตำแหน่งอย่างนุ่มนวลจากจุดปัจจุบันไปจุดใหม่
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+            float t = 1f - Mathf.Exp(-smoothSpeed * 25f * Time.deltaTime);
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, t);
             transform.position = smoothedPosition;
 
             // สั่งให้กล้องหันหน้าโฟกัสไปที่ตัวละครตลอดเวลา

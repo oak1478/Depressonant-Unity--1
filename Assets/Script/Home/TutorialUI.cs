@@ -27,6 +27,9 @@ public class TutorialUI : MonoBehaviour
     [Header("Auto Animation Settings")]
     [Tooltip("ระยะเวลาสลับภาพอนิเมชันปุ่มบุ๋ม/นูน (วินาที) ตั้งเป็น 0.5 วินาทีตามต้องการ")]
     public float blinkInterval = 0.5f;
+    private bool lastShowPressedState = false;
+    private bool stateInitialized = false;
+    private static TMP_FontAsset cachedThaiFont;
 
     void Awake()
     {
@@ -47,6 +50,10 @@ public class TutorialUI : MonoBehaviour
         if (keycapBindings == null) return;
 
         bool showPressedState = (Mathf.FloorToInt(Time.unscaledTime / blinkInterval) % 2) == 1;
+        if (stateInitialized && showPressedState == lastShowPressedState) return;
+
+        lastShowPressedState = showPressedState;
+        stateInitialized = true;
 
         foreach (var binding in keycapBindings)
         {
@@ -155,11 +162,18 @@ public class TutorialUI : MonoBehaviour
     {
         if (instructionText != null && (instructionText.font == null || instructionText.font.name.Contains("LiberationSans")))
         {
+            if (cachedThaiFont != null)
+            {
+                instructionText.font = cachedThaiFont;
+                return;
+            }
+
             TMP_FontAsset[] fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
             foreach (var f in fonts)
             {
                 if (f != null && (f.name.Contains("Kanit") || f.name.Contains("Thai") || f.name.Contains("Sarabun") || f.name.Contains("Prompt")))
                 {
+                    cachedThaiFont = f;
                     instructionText.font = f;
                     break;
                 }

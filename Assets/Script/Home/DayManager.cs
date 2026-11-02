@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DayManager : MonoBehaviour
@@ -94,7 +95,9 @@ public class DayManager : MonoBehaviour
     public void UpdateAllAppearances()
     {
         // อัปเดต NPC ทั้งหมด
-        NPCAppearanceController[] allNPCs = Object.FindObjectsByType<NPCAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        IEnumerable<NPCAppearanceController> allNPCs = NPCAppearanceController.AllNPCAppearances.Count > 0 
+            ? (IEnumerable<NPCAppearanceController>)NPCAppearanceController.AllNPCAppearances 
+            : Object.FindObjectsByType<NPCAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (NPCAppearanceController npc in allNPCs)
         {
             try
@@ -111,7 +114,9 @@ public class DayManager : MonoBehaviour
         }
 
         // อัปเดตไอเทมในฉากทั้งหมด
-        ItemAppearanceController[] allItems = Object.FindObjectsByType<ItemAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        IEnumerable<ItemAppearanceController> allItems = ItemAppearanceController.AllItemAppearances.Count > 0 
+            ? (IEnumerable<ItemAppearanceController>)ItemAppearanceController.AllItemAppearances 
+            : Object.FindObjectsByType<ItemAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (ItemAppearanceController item in allItems)
         {
             try

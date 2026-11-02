@@ -126,6 +126,24 @@ public class DialogueManager : MonoBehaviour
     //  ตัวเก็บสถานะเพื่อจดจำว่าใครอยู่ที่สล็อตไหน ป้องกันตัวละครเดียวกันแสดงซ้ำซ้อนหลายตำแหน่ง
     private string[] slotSpeakers;
 
+    public static DialogueManager Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     void Start() { if (dialogueCanvas != null) dialogueCanvas.SetActive(false); }
 
     void Update()

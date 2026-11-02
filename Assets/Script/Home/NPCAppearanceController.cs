@@ -3,6 +3,21 @@ using System.Collections.Generic;
 
 public class NPCAppearanceController : MonoBehaviour
 {
+    public static readonly List<NPCAppearanceController> AllNPCAppearances = new List<NPCAppearanceController>();
+
+    void Awake()
+    {
+        if (!AllNPCAppearances.Contains(this))
+        {
+            AllNPCAppearances.Add(this);
+        }
+    }
+
+    void OnDestroy()
+    {
+        AllNPCAppearances.Remove(this);
+    }
+
     [Header("วันที่ NPC ตัวนี้จะปรากฏตัว (เช่น 1, 2, 5, 14)")]
     public List<int> activeDays = new List<int>();
 

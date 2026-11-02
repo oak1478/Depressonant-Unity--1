@@ -59,6 +59,38 @@ public class DailyFallback
 
 public class NPCInteraction : MonoBehaviour
 {
+    public static readonly List<NPCInteraction> ActiveNPCs = new List<NPCInteraction>();
+    public static Transform CachedPlayerTransform;
+    private static GUIStyle sharedNpcPromptStyle;
+    private static Texture2D sharedNpcPromptBgTex;
+    private string cachedPromptMessage;
+
+    void OnEnable()
+    {
+        if (!ActiveNPCs.Contains(this))
+        {
+            ActiveNPCs.Add(this);
+        }
+    }
+
+    void OnDisable()
+    {
+        ActiveNPCs.Remove(this);
+    }
+
+    public static Transform GetPlayerTransform()
+    {
+        if (CachedPlayerTransform == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj == null) playerObj = GameObject.Find("Player");
+            if (playerObj != null)
+            {
+                CachedPlayerTransform = playerObj.transform;
+            }
+        }
+        return CachedPlayerTransform;
+    }
     [Header("👤 NPC Settings")]
     [Tooltip("Display name of the NPC")]
     public string npcDisplayName = "Mom";
@@ -81,8 +113,6 @@ public class NPCInteraction : MonoBehaviour
 
     private bool isPlayerClose = false;
     private bool isTriggerClose = false;
-    private GUIStyle npcPromptStyle;
-    private Texture2D npcPromptBgTex;
     [HideInInspector] public int lastTalkedDay = 0;
 
     // กลุ่มตัวละครที่อยู่ด้วยกันและใช้บทสนทนาร่วมกัน
@@ -125,15 +155,15 @@ public class NPCInteraction : MonoBehaviour
 
     private bool IsClosestInteractableNPC()
     {
-        CharacterController player = Object.FindAnyObjectByType<CharacterController>();
-        if (player == null) return true;
+        Transform playerT = GetPlayerTransform();
+        if (playerT == null) return true;
 
-        Vector3 playerPos = player.transform.position;
+        Vector3 playerPos = playerT.position;
         float myDist = Vector3.Distance(transform.position, playerPos);
 
-        NPCInteraction[] allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-        foreach (var npc in allNPCs)
+        for (int i = 0; i < ActiveNPCs.Count; i++)
         {
+            NPCInteraction npc = ActiveNPCs[i];
             if (npc != null && npc != this && npc.isPlayerClose)
             {
                 float otherDist = Vector3.Distance(npc.transform.position, playerPos);
@@ -183,6 +213,9 @@ public class NPCInteraction : MonoBehaviour
             npcDisplayName = GetNPCIdentifier();
         }
 
+        string nameToShow = string.IsNullOrEmpty(npcDisplayName) ? GetNPCIdentifier() : npcDisplayName;
+        cachedPromptMessage = ThaiTextAdjuster.Adjust($"กด [E] เพื่อพูดคุยกับ {nameToShow}");
+
         DayManager dm = Object.FindAnyObjectByType<DayManager>();
         int today = dm != null ? (int)dm.currentDay : (GameManagerSetup.Instance != null ? GameManagerSetup.Instance.currentDay : 1);
 
@@ -205,12 +238,11 @@ public class NPCInteraction : MonoBehaviour
     {
         if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
 
-        // คำนวณระยะห่างระหว่างตัวละครกับ NPC (รัศมี 2.2 เมตร)
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj == null) playerObj = GameObject.Find("Player");
-        if (playerObj != null)
+        // คำนวณระยะห่างระหว่างตัวละครกับ NPC (รัศมี 2.2 เมตร) ผ่าน static Transform
+        Transform playerT = GetPlayerTransform();
+        if (playerT != null)
         {
-            float dist = Vector3.Distance(transform.position, playerObj.transform.position);
+            float dist = Vector3.Distance(transform.position, playerT.position);
             if (dist <= 2.2f)
             {
                 isPlayerClose = true;
@@ -223,7 +255,7 @@ public class NPCInteraction : MonoBehaviour
 
         if (isPlayerClose && UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
         {
-            DialogueManager dmCheck = Object.FindAnyObjectByType<DialogueManager>();
+            DialogueManager dmCheck = DialogueManager.Instance ?? Object.FindAnyObjectByType<DialogueManager>();
             if (dmCheck != null && dmCheck.IsDialogueActive()) return;
 
             // หากผู้เล่นอยู่ใกล้ NPC หลายตัวพร้อมกัน ให้ตัวที่ใกล้ผู้เล่นที่สุดเป็นตัวเรียก Trigger
@@ -235,8 +267,8 @@ public class NPCInteraction : MonoBehaviour
 
     void TriggerAction()
     {
-        DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
-        DayManager dayManager = Object.FindAnyObjectByType<DayManager>();
+        DialogueManager dm = DialogueManager.Instance ?? Object.FindAnyObjectByType<DialogueManager>();
+        DayManager dayManager = DayManager.Instance ?? Object.FindAnyObjectByType<DayManager>();
 
         if (dm != null && dayManager != null)
         {
@@ -542,36 +574,39 @@ public class NPCInteraction : MonoBehaviour
         if (!isPlayerClose) return;
         if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
 
-        DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+        DialogueManager dm = DialogueManager.Instance ?? Object.FindAnyObjectByType<DialogueManager>();
         if (dm != null && dm.IsDialogueActive()) return;
 
         // หากผู้เล่นอยู่ใกล้ NPC หลายตัวพร้อมกัน แสดงข้อความเฉพาะตัวที่ใกล้ที่สุด
         if (!IsClosestInteractableNPC()) return;
 
-        if (npcPromptStyle == null)
+        if (sharedNpcPromptStyle == null)
         {
-            npcPromptStyle = new GUIStyle();
-            npcPromptStyle.alignment = TextAnchor.MiddleCenter;
-            npcPromptStyle.fontSize = 18;
-            npcPromptStyle.fontStyle = FontStyle.Bold;
-            npcPromptStyle.normal.textColor = new Color(1f, 1f, 1f, 1f);
+            sharedNpcPromptStyle = new GUIStyle();
+            sharedNpcPromptStyle.alignment = TextAnchor.MiddleCenter;
+            sharedNpcPromptStyle.fontSize = 18;
+            sharedNpcPromptStyle.fontStyle = FontStyle.Bold;
+            sharedNpcPromptStyle.normal.textColor = new Color(1f, 1f, 1f, 1f);
 
-            npcPromptBgTex = new Texture2D(1, 1);
-            npcPromptBgTex.SetPixel(0, 0, new Color(0.08f, 0.12f, 0.18f, 0.88f));
-            npcPromptBgTex.Apply();
-            npcPromptStyle.normal.background = npcPromptBgTex;
-            npcPromptStyle.padding = new RectOffset(16, 16, 8, 8);
+            sharedNpcPromptBgTex = new Texture2D(1, 1);
+            sharedNpcPromptBgTex.SetPixel(0, 0, new Color(0.08f, 0.12f, 0.18f, 0.88f));
+            sharedNpcPromptBgTex.Apply();
+            sharedNpcPromptStyle.normal.background = sharedNpcPromptBgTex;
+            sharedNpcPromptStyle.padding = new RectOffset(16, 16, 8, 8);
         }
 
-        string nameToShow = string.IsNullOrEmpty(npcDisplayName) ? GetNPCIdentifier() : npcDisplayName;
-        string message = ThaiTextAdjuster.Adjust($"กด [E] เพื่อพูดคุยกับ {nameToShow}");
+        if (string.IsNullOrEmpty(cachedPromptMessage))
+        {
+            string nameToShow = string.IsNullOrEmpty(npcDisplayName) ? GetNPCIdentifier() : npcDisplayName;
+            cachedPromptMessage = ThaiTextAdjuster.Adjust($"กด [E] เพื่อพูดคุยกับ {nameToShow}");
+        }
 
         float width = 320f;
         float height = 44f;
         float x = (Screen.width - width) / 2f;
         float y = Screen.height * 0.82f;
 
-        GUI.Label(new Rect(x, y, width, height), message, npcPromptStyle);
+        GUI.Label(new Rect(x, y, width, height), cachedPromptMessage, sharedNpcPromptStyle);
     }
 
 #if UNITY_EDITOR

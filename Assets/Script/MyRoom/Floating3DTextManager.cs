@@ -24,6 +24,8 @@ public class Floating3DTextManager : MonoBehaviour
 
     [Header("Default Font Settings")]
     public TMP_FontAsset customThaiFont;
+    private static TMP_FontAsset cachedThaiFontStatic;
+    private static Camera cachedMainCam;
     public float defaultFontSize = 3.5f;
 
     void Awake()
@@ -42,17 +44,22 @@ public class Floating3DTextManager : MonoBehaviour
 
     private void AutoFindThaiFont()
     {
-        if (customThaiFont == null)
+        if (customThaiFont != null) return;
+        if (cachedThaiFontStatic != null)
         {
-            TMP_FontAsset[] fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
-            foreach (var f in fonts)
+            customThaiFont = cachedThaiFontStatic;
+            return;
+        }
+
+        TMP_FontAsset[] fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
+        foreach (var f in fonts)
+        {
+            if (f != null && (f.name.Contains("Kanit") || f.name.Contains("Thai") || f.name.Contains("Sarabun") || f.name.Contains("Prompt")))
             {
-                if (f != null && (f.name.Contains("Kanit") || f.name.Contains("Thai") || f.name.Contains("Sarabun") || f.name.Contains("Prompt")))
-                {
-                    customThaiFont = f;
-                    Debug.Log($"[Floating3DTextManager] ออโต้ค้นพบฟอนต์ภาษาไทย {f.name} สำเร็จ!");
-                    break;
-                }
+                customThaiFont = f;
+                cachedThaiFontStatic = f;
+                Debug.Log($"[Floating3DTextManager] ออโต้ค้นพบฟอนต์ภาษาไทย {f.name} สำเร็จ!");
+                break;
             }
         }
     }
@@ -86,7 +93,7 @@ public class Floating3DTextManager : MonoBehaviour
         Vector3 startPos = textObj.transform.position;
         Vector3 targetPos = startPos + new Vector3(0, 0.8f, 0); // ลอยขึ้นด้านบน 0.8 เมตร
 
-        Camera mainCam = Camera.main;
+        if (cachedMainCam == null) cachedMainCam = Camera.main;
 
         while (elapsedTime < duration)
         {
@@ -94,7 +101,8 @@ public class Floating3DTextManager : MonoBehaviour
             float ratio = elapsedTime / duration;
 
             // ⚡ Billboard Effect: หันหน้าเข้าหากล้องเสมอ
-            if (mainCam == null) mainCam = Camera.main;
+            if (cachedMainCam == null) cachedMainCam = Camera.main;
+            Camera mainCam = cachedMainCam;
             if (mainCam != null)
             {
                 textObj.transform.rotation = Quaternion.LookRotation(textObj.transform.position - mainCam.transform.position);

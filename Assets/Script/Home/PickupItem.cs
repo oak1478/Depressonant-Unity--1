@@ -30,10 +30,10 @@ public class PickupItem : MonoBehaviour
 
     private bool isPlayerInRange = false;
     private bool isTriggerInside = false;
-    private Transform cachedPlayerTransform;
-
-    private GUIStyle promptStyle;
-    private Texture2D promptBgTex;
+    private static Transform cachedPlayerTransform;
+    private static GUIStyle sharedPromptStyle;
+    private static Texture2D sharedPromptBgTex;
+    private string cachedPromptMessage;
 
     public string GetUniqueID()
     {
@@ -72,34 +72,22 @@ public class PickupItem : MonoBehaviour
         if (GameManagerSetup.Instance != null && GameManagerSetup.Instance.IsItemPickedUp(uniqueItemID))
         {
             Destroy(gameObject);
+            return;
         }
+
+        cachedPromptMessage = ThaiTextAdjuster.Adjust($"กด [F] เพื่อเก็บ {GetItemThaiName(itemType)}");
     }
 
     void Update()
     {
         if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
 
-        // ค้นหาตำแหน่งผู้เล่นหากยังไม่ได้จำไว้
+        // ค้นหาตำแหน่งผู้เล่นหากยังไม่ได้จำไว้ (แชร์ตัวแปร static ร่วมกันทุกไอเทม)
         if (cachedPlayerTransform == null)
         {
-            PlayerMovement pm = Object.FindAnyObjectByType<PlayerMovement>();
-            if (pm != null)
-            {
-                cachedPlayerTransform = pm.transform;
-            }
-            else
-            {
-                CharacterController cc = Object.FindAnyObjectByType<CharacterController>();
-                if (cc != null)
-                {
-                    cachedPlayerTransform = cc.transform;
-                }
-                else
-                {
-                    GameObject pObj = GameObject.FindGameObjectWithTag("Player");
-                    if (pObj != null) cachedPlayerTransform = pObj.transform;
-                }
-            }
+            GameObject pObj = GameObject.FindGameObjectWithTag("Player");
+            if (pObj == null) pObj = GameObject.Find("Player");
+            if (pObj != null) cachedPlayerTransform = pObj.transform;
         }
 
         // คำนวณระยะห่างระหว่างตัวละครกับไอเทม (ตรวจจับทั้งแนวราบ XZ และความสูง Y)
@@ -134,7 +122,7 @@ public class PickupItem : MonoBehaviour
         if (isPlayerInRange && interactPressed)
         {
             // หากกำลังมีบทสนทนาอยู่ ให้งดการเก็บไอเทมชั่วคราว
-            DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+            DialogueManager dm = DialogueManager.Instance ?? Object.FindAnyObjectByType<DialogueManager>();
             if (dm != null && dm.IsDialogueActive()) return;
 
             ExecutePickup();
@@ -198,33 +186,35 @@ public class PickupItem : MonoBehaviour
         if (!isPlayerInRange) return;
         if (DevConsole.Instance != null && DevConsole.Instance.IsOpen) return;
 
-        DialogueManager dm = Object.FindAnyObjectByType<DialogueManager>();
+        DialogueManager dm = DialogueManager.Instance ?? Object.FindAnyObjectByType<DialogueManager>();
         if (dm != null && dm.IsDialogueActive()) return;
 
-        if (promptStyle == null)
+        if (sharedPromptStyle == null)
         {
-            promptStyle = new GUIStyle();
-            promptStyle.alignment = TextAnchor.MiddleCenter;
-            promptStyle.fontSize = 18;
-            promptStyle.fontStyle = FontStyle.Bold;
-            promptStyle.normal.textColor = new Color(1f, 1f, 1f, 1f);
+            sharedPromptStyle = new GUIStyle();
+            sharedPromptStyle.alignment = TextAnchor.MiddleCenter;
+            sharedPromptStyle.fontSize = 18;
+            sharedPromptStyle.fontStyle = FontStyle.Bold;
+            sharedPromptStyle.normal.textColor = new Color(1f, 1f, 1f, 1f);
 
-            promptBgTex = new Texture2D(1, 1);
-            promptBgTex.SetPixel(0, 0, new Color(0.08f, 0.12f, 0.18f, 0.88f));
-            promptBgTex.Apply();
-            promptStyle.normal.background = promptBgTex;
-            promptStyle.padding = new RectOffset(16, 16, 8, 8);
+            sharedPromptBgTex = new Texture2D(1, 1);
+            sharedPromptBgTex.SetPixel(0, 0, new Color(0.08f, 0.12f, 0.18f, 0.88f));
+            sharedPromptBgTex.Apply();
+            sharedPromptStyle.normal.background = sharedPromptBgTex;
+            sharedPromptStyle.padding = new RectOffset(16, 16, 8, 8);
         }
 
-        string itemNameTh = GetItemThaiName(itemType);
-        string message = ThaiTextAdjuster.Adjust($"กด [F] เพื่อเก็บ {itemNameTh}");
+        if (string.IsNullOrEmpty(cachedPromptMessage))
+        {
+            cachedPromptMessage = ThaiTextAdjuster.Adjust($"กด [F] เพื่อเก็บ {GetItemThaiName(itemType)}");
+        }
 
         float width = 300f;
         float height = 44f;
         float x = (Screen.width - width) / 2f;
         float y = Screen.height * 0.82f;
 
-        GUI.Label(new Rect(x, y, width, height), message, promptStyle);
+        GUI.Label(new Rect(x, y, width, height), cachedPromptMessage, sharedPromptStyle);
     }
 
     private string GetItemThaiName(ItemType type)

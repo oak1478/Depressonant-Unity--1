@@ -20,6 +20,12 @@ public class ItemGlowEffect : MonoBehaviour
     private Material instanceMaterial;
     private Color originalColor;
     private Light pointLight;
+    private static readonly int EmissionColorID = Shader.PropertyToID("_EmissionColor");
+    private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
+    private static readonly int ColorID = Shader.PropertyToID("_Color");
+    private bool hasEmissionProp = false;
+    private bool hasBaseColorProp = false;
+    private bool hasColorProp = false;
 
     void Awake()
     {
@@ -34,11 +40,20 @@ public class ItemGlowEffect : MonoBehaviour
         else if (meshRenderer != null && meshRenderer.material != null)
         {
             instanceMaterial = meshRenderer.material; // สร้างอินสแตนซ์วัสดุแยกป้องกันแก้ไขไฟลต้นฉบับ
-            if (instanceMaterial.HasProperty("_BaseColor"))
+            hasEmissionProp = instanceMaterial.HasProperty(EmissionColorID);
+            hasBaseColorProp = instanceMaterial.HasProperty(BaseColorID);
+            hasColorProp = instanceMaterial.HasProperty(ColorID);
+
+            if (hasEmissionProp)
             {
-                originalColor = instanceMaterial.GetColor("_BaseColor");
+                instanceMaterial.EnableKeyword("_EMISSION");
             }
-            else if (instanceMaterial.HasProperty("_Color"))
+
+            if (hasBaseColorProp)
+            {
+                originalColor = instanceMaterial.GetColor(BaseColorID);
+            }
+            else if (hasColorProp)
             {
                 originalColor = instanceMaterial.color;
             }
@@ -62,17 +77,16 @@ public class ItemGlowEffect : MonoBehaviour
         // 2. กรณีไอเทมเป็น 3D Mesh (URP Emission/Color)
         if (instanceMaterial != null)
         {
-            if (instanceMaterial.HasProperty("_EmissionColor"))
+            if (hasEmissionProp)
             {
-                instanceMaterial.SetColor("_EmissionColor", glowColor * currentIntensity);
-                instanceMaterial.EnableKeyword("_EMISSION");
+                instanceMaterial.SetColor(EmissionColorID, glowColor * currentIntensity);
             }
-            else if (instanceMaterial.HasProperty("_BaseColor"))
+            else if (hasBaseColorProp)
             {
                 Color lerpedColor = Color.Lerp(originalColor, glowColor, wave * 0.5f);
-                instanceMaterial.SetColor("_BaseColor", lerpedColor);
+                instanceMaterial.SetColor(BaseColorID, lerpedColor);
             }
-            else if (instanceMaterial.HasProperty("_Color"))
+            else if (hasColorProp)
             {
                 Color lerpedColor = Color.Lerp(originalColor, glowColor, wave * 0.5f);
                 instanceMaterial.color = lerpedColor;
@@ -87,17 +101,26 @@ public class ItemGlowEffect : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        if (instanceMaterial != null)
+        {
+            Destroy(instanceMaterial);
+            instanceMaterial = null;
+        }
+    }
+
     void OnDisable()
     {
         // คืนค่าสีเดิมเมื่อปิดการทำงาน
         if (spriteRenderer != null) spriteRenderer.color = originalColor;
         if (instanceMaterial != null)
         {
-            if (instanceMaterial.HasProperty("_BaseColor"))
+            if (hasBaseColorProp)
             {
-                instanceMaterial.SetColor("_BaseColor", originalColor);
+                instanceMaterial.SetColor(BaseColorID, originalColor);
             }
-            else if (instanceMaterial.HasProperty("_Color"))
+            else if (hasColorProp)
             {
                 instanceMaterial.color = originalColor;
             }

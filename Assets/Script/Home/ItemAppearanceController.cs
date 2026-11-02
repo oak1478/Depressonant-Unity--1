@@ -3,6 +3,21 @@ using System.Collections.Generic;
 
 public class ItemAppearanceController : MonoBehaviour
 {
+    public static readonly List<ItemAppearanceController> AllItemAppearances = new List<ItemAppearanceController>();
+
+    void Awake()
+    {
+        if (!AllItemAppearances.Contains(this))
+        {
+            AllItemAppearances.Add(this);
+        }
+    }
+
+    void OnDestroy()
+    {
+        AllItemAppearances.Remove(this);
+    }
+
     [Header("วันที่ไอเทมชิ้นนี้จะโผล่มาให้เก็บ (เช่น วันที่ 1, 3, 8, 10)")]
     public List<int> spawnDays = new List<int>();
 
