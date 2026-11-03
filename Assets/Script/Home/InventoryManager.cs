@@ -592,7 +592,7 @@ public class InventoryManager : MonoBehaviour
         slotCountTexts[i].margin = Vector4.zero;
 
         // ปิดการตัดคำ (Word Wrapping) ป้องกันตัวเลข 10 ชิ้นขึ้นไปตกบรรทัด
-        slotCountTexts[i].enableWordWrapping = false;
+        slotCountTexts[i].textWrappingMode = TextWrappingModes.NoWrap;
         slotCountTexts[i].overflowMode = TextOverflowModes.Overflow;
         slotCountTexts[i].alignment = TextAlignmentOptions.BottomRight;
         slotCountTexts[i].fontSize = 22f;
@@ -825,7 +825,7 @@ public class InventoryManager : MonoBehaviour
             examineDescriptionText.fontSize = 24f;
             examineDescriptionText.color = new Color(0.12f, 0.16f, 0.22f, 1f);
             examineDescriptionText.alignment = TextAlignmentOptions.Center;
-            examineDescriptionText.enableWordWrapping = true;
+            examineDescriptionText.textWrappingMode = TextWrappingModes.Normal;
             examineDescriptionText.overflowMode = TextOverflowModes.Truncate;
             examineDescriptionText.lineSpacing = 10f;
             examineDescriptionText.raycastTarget = false;

@@ -95,9 +95,7 @@ public class DayManager : MonoBehaviour
     public void UpdateAllAppearances()
     {
         // อัปเดต NPC ทั้งหมด
-        IEnumerable<NPCAppearanceController> allNPCs = NPCAppearanceController.AllNPCAppearances.Count > 0 
-            ? (IEnumerable<NPCAppearanceController>)NPCAppearanceController.AllNPCAppearances 
-            : Object.FindObjectsByType<NPCAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        NPCAppearanceController[] allNPCs = Object.FindObjectsByType<NPCAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (NPCAppearanceController npc in allNPCs)
         {
             try
@@ -114,9 +112,7 @@ public class DayManager : MonoBehaviour
         }
 
         // อัปเดตไอเทมในฉากทั้งหมด
-        IEnumerable<ItemAppearanceController> allItems = ItemAppearanceController.AllItemAppearances.Count > 0 
-            ? (IEnumerable<ItemAppearanceController>)ItemAppearanceController.AllItemAppearances 
-            : Object.FindObjectsByType<ItemAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        ItemAppearanceController[] allItems = Object.FindObjectsByType<ItemAppearanceController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (ItemAppearanceController item in allItems)
         {
             try

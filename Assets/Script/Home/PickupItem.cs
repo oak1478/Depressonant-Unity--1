@@ -87,7 +87,23 @@ public class PickupItem : MonoBehaviour
         {
             GameObject pObj = GameObject.FindGameObjectWithTag("Player");
             if (pObj == null) pObj = GameObject.Find("Player");
-            if (pObj != null) cachedPlayerTransform = pObj.transform;
+            if (pObj != null)
+            {
+                cachedPlayerTransform = pObj.transform;
+            }
+            else
+            {
+                PlayerMovement pm = Object.FindAnyObjectByType<PlayerMovement>();
+                if (pm != null)
+                {
+                    cachedPlayerTransform = pm.transform;
+                }
+                else
+                {
+                    CharacterController cc = Object.FindAnyObjectByType<CharacterController>();
+                    if (cc != null) cachedPlayerTransform = cc.transform;
+                }
+            }
         }
 
         // คำนวณระยะห่างระหว่างตัวละครกับไอเทม (ตรวจจับทั้งแนวราบ XZ และความสูง Y)

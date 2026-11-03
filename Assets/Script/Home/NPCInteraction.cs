@@ -88,6 +88,19 @@ public class NPCInteraction : MonoBehaviour
             {
                 CachedPlayerTransform = playerObj.transform;
             }
+            else
+            {
+                PlayerMovement pm = Object.FindAnyObjectByType<PlayerMovement>();
+                if (pm != null)
+                {
+                    CachedPlayerTransform = pm.transform;
+                }
+                else
+                {
+                    CharacterController cc = Object.FindAnyObjectByType<CharacterController>();
+                    if (cc != null) CachedPlayerTransform = cc.transform;
+                }
+            }
         }
         return CachedPlayerTransform;
     }
@@ -161,10 +174,15 @@ public class NPCInteraction : MonoBehaviour
         Vector3 playerPos = playerT.position;
         float myDist = Vector3.Distance(transform.position, playerPos);
 
-        for (int i = 0; i < ActiveNPCs.Count; i++)
+        for (int i = ActiveNPCs.Count - 1; i >= 0; i--)
         {
             NPCInteraction npc = ActiveNPCs[i];
-            if (npc != null && npc != this && npc.isPlayerClose)
+            if (npc == null)
+            {
+                ActiveNPCs.RemoveAt(i);
+                continue;
+            }
+            if (npc != this && npc.isPlayerClose)
             {
                 float otherDist = Vector3.Distance(npc.transform.position, playerPos);
                 if (otherDist < myDist)
