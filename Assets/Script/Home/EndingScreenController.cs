@@ -164,11 +164,11 @@ public class EndingScreenController : MonoBehaviour
         if (font != null) titleTmp.font = font;
         bool isGameOver = sceneName.IndexOf("GameOver", System.StringComparison.OrdinalIgnoreCase) >= 0;
         titleTmp.text = isGameOver ? "GAME OVER" : "THE END";
-        if (isGameOver) titleTmp.color = new Color(1f, 0.28f, 0.28f, 1f);
+
         titleTmp.fontSize = 88;
         titleTmp.fontStyle = FontStyles.Bold;
         titleTmp.alignment = TextAlignmentOptions.Center;
-        titleTmp.color = Color.white;
+        titleTmp.color = isGameOver ? new Color(1f, 0.28f, 0.28f, 1f) : Color.white;
         titleTmp.raycastTarget = false;
 
         RectTransform titleRt = titleObj.GetComponent<RectTransform>() ?? titleObj.AddComponent<RectTransform>();
