@@ -29,6 +29,26 @@ public class EndingScreenController : MonoBehaviour
     private bool canAcceptInput = false;
     private bool isTransitioningToMenu = false;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void InitSceneListener()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoadedStatic;
+        SceneManager.sceneLoaded += OnSceneLoadedStatic;
+
+        if (SceneManager.GetActiveScene().name == "GameOver_Stress")
+        {
+            Instance.TriggerEndingSequence("GameOver_Stress");
+        }
+    }
+
+    private static void OnSceneLoadedStatic(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "GameOver_Stress")
+        {
+            Instance.TriggerEndingSequence("GameOver_Stress");
+        }
+    }
+
     void Awake()
     {
         if (instance == null)
@@ -142,7 +162,9 @@ public class EndingScreenController : MonoBehaviour
         titleObj.AddComponent<CanvasRenderer>();
         TextMeshProUGUI titleTmp = titleObj.AddComponent<TextMeshProUGUI>();
         if (font != null) titleTmp.font = font;
-        titleTmp.text = "THE END";
+        bool isGameOver = sceneName.IndexOf("GameOver", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        titleTmp.text = isGameOver ? "GAME OVER" : "THE END";
+        if (isGameOver) titleTmp.color = new Color(1f, 0.28f, 0.28f, 1f);
         titleTmp.fontSize = 88;
         titleTmp.fontStyle = FontStyles.Bold;
         titleTmp.alignment = TextAlignmentOptions.Center;
@@ -166,7 +188,12 @@ public class EndingScreenController : MonoBehaviour
         string subText = "Good Ending";
         Color subColor = new Color(0.48f, 0.93f, 0.62f, 1f); // เขียวมิ้นต์สดใส (#7bed9f)
 
-        if (sceneName.IndexOf("Bad", System.StringComparison.OrdinalIgnoreCase) >= 0)
+        if (isGameOver)
+        {
+            subText = ThaiTextAdjuster.Adjust("ความเครียดสะสมเกินขีดจำกัด (Burnout)");
+            subColor = new Color(1f, 0.45f, 0.45f, 1f); // แดงพาสเทล
+        }
+        else if (sceneName.IndexOf("Bad", System.StringComparison.OrdinalIgnoreCase) >= 0)
         {
             subText = "Bad Ending";
             subColor = new Color(1f, 0.42f, 0.51f, 1f); // แดงกุหลาบ (#ff6b81)
@@ -190,6 +217,27 @@ public class EndingScreenController : MonoBehaviour
         subRt.pivot = new Vector2(0.5f, 0.5f);
         subRt.sizeDelta = new Vector2(1000, 80);
         subRt.anchoredPosition = new Vector2(0, -10);
+
+        if (isGameOver)
+        {
+            GameObject descObj = new GameObject("GameOverDescription", typeof(RectTransform));
+            descObj.transform.SetParent(contentObj.transform, false);
+            descObj.AddComponent<CanvasRenderer>();
+            TextMeshProUGUI descTmp = descObj.AddComponent<TextMeshProUGUI>();
+            if (font != null) descTmp.font = font;
+            descTmp.text = ThaiTextAdjuster.Adjust("เนียไม่สามารถรับมือกับแรงกดดันและความเครียดติดต่อกันได้อีกต่อไป...");
+            descTmp.fontSize = 24;
+            descTmp.alignment = TextAlignmentOptions.Center;
+            descTmp.color = new Color(0.85f, 0.85f, 0.85f, 0.9f);
+            descTmp.raycastTarget = false;
+
+            RectTransform descRt = descObj.GetComponent<RectTransform>() ?? descObj.AddComponent<RectTransform>();
+            descRt.anchorMin = new Vector2(0.5f, 0.5f);
+            descRt.anchorMax = new Vector2(0.5f, 0.5f);
+            descRt.pivot = new Vector2(0.5f, 0.5f);
+            descRt.sizeDelta = new Vector2(1000, 60);
+            descRt.anchoredPosition = new Vector2(0, -75);
+        }
 
         // 5. ปุ่มกลับสู่หน้าหลัก (Main Menu Button)
         GameObject btnObj = new GameObject("ReturnButton", typeof(RectTransform));
@@ -368,6 +416,11 @@ public class EndingScreenController : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        if (GameManagerSetup.Instance != null)
+        {
+            GameManagerSetup.Instance.ResetGameSession();
+        }
 
         SceneManager.LoadScene("MainMenu");
         Destroy(gameObject, 1f);

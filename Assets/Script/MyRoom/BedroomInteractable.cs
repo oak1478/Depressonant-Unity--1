@@ -97,6 +97,7 @@ public class BedroomInteractable : MonoBehaviour
         source.clip = clip;
         source.spatialBlend = 0f;
         source.volume = 1f;
+        GameManagerSetup.RouteSourceToSFX(source);
         source.Play();
         DontDestroyOnLoad(audioGo);
         Destroy(audioGo, clip.length + 0.2f);

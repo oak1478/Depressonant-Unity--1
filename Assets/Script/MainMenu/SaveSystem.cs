@@ -49,13 +49,27 @@ public class SaveSystem : MonoBehaviour
         // ดึงค่าสถานะระดับโลกมาเซฟลงไฟล์
         if (GameManagerSetup.Instance != null)
         {
-            data.currentDay = GameManagerSetup.Instance.currentDay;
+            data.currentDay = GameManagerSetup.Instance.currentDay > 0 ? GameManagerSetup.Instance.currentDay : 1;
             data.currentStress = GameManagerSetup.Instance.currentStress;
             data.consecutiveMaxStressDays = GameManagerSetup.Instance.consecutiveMaxStressDays;
             data.inventoryItems = new List<GlobalInventoryItem>(GameManagerSetup.Instance.savedInventory);
             data.pickedUpItemIDs = new List<string>(GameManagerSetup.Instance.pickedUpItemIDs);
             data.talkedNPCsToday = new List<string>(GameManagerSetup.Instance.talkedNPCsToday);
             data.playTime = GameManagerSetup.Instance.playTime;
+        }
+        else if (pendingLoadData != null)
+        {
+            data.currentDay = pendingLoadData.currentDay > 0 ? pendingLoadData.currentDay : 1;
+            data.currentStress = pendingLoadData.currentStress;
+            data.consecutiveMaxStressDays = pendingLoadData.consecutiveMaxStressDays;
+            data.inventoryItems = pendingLoadData.inventoryItems != null ? new List<GlobalInventoryItem>(pendingLoadData.inventoryItems) : new List<GlobalInventoryItem>();
+            data.pickedUpItemIDs = pendingLoadData.pickedUpItemIDs != null ? new List<string>(pendingLoadData.pickedUpItemIDs) : new List<string>();
+            data.talkedNPCsToday = pendingLoadData.talkedNPCsToday != null ? new List<string>(pendingLoadData.talkedNPCsToday) : new List<string>();
+            data.playTime = pendingLoadData.playTime;
+        }
+        else
+        {
+            data.currentDay = 1;
         }
 
         SaveGame(slotIndex, data);
@@ -124,6 +138,9 @@ public class SaveSystem : MonoBehaviour
         if (data.talkedNPCsToday != null)
         {
             data.talkedNPCsToday.Clear();
+            if (InventoryManager.Instance != null) InventoryManager.Instance.ResetDailyItems();
+            StressManager loadedStress = Object.FindAnyObjectByType<StressManager>();
+            if (loadedStress != null) loadedStress.ResetDailyModifiers();
         }
 
         // บันทึกเซฟไว้ใน Pending Data เสมอ เพื่อเป็นข้อมูลสำรองรับประกันก่อนย้ายซีน

@@ -112,6 +112,9 @@ public class GameManagerSetup : MonoBehaviour
 
         savedInventory.Clear();
         pickedUpItemIDs.Clear();
+        if (InventoryManager.Instance != null) InventoryManager.Instance.ResetDailyItems();
+        StressManager sessionStress = Object.FindAnyObjectByType<StressManager>();
+        if (sessionStress != null) sessionStress.ResetDailyModifiers();
         talkedNPCsToday.Clear();
 
         Debug.Log("[GameManagerSetup] รีเซ็ตสถานะข้อมูลเกมทั้งหมดเรียบร้อย");
@@ -192,6 +195,21 @@ public class GameManagerSetup : MonoBehaviour
                 esObj.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
                 Debug.Log("[GameManagerSetup] ตรวจไม่พบ EventSystem ในฉาก ได้สร้าง EventSystem_Auto ให้อัตโนมัติ");
             }
+        }
+    }
+
+    public static void RouteSourceToSFX(AudioSource src)
+    {
+        if (src == null || src.outputAudioMixerGroup != null) return;
+        UnityEngine.Audio.AudioMixerGroup sfxGroup = SettingsController.SFXGroup;
+        if (sfxGroup == null && SettingsController.Instance != null && SettingsController.Instance.mainMixer != null)
+        {
+            var groups = SettingsController.Instance.mainMixer.FindMatchingGroups("SFX");
+            if (groups != null && groups.Length > 0) sfxGroup = groups[0];
+        }
+        if (sfxGroup != null)
+        {
+            src.outputAudioMixerGroup = sfxGroup;
         }
     }
 
@@ -356,6 +374,9 @@ public class GameManagerSetup : MonoBehaviour
                 ? new List<string>(SaveSystem.pendingLoadData.pickedUpItemIDs) 
                 : new List<string>();
             talkedNPCsToday = new List<string>(); // เริ่มวันใหม่ ล้างรายชื่อ NPC ที่คุยไปแล้ว
+            if (InventoryManager.Instance != null) InventoryManager.Instance.ResetDailyItems();
+            StressManager unpackedStress = Object.FindAnyObjectByType<StressManager>();
+            if (unpackedStress != null) unpackedStress.ResetDailyModifiers();
             activeSaveSlot = SaveSystem.pendingLoadData.activeSaveSlot;
             playTime = SaveSystem.pendingLoadData.playTime;
 

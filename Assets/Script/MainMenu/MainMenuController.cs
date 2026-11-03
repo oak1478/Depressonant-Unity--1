@@ -259,7 +259,14 @@ public class MainMenuController : MonoBehaviour
         }
 
         // 4. บันทึกทับไฟล์เซฟตั้งต้นลงเครื่อง (ซีน index 2 คือ Bedroom_3D พิกัดหน้าประตูห้องนอน)
-        saveSystem.SaveGameFromGlobal(targetSlot, new Vector3(-0.808f, 1f, -6.931f), 2);
+        if (SaveSystem.pendingLoadData != null)
+        {
+            saveSystem.SaveGame(targetSlot, SaveSystem.pendingLoadData);
+        }
+        else
+        {
+            saveSystem.SaveGameFromGlobal(targetSlot, new Vector3(-0.808f, 1f, -6.931f), 2);
+        }
 
         // 5. โหลดซีนห้องนอนเพื่อเริ่มเล่น
         SceneManager.LoadScene("Bedroom_3D");

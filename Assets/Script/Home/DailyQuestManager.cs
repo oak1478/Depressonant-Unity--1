@@ -55,6 +55,7 @@ public class DailyQuestManager : MonoBehaviour
     // เก็บแถวที่สร้างไว้เพื่อ destroy เมื่อ refresh
     private List<GameObject> activeRows = new List<GameObject>();
     private Canvas cachedCanvas;
+    private string lastRenderedSignature = null;
 
     private void Awake()
     {
@@ -98,7 +99,8 @@ public class DailyQuestManager : MonoBehaviour
             return;
         }
         SetVisible(true);
-        RefreshQuestList();
+        lastRenderedSignature = null;
+        RefreshQuestList(true);
     }
 
     private void EnsureDefaultSchedule()
@@ -174,7 +176,8 @@ public class DailyQuestManager : MonoBehaviour
             SetVisible(false);
             return;
         }
-        RefreshQuestList();
+        lastRenderedSignature = null;
+        RefreshQuestList(true);
     }
 
     private void Update()
@@ -188,7 +191,7 @@ public class DailyQuestManager : MonoBehaviour
         if (refreshTimer >= refreshInterval)
         {
             refreshTimer = 0f;
-            RefreshQuestList();
+            RefreshQuestList(false);
         }
     }
 
@@ -583,7 +586,7 @@ public class DailyQuestManager : MonoBehaviour
         return ThaiTextAdjuster.Adjust(desc);
     }
 
-    public void RefreshQuestList()
+    public void RefreshQuestList(bool force = false)
     {
         if (npcListContainer == null || npcRowPrefab == null) return;
 
@@ -591,6 +594,13 @@ public class DailyQuestManager : MonoBehaviour
         int today = GetCurrentDay();
 
         List<string> availableNPCs = GetUnfinishedNPCsToday(today);
+
+        string currentSig = today + ":" + string.Join(",", availableNPCs);
+        if (!force && currentSig == lastRenderedSignature && activeRows.Count > 0 && activeRows[0] != null)
+        {
+            return;
+        }
+        lastRenderedSignature = currentSig;
 
         // ล้างแถวเก่าออก
         foreach (var row in activeRows)
@@ -729,6 +739,7 @@ public class DailyQuestManager : MonoBehaviour
     /// </summary>
     public void ForceRefresh()
     {
-        RefreshQuestList();
+        lastRenderedSignature = null;
+        RefreshQuestList(true);
     }
 }

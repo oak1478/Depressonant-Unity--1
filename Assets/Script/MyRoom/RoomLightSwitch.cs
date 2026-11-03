@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class RoomLightSwitch : MonoBehaviour
 {
@@ -35,6 +35,7 @@ public class RoomLightSwitch : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.spatialBlend = 1f; // 3D Sound
             audioSource.playOnAwake = false;
+            GameManagerSetup.RouteSourceToSFX(audioSource);
         }
 
         ApplyLightState();
@@ -48,6 +49,7 @@ public class RoomLightSwitch : MonoBehaviour
         // เล่นเสียงสวิตช์ไฟแป๊ก
         if (switchSound != null && audioSource != null)
         {
+            GameManagerSetup.RouteSourceToSFX(audioSource);
             audioSource.PlayOneShot(switchSound);
         }
 

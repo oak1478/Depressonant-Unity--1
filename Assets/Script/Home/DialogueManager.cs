@@ -184,8 +184,8 @@ public class DialogueManager : MonoBehaviour
 
         currentNPCName = npcName;
         currentActiveStory = intro != null ? new List<DialogueLine>(intro) : new List<DialogueLine>();
-        currentChoicesData = choices != null ? choices : new List<DialogueChoice>();
-        conclusionStoryData = conclusion != null ? conclusion : new List<DialogueLine>();
+        currentChoicesData = choices != null ? new List<DialogueChoice>(choices) : new List<DialogueChoice>();
+        conclusionStoryData = conclusion != null ? new List<DialogueLine>(conclusion) : new List<DialogueLine>();
         
         dialogueStep = 0;
         isWaitingForChoice = false;
