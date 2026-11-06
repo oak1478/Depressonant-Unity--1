@@ -617,21 +617,23 @@ public class DevConsole : MonoBehaviour
         slot = Mathf.Clamp(slot, 1, 4);
 
         SaveSystem saveSys = SaveSystem.Instance != null ? SaveSystem.Instance : UnityEngine.Object.FindAnyObjectByType<SaveSystem>();
-        if (saveSys != null && saveSys.HasSaveFile(slot))
+        if (saveSys == null)
         {
-            Log($"<color=#98C379>[Success] กำลังโหลดข้อมูลเกมจาก Slot {slot}...</color>");
-            CloseConsole();
-            SaveData data = saveSys.LoadGameToGlobal(slot);
-            if (data != null)
-            {
-                int sceneToLoad = data.currentSceneIndex > 0 ? data.currentSceneIndex : 1;
-                UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
-            }
+            Log("<color=#E06C75>[Error] ไม่พบ SaveSystem!</color>");
+            return;
         }
-        else
+
+        SaveData data = saveSys.LoadGameToGlobal(slot);
+        if (data == null)
         {
-            Log($"<color=#E06C75>[Error] ไม่พบไฟล์เซฟใน Slot {slot}</color>");
+            Log($"<color=#E06C75>[Error] โหลดเซฟ Slot {slot} ไม่สำเร็จ</color>");
+            return;
         }
+
+        Log($"<color=#98C379>[Success] กำลังโหลดข้อมูลเกมจาก Slot {slot}...</color>");
+        CloseConsole();
+        int sceneToLoad = data.currentSceneIndex > 0 ? data.currentSceneIndex : 1;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 
     private void HandleSpeedCommand(string[] parts)

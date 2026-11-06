@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.IO;
 using System.Collections.Generic;
 
@@ -27,13 +28,69 @@ public class SaveSystem : MonoBehaviour
         return Application.persistentDataPath + $"/gamesave_{slotIndex}.json";
     }
 
+    public SaveData ReadSlotPreview(int slotIndex)
+    {
+        return File.Exists(GetSaveFilePath(slotIndex)) ? LoadGame(slotIndex) : null;
+    }
+
+    public static string FormatSlotSummary(SaveData data)
+    {
+        string scenePath = SceneUtility.GetScenePathByBuildIndex(data.currentSceneIndex);
+        string sceneName = Path.GetFileNameWithoutExtension(scenePath) switch
+        {
+            "Home" => "HOME TOWN",
+            "OutSide" => "OUTSIDE",
+            "School" => "SCHOOL",
+            "MainMenu" or "Bedroom_3D" or "" or null => "MY ROOM",
+            string name => name.Replace('_', ' ').ToUpperInvariant()
+        };
+        double totalSeconds = data.playTime;
+        if (double.IsNaN(totalSeconds) || totalSeconds < 0 || totalSeconds >= TimeSpanMaxSeconds)
+        {
+            totalSeconds = 0;
+        }
+        var time = System.TimeSpan.FromSeconds(System.Math.Truncate(totalSeconds));
+        return $"Nia\t\t\t\t{sceneName}\nDAY {data.currentDay}\t\t\t\tPlay Time {(long)time.TotalHours}:{time.Minutes:D2}:{time.Seconds:D2}";
+    }
+
+    private static readonly double TimeSpanMaxSeconds = System.TimeSpan.MaxValue.TotalSeconds;
+
     // ฟังก์ชันสำหรับ "เซฟเกม" ลงสล็อตที่กำหนด
     public void SaveGame(int slotIndex, SaveData data)
     {
         string json = JsonUtility.ToJson(data, true);
         string path = GetSaveFilePath(slotIndex);
-        File.WriteAllText(path, json);
+        WriteSaveFile(path, json);
         Debug.Log($"บันทึกเกมเรียบร้อยที่ Slot {slotIndex}: {path}");
+    }
+
+    private static void WriteSaveFile(string path, string json)
+    {
+        // เขียนในโฟลเดอร์เดียวกันให้เสร็จ ก่อนแทนไฟล์เซฟเดิม
+        string tempPath = path + "." + System.Guid.NewGuid().ToString("N") + ".tmp";
+        try
+        {
+            File.WriteAllText(tempPath, json);
+            if (File.Exists(path))
+            {
+                File.Replace(tempPath, path, null);
+            }
+            else
+            {
+                File.Move(tempPath, path);
+            }
+        }
+        finally
+        {
+            try
+            {
+                File.Delete(tempPath);
+            }
+            catch (System.Exception ex) when (ex is IOException || ex is System.UnauthorizedAccessException)
+            {
+                Debug.LogWarning("[SaveSystem] ลบไฟล์เซฟชั่วคราวไม่สำเร็จ");
+            }
+        }
     }
 
     // เซฟข้อมูลของเกมจาก GameManagerSetup ลงไฟล์ JSON ของสล็อตที่กำหนด
@@ -90,15 +147,55 @@ public class SaveSystem : MonoBehaviour
     public SaveData LoadGame(int slotIndex)
     {
         string path = GetSaveFilePath(slotIndex);
-        if (File.Exists(path))
+        try
         {
             string json = File.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                Debug.LogWarning($"[SaveSystem] ไฟล์เซฟสล็อต {slotIndex} ว่างเปล่า");
+                return null;
+            }
+
             SaveData data = JsonUtility.FromJson<SaveData>(json);
+            if (data == null)
+            {
+                Debug.LogWarning($"[SaveSystem] แปลงข้อมูล JSON เซฟสล็อต {slotIndex} ล้มเหลว (ได้ค่า null)");
+                return null;
+            }
+
+            if (data.currentDay <= 0)
+            {
+                Debug.LogWarning($"[SaveSystem] ข้อมูลเซฟสล็อต {slotIndex} ไม่ถูกต้อง (currentDay <= 0)");
+                return null;
+            }
+
+            // ค่า 0 ใช้ฉากสำรองสำหรับเซฟที่ไม่ได้ระบุฉาก
+            if (data.currentSceneIndex < 0 || data.currentSceneIndex >= SceneManager.sceneCountInBuildSettings)
+            {
+                Debug.LogWarning($"[SaveSystem] เซฟสล็อต {slotIndex} ระบุฉากที่ไม่มีใน build (index {data.currentSceneIndex})");
+                return null;
+            }
+
             return data;
         }
-        else
+        catch (System.ArgumentException)
         {
-            Debug.LogWarning($"ไม่พบไฟล์เซฟสล็อต {slotIndex}");
+            Debug.LogWarning($"[SaveSystem] ข้อมูล JSON ในสล็อต {slotIndex} เสียหาย");
+            return null;
+        }
+        catch (FileNotFoundException)
+        {
+            Debug.LogWarning($"[SaveSystem] ไม่พบไฟล์เซฟสล็อต {slotIndex}");
+            return null;
+        }
+        catch (IOException)
+        {
+            Debug.LogWarning($"[SaveSystem] เกิดข้อผิดพลาด IO ขณะอ่านไฟล์เซฟสล็อต {slotIndex}");
+            return null;
+        }
+        catch (System.UnauthorizedAccessException)
+        {
+            Debug.LogWarning($"[SaveSystem] ไม่มีสิทธิ์เข้าถึงไฟล์เซฟสล็อต {slotIndex}");
             return null;
         }
     }

@@ -206,6 +206,7 @@ public class InventoryManager : MonoBehaviour
         // สร้างและตั้งค่ากล่องข้อความ Examine อัตโนมัติ
         SetupExamineDescriptionUI();
         ResetExamineDescription();
+        GameplayUIPresentation.StyleInventory(inventoryPanel, itemSlots);
 
         // [เพิ่มใหม่] โหลดไอเทมข้ามฉอกจาก GameManager เข้ามาแสดงผลใน UI
         LoadFromGlobal();
@@ -239,10 +240,11 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        //  [เพิ่มใหม่] อัปเดตรูปปกไดอารี่ในกระเป๋าเป้ตามค่าความเครียดแบบเรียลไทม์ (Dynamic Cover)
+        // อัปเดตรูปปกไดอารี่เฉพาะตอนที่ผู้เล่นเห็นกระเป๋า
+        if (inventoryPanel == null || !inventoryPanel.activeInHierarchy) return;
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].enabled && slotItemTypes[i] == ItemType.Diary)
+            if (itemSlots[i] != null && itemSlots[i].enabled && slotItemTypes[i] == ItemType.Diary)
             {
                 Sprite dynamicCover = GetDynamicDiarySprite();
                 if (dynamicCover != null) itemSlots[i].sprite = dynamicCover;
@@ -268,6 +270,10 @@ public class InventoryManager : MonoBehaviour
         if (inventoryPanel != null)
         {
             bool isActive = !inventoryPanel.activeSelf;
+            SleepSaveMenuController sleepMenu = SleepSaveMenuController.Instance;
+            if (isActive && (Time.timeScale == 0f ||
+                (sleepMenu != null && sleepMenu.BlocksGameplayMenus) ||
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "MainMenu")) return;
             inventoryPanel.SetActive(isActive);
 
             // ซ่อนหรือแสดง Quest HUD ตามสถานะการเปิดกระเป๋า
@@ -364,12 +370,7 @@ public class InventoryManager : MonoBehaviour
             RectTransform rt = closeBtnTrans.GetComponent<RectTransform>();
             if (rt != null)
             {
-                rt.localScale = Vector3.one;
-                rt.anchorMin = new Vector2(1f, 1f);
-                rt.anchorMax = new Vector2(1f, 1f);
-                rt.pivot = new Vector2(0.5f, 0.5f);
-                rt.anchoredPosition = new Vector2(-207f, -94f);
-                rt.sizeDelta = new Vector2(64f, 64f);
+                GameplayUIPresentation.SetBounds(rt, 0.821f, 0.797f, 0.866f, 0.885f);
             }
 
             Image img = closeBtnTrans.GetComponent<Image>();
@@ -381,6 +382,7 @@ public class InventoryManager : MonoBehaviour
                     img.sprite = modernSprite;
                 }
                 img.color = Color.white;
+                img.preserveAspect = true;
                 img.raycastTarget = true;
             }
 
@@ -395,10 +397,10 @@ public class InventoryManager : MonoBehaviour
             {
                 btn.transition = Selectable.Transition.ColorTint;
                 ColorBlock cb = btn.colors;
-                cb.normalColor = Color.white;
-                cb.highlightedColor = new Color(1f, 0.55f, 0.6f, 1f);
-                cb.pressedColor = new Color(0.85f, 0.25f, 0.3f, 1f);
-                cb.selectedColor = Color.white;
+                cb.normalColor = GameplayUIPresentation.Cream;
+                cb.highlightedColor = GameplayUIPresentation.Accent;
+                cb.pressedColor = new Color32(121, 105, 164, 255);
+                cb.selectedColor = GameplayUIPresentation.Accent;
                 cb.fadeDuration = 0.1f;
                 btn.colors = cb;
 
@@ -727,32 +729,32 @@ public class InventoryManager : MonoBehaviour
             case ItemType.Candy:
                 return "<b><size=115%>ลูกอมหลากสี (Candy)</size></b>\n" +
                        "ลูกอมรสหวาน ช่วยคลายความกังวลและลดค่าความเครียดเล็กน้อย (-3%)\n" +
-                       "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อรับประทาน]</i></color></size>";
+                       "<size=85%><color=#C6B7F0><i>[คลิกซ้ายเพื่อรับประทาน]</i></color></size>";
 
             case ItemType.StrawberryMilk:
                 return "<b><size=115%>นมสตรอว์เบอร์รี่ (Strawberry Milk)</size></b>\n" +
                        "เครื่องดื่มกลิ่นหวานหอม ดื่มแล้วรู้สึกผ่อนคลายและลดค่าความเครียด (-5%)\n" +
-                       "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อดื่ม]</i></color></size>";
+                       "<size=85%><color=#C6B7F0><i>[คลิกซ้ายเพื่อดื่ม]</i></color></size>";
 
             case ItemType.Diary:
                 return "<b><size=115%>ไดอารี่ของเนีย (Diary)</size></b>\n" +
                        "สมุดบันทึกส่วนตัวของเนีย ใช้เขียนเรื่องราวในแต่ละวันและตรวจสอบระดับความเครียดสะสม\n" +
-                       "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อเปิดอ่าน]</i></color></size>";
+                       "<size=85%><color=#C6B7F0><i>[คลิกซ้ายเพื่อเปิดอ่าน]</i></color></size>";
 
             case ItemType.Headphone:
                 int currentDay = DayManager.Instance != null ? DayManager.Instance.currentDay : 1;
                 string headphoneStatus;
                 if (currentDay < 8)
                 {
-                    headphoneStatus = "<size=85%><color=#DC2626><i>(ยังไม่สามารถใช้งานได้ จะเริ่มใช้งานได้ตั้งแต่วันที่ 8 เป็นต้นไป)</i></color></size>";
+                    headphoneStatus = "<size=85%><color=#F5A4AA><i>(ยังไม่สามารถใช้งานได้ จะเริ่มใช้งานได้ตั้งแต่วันที่ 8 เป็นต้นไป)</i></color></size>";
                 }
                 else if (hasUsedHeadphoneToday)
                 {
-                    headphoneStatus = "<size=85%><color=#D97706><i>(วันนี้ใช้งานไปแล้ว สามารถใช้งานได้วันละ 1 ครั้ง)</i></color></size>";
+                    headphoneStatus = "<size=85%><color=#F0C68B><i>(วันนี้ใช้งานไปแล้ว สามารถใช้งานได้วันละ 1 ครั้ง)</i></color></size>";
                 }
                 else
                 {
-                    headphoneStatus = "<size=85%><color=#2563EB><i>[คลิกซ้ายเพื่อสวมใส่]</i></color></size>";
+                    headphoneStatus = "<size=85%><color=#C6B7F0><i>[คลิกซ้ายเพื่อสวมใส่]</i></color></size>";
                 }
 
                 return "<b><size=115%>หูฟังครอบหู (Headphone)</size></b>\n" +
@@ -762,12 +764,12 @@ public class InventoryManager : MonoBehaviour
             case ItemType.Armband:
                 return "<b><size=115%>ปลอกแขนผ้า (Armband)</size></b>\n" +
                        "ปลอกแขนผ้าช่วยดึงสติ ซึมซับและลดการเพิ่มขึ้นของความเครียดลง 50% ครั้งแรกในแต่ละวัน\n" +
-                       "<size=85%><color=#4B5563><i>[ไอเทมติดตัว / ทำงานอัตโนมัติ]</i></color></size>";
+                       "<size=85%><color=#C0B8CB><i>[ไอเทมติดตัว / ทำงานอัตโนมัติ]</i></color></size>";
 
             case ItemType.RainDrawing:
                 return "<b><size=115%>ภาพวาดของเรน (Rain's Drawing)</size></b>\n" +
                        "ภาพวาดลายเส้นที่เรนเคยวาดให้ เป็นความทรงจำอันอบอุ่นที่คอยปลอบประโลมใจเนีย\n" +
-                       "<size=85%><color=#4B5563><i>[ไอเทมสำคัญ / ส่งผลต่อฉากจบ]</i></color></size>";
+                       "<size=85%><color=#C0B8CB><i>[ไอเทมสำคัญ / ส่งผลต่อฉากจบ]</i></color></size>";
 
             default:
                 return "";
@@ -822,12 +824,16 @@ public class InventoryManager : MonoBehaviour
                 examineDescriptionText.font = examineFont;
             }
 
-            examineDescriptionText.fontSize = 24f;
-            examineDescriptionText.color = new Color(0.12f, 0.16f, 0.22f, 1f);
-            examineDescriptionText.alignment = TextAlignmentOptions.Center;
+            GameplayUIPresentation.SetBounds(examineDescriptionText.rectTransform, 0.625f, 0.225f, 0.839f, 0.548f);
+            examineDescriptionText.enableAutoSizing = true;
+            examineDescriptionText.fontSizeMin = 17f;
+            examineDescriptionText.fontSizeMax = 29f;
+            examineDescriptionText.color = GameplayUIPresentation.Cream;
+            examineDescriptionText.alignment = TextAlignmentOptions.TopLeft;
+            examineDescriptionText.margin = Vector4.zero;
             examineDescriptionText.textWrappingMode = TextWrappingModes.Normal;
             examineDescriptionText.overflowMode = TextOverflowModes.Truncate;
-            examineDescriptionText.lineSpacing = 10f;
+            examineDescriptionText.lineSpacing = 5f;
             examineDescriptionText.raycastTarget = false;
             examineDescriptionText.text = ThaiTextAdjuster.Adjust(defaultExaminePrompt);
         }

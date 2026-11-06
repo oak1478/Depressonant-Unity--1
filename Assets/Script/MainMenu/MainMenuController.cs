@@ -1,7 +1,11 @@
+using System;
+using System.IO;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Object = UnityEngine.Object;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -35,6 +39,9 @@ public class MainMenuController : MonoBehaviour
 
     private SaveSystem saveSystem;
     private AudioSource audioSource;
+    private GameObject newGameDialog;
+    private GameObject previousMenuSelection;
+    private bool isStartingNewGame;
 
     void Awake()
     {
@@ -74,6 +81,8 @@ public class MainMenuController : MonoBehaviour
         {
             InventoryManager.Instance.inventoryPanel.SetActive(false);
         }
+
+        MainMenuPresentation.Apply(mainPanel, playOptionsPanel, slotSelectPanel, slotButtons, slotTexts);
 
         // เริ่มต้นแสดงผลหน้าแรกสุด และปิดหน้าอื่นๆ ทั้งหมด
         ShowMainMenu();
@@ -171,76 +180,100 @@ public class MainMenuController : MonoBehaviour
 
     // --- ฟังก์ชันหลักเกี่ยวกับระบบเซฟและการเลือกสล็อต ---
 
-    // เริ่มเกมใหม่โดยอัตโนมัติ: ค้นหาสล็อตว่างหรือเขียนทับช่องเก่าที่สุด
     public void StartNewGame()
     {
-        int targetSlot = 1;
-        bool foundEmpty = false;
+        if (newGameDialog != null || isStartingNewGame) return;
 
-        // 1. ค้นหาสล็อตที่ยังไม่มีไฟล์เซฟอยู่จริง
-        for (int i = 1; i <= 4; i++)
+        int oldestSlot = 1;
+        DateTime oldestWrite = DateTime.MaxValue;
+        try
         {
-            if (!saveSystem.HasSaveFile(i))
+            for (int slot = 1; slot <= 4; slot++)
             {
-                targetSlot = i;
-                foundEmpty = true;
-                break;
-            }
-        }
-
-        // 2. หากสล็อตเต็มทุกช่อง ค้นหาช่องที่เขียนไว้นานที่สุด (Oldest Last Write Time) เพื่อบันทึกทับ
-        if (!foundEmpty)
-        {
-            System.DateTime oldestTime = System.DateTime.MaxValue;
-            for (int i = 1; i <= 4; i++)
-            {
-                string path = saveSystem.GetSaveFilePath(i);
-                if (System.IO.File.Exists(path))
+                DateTime? lastWrite = GetSlotWriteTime(saveSystem.GetSaveFilePath(slot));
+                if (!lastWrite.HasValue)
                 {
-                    System.DateTime writeTime = System.IO.File.GetLastWriteTime(path);
-                    if (writeTime < oldestTime)
-                    {
-                        oldestTime = writeTime;
-                        targetSlot = i;
-                    }
+                    StartGameAtSlot(slot, null);
+                    return;
+                }
+
+                if (lastWrite.Value < oldestWrite)
+                {
+                    oldestWrite = lastWrite.Value;
+                    oldestSlot = slot;
                 }
             }
         }
+        catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+        {
+            ShowNewGameDialog("Save slots could not be checked. Check storage access and try again.");
+            return;
+        }
 
-        Debug.Log($"[New Game Auto-Select] เริ่มเล่นใหม่ในสล็อต: {targetSlot}");
+        ShowNewGameDialog(
+            $"All 4 save slots are occupied.\nStarting a new game will overwrite Slot {oldestSlot}, the oldest save.",
+            () => StartGameAtSlot(oldestSlot, oldestWrite));
+    }
 
-        // 3. รีเซ็ตสถานะระดับโลกเข้า GameManager
+    private static DateTime? GetSlotWriteTime(string path)
+    {
+        try
+        {
+            // ไฟล์ที่อ่านเนื้อหาไม่ได้ยังถือว่าเป็นสล็อตที่มีข้อมูล
+            File.GetAttributes(path);
+            return File.GetLastWriteTimeUtc(path);
+        }
+        catch (FileNotFoundException) { return null; }
+        catch (DirectoryNotFoundException) { return null; }
+    }
+
+    private void StartGameAtSlot(int targetSlot, DateTime? expectedWrite)
+    {
+        if (isStartingNewGame) return;
+
+        const string bedroomScene = "Bedroom_3D";
+        SaveData initialData = new SaveData
+        {
+            currentDay = 1,
+            activeSaveSlot = targetSlot,
+            playerX = -0.808f,
+            playerY = 1f,
+            playerZ = -6.931f,
+            currentSceneIndex = SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Bedroom_3D.unity")
+        };
+        if (initialData.currentSceneIndex < 0)
+        {
+            ShowNewGameDialog("The starting scene is unavailable.");
+            return;
+        }
+
+        try
+        {
+            if (GetSlotWriteTime(saveSystem.GetSaveFilePath(targetSlot)) != expectedWrite)
+            {
+                ShowNewGameDialog("This save slot changed. Choose New Game again to review it.");
+                return;
+            }
+
+            saveSystem.SaveGame(targetSlot, initialData);
+        }
+        catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+        {
+            ShowNewGameDialog("The new game could not be saved. Check storage access and try again.");
+            return;
+        }
+
+        isStartingNewGame = true;
+        SaveSystem.pendingLoadData = initialData;
         if (GameManagerSetup.Instance != null)
         {
-            GameManagerSetup.Instance.currentStress = 0f;
-            GameManagerSetup.Instance.currentDay = 1;
-            GameManagerSetup.Instance.consecutiveMaxStressDays = 0;
-            GameManagerSetup.Instance.savedInventory.Clear();
-            GameManagerSetup.Instance.pickedUpItemIDs.Clear();
+            GameManagerSetup.Instance.ResetGameSession();
             GameManagerSetup.Instance.activeSaveSlot = targetSlot;
-            GameManagerSetup.Instance.playTime = 0f;
-            GameManagerSetup.Instance.hasLoadedPosition = false;
         }
 
         if (DayManager.Instance != null)
         {
             DayManager.Instance.currentDay = 1;
-        }
-        else
-        {
-            // บันทึกบัฟเฟอร์รอ GameManager โหลดในซีนใหม่ (กำหนดพิกัดปลอดภัยหน้าประตูห้องนอน)
-            SaveData initialData = new SaveData
-            {
-                currentDay = 1,
-                currentStress = 0f,
-                activeSaveSlot = targetSlot,
-                playTime = 0f,
-                playerX = -0.808f,
-                playerY = 1.0f,
-                playerZ = -6.931f,
-                currentSceneIndex = 2
-            };
-            SaveSystem.pendingLoadData = initialData;
         }
 
         // กำหนดจุดเกิดเริ่มต้นที่ประตูห้องนอน
@@ -258,18 +291,103 @@ public class MainMenuController : MonoBehaviour
             InventoryManager.Instance.LoadFromGlobal();
         }
 
-        // 4. บันทึกทับไฟล์เซฟตั้งต้นลงเครื่อง (ซีน index 2 คือ Bedroom_3D พิกัดหน้าประตูห้องนอน)
-        if (SaveSystem.pendingLoadData != null)
+        SceneManager.LoadScene(bedroomScene);
+    }
+
+    private void Update()
+    {
+        if (newGameDialog != null &&
+            UnityEngine.InputSystem.Keyboard.current?.escapeKey.wasPressedThisFrame == true)
         {
-            saveSystem.SaveGame(targetSlot, SaveSystem.pendingLoadData);
+            CloseNewGameDialog();
+        }
+    }
+
+    private void ShowNewGameDialog(string message, Action confirm = null)
+    {
+        Canvas canvas = playOptionsPanel != null ? playOptionsPanel.GetComponentInParent<Canvas>() : null;
+        if (canvas == null)
+        {
+            Debug.LogError($"[New Game] {message}");
+            return;
+        }
+
+        previousMenuSelection = EventSystem.current?.currentSelectedGameObject;
+        RectTransform overlay = CreateDialogRect(canvas.rootCanvas.transform, "NewGameConfirmation", Vector2.zero, Vector2.one);
+        newGameDialog = overlay.gameObject;
+        overlay.gameObject.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.75f);
+        RectTransform box = CreateDialogRect(overlay, "DialogBox", new Vector2(0.22f, 0.30f), new Vector2(0.78f, 0.70f));
+        box.gameObject.AddComponent<Image>().color = new Color(0.13f, 0.15f, 0.20f);
+        TMP_FontAsset font = playOptionsPanel.GetComponentInChildren<TextMeshProUGUI>(true)?.font;
+        CreateDialogLabel(box, "Message", message, font, new Vector2(0.07f, 0.36f), new Vector2(0.93f, 0.92f), 36f);
+
+        Button cancel = CreateDialogButton(box, confirm == null ? "OK" : "Cancel", font,
+            confirm == null ? 0.32f : 0.07f, confirm == null ? 0.68f : 0.47f, new Color(0.28f, 0.33f, 0.42f));
+        cancel.onClick.AddListener(CloseNewGameDialog);
+        if (confirm != null)
+        {
+            Button overwrite = CreateDialogButton(box, "Overwrite Save", font, 0.53f, 0.93f, new Color(0.62f, 0.22f, 0.26f));
+            overwrite.onClick.AddListener(() =>
+            {
+                if (newGameDialog == null) return;
+                CloseNewGameDialog();
+                confirm();
+            });
+            cancel.navigation = new Navigation { mode = Navigation.Mode.Explicit, selectOnRight = overwrite };
+            overwrite.navigation = new Navigation { mode = Navigation.Mode.Explicit, selectOnLeft = cancel };
         }
         else
         {
-            saveSystem.SaveGameFromGlobal(targetSlot, new Vector3(-0.808f, 1f, -6.931f), 2);
+            cancel.navigation = new Navigation { mode = Navigation.Mode.None };
         }
 
-        // 5. โหลดซีนห้องนอนเพื่อเริ่มเล่น
-        SceneManager.LoadScene("Bedroom_3D");
+        EventSystem.current?.SetSelectedGameObject(cancel.gameObject);
+    }
+
+    private void CloseNewGameDialog()
+    {
+        if (newGameDialog == null) return;
+        newGameDialog.SetActive(false);
+        Destroy(newGameDialog);
+        newGameDialog = null;
+        EventSystem.current?.SetSelectedGameObject(previousMenuSelection);
+        previousMenuSelection = null;
+    }
+
+    private static RectTransform CreateDialogRect(Transform parent, string name, Vector2 min, Vector2 max)
+    {
+        var rect = new GameObject(name, typeof(RectTransform)).GetComponent<RectTransform>();
+        rect.SetParent(parent, false);
+        rect.anchorMin = min;
+        rect.anchorMax = max;
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+        return rect;
+    }
+
+    private static void CreateDialogLabel(Transform parent, string name, string value, TMP_FontAsset font,
+        Vector2 min, Vector2 max, float maxFontSize)
+    {
+        var label = CreateDialogRect(parent, name, min, max).gameObject.AddComponent<TextMeshProUGUI>();
+        if (font != null) label.font = font;
+        label.text = value;
+        label.alignment = TextAlignmentOptions.Center;
+        label.enableAutoSizing = true;
+        label.fontSizeMin = 12f;
+        label.fontSizeMax = maxFontSize;
+        label.color = Color.white;
+        label.raycastTarget = false;
+    }
+
+    private static Button CreateDialogButton(Transform parent, string label, TMP_FontAsset font, float left, float right, Color color)
+    {
+        var rect = CreateDialogRect(parent, label, new Vector2(left, 0.09f), new Vector2(right, 0.30f));
+        var image = rect.gameObject.AddComponent<Image>();
+        image.color = color;
+        var button = rect.gameObject.AddComponent<Button>();
+        button.targetGraphic = image;
+        CreateDialogLabel(rect, "Label", label, font, Vector2.zero, Vector2.one, 30f);
+        return button;
     }
 
     // ฟังก์ชันสำหรับอัปเดตตัวหนังสือแสดงข้อมูลเซฟในแต่ละสล็อต 1 - 4
@@ -277,106 +395,50 @@ public class MainMenuController : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            int slotIdx = i + 1;
-            bool hasSave = saveSystem.HasSaveFile(slotIdx);
-
             if (slotButtons[i] == null) continue;
 
-            if (hasSave)
+            SaveData data = saveSystem.ReadSlotPreview(i + 1);
+            if (slotTexts[i] != null)
             {
-                SaveData data = saveSystem.LoadGame(slotIdx);
-                if (data != null && data.currentDay > 0)
-                {
-                    // จัดข้อความตามโครงสร้างในรูปภาพ:
-                    // แถวแรก: ชื่อตัวละคร และชื่อสถานที่ (เช่น Nia       MY ROOM)
-                    // แถวสอง: วันที่ และเวลาเล่นสะสม (เช่น DAY 3       Play Time 0:46:30)
-                    string sceneName = GetSceneName(data.currentSceneIndex);
-                    string formattedTime = FormatPlayTime(data.playTime);
-
-                    if (slotTexts[i] != null)
-                    {
-                        // การเว้นช่องว่าง \t ช่วยดันข้อความให้ห่างกันซ้ายขวาตามภาพต้นฉบับ
-                        slotTexts[i].text = $"Nia\t\t\t\t{sceneName}\nDAY {data.currentDay}\t\t\t\tPlay Time {formattedTime}";
-                    }
-                    slotButtons[i].interactable = true;
-                }
-                else
-                {
-                    if (slotTexts[i] != null)
-                    {
-                        slotTexts[i].text = "";
-                    }
-                    slotButtons[i].interactable = false;
-                }
+                slotTexts[i].text = data != null ? SaveSystem.FormatSlotSummary(data).Replace("\t\t\t\t", "  /  ") : "Empty slot";
             }
-            else
-            {
-                if (slotTexts[i] != null)
-                {
-                    slotTexts[i].text = "";
-                }
-                slotButtons[i].interactable = false; // ไม่มีเซฟกดโหลดไม่ได้
-            }
+            slotButtons[i].interactable = data != null;
         }
     }
 
     // ฟังก์ชันสำหรับกดโหลดไฟล์ตามสล็อต (เรียกผ่าน Unity Event หรือปุ่มสล็อต)
     public void LoadSlot(int slotIndex)
     {
+        SaveData data = saveSystem.LoadGameToGlobal(slotIndex);
+        if (data == null)
+        {
+            UpdateSlotDetails();
+            return;
+        }
+
         // เคลียร์ชื่อจุดเกิดของประตู เพื่อให้ตัวเกมใช้พิกัดจากไฟล์เซฟ
         SceneTransitionManager.targetSpawnPointName = "";
 
-        SaveData data = saveSystem.LoadGameToGlobal(slotIndex);
-        if (data != null)
+        int loadedDay = data.currentDay;
+        if (TutorialManager.Instance != null)
         {
-            int loadedDay = data.currentDay > 0 ? data.currentDay : 1;
+            TutorialManager.Instance.isTutorialActive = (loadedDay <= 1);
+        }
 
-            if (TutorialManager.Instance != null)
-            {
-                TutorialManager.Instance.isTutorialActive = (loadedDay <= 1);
-            }
+        if (DayManager.Instance != null)
+        {
+            DayManager.Instance.currentDay = loadedDay;
+        }
 
-            if (DayManager.Instance != null)
-            {
-                DayManager.Instance.currentDay = loadedDay;
-            }
-
-            if (data.currentSceneIndex > 0)
-            {
-                Debug.Log($"[Load Game] โหลดสล็อตที่: {slotIndex} สำเร็จ! วันที่: {loadedDay} กำลังเข้าซีนรหัส {data.currentSceneIndex}");
-                SceneManager.LoadScene(data.currentSceneIndex);
-            }
-            else
-            {
-                SceneManager.LoadScene("Bedroom_3D");
-            }
+        if (data.currentSceneIndex > 0)
+        {
+            Debug.Log($"[Load Game] โหลดสล็อตที่: {slotIndex} สำเร็จ! วันที่: {loadedDay} กำลังเข้าซีนรหัส {data.currentSceneIndex}");
+            SceneManager.LoadScene(data.currentSceneIndex);
         }
         else
         {
             SceneManager.LoadScene("Bedroom_3D");
         }
-    }
-
-    // --- ฟังก์ชันแปลข้อมูลระดับเกม ---
-
-    private string GetSceneName(int sceneIndex)
-    {
-        switch (sceneIndex)
-        {
-            case 1: return "HOME TOWN";
-            case 2: return "MY ROOM";
-            case 30: return "OUTSIDE";
-            case 33: return "SCHOOL";
-            default: return "MY ROOM";
-        }
-    }
-
-    private string FormatPlayTime(float totalSeconds)
-    {
-        int hours = (int)(totalSeconds / 3600);
-        int minutes = (int)((totalSeconds % 3600) / 60);
-        int seconds = (int)(totalSeconds % 60);
-        return $"{hours}:{minutes:D2}:{seconds:D2}";
     }
 
     public void ExitGame()

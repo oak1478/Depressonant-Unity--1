@@ -62,6 +62,7 @@ public class DailyQuestManager : MonoBehaviour
         if (Instance == null) Instance = this;
 
         EnsureDefaultSchedule();
+        GameplayUIPresentation.StyleQuest(questUIRoot, titleObjectToHide);
 
         cachedCanvas = GetComponent<Canvas>();
         if (cachedCanvas == null) cachedCanvas = GetComponentInParent<Canvas>();
@@ -211,6 +212,16 @@ public class DailyQuestManager : MonoBehaviour
     /// </summary>
     public List<string> GetTargetNPCsToday(int today)
     {
+        return GetTargetNPCsToday(today, FindSceneNPCs());
+    }
+
+    private static NPCInteraction[] FindSceneNPCs()
+    {
+        return Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+    }
+
+    private List<string> GetTargetNPCsToday(int today, NPCInteraction[] allNPCInteractions)
+    {
         EnsureDefaultSchedule();
         List<string> targetNPCsToday = new List<string>();
 
@@ -230,7 +241,6 @@ public class DailyQuestManager : MonoBehaviour
         }
 
         // 2. สแกน NPC ในฉากปัจจุบันเพิ่มเติม เพื่อรองรับกรณีมี NPC ใหม่ที่ไม่ได้ใส่ในตาราง
-        NPCInteraction[] allNPCInteractions = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (NPCInteraction npc in allNPCInteractions)
         {
             if (npc == null) continue;
@@ -297,6 +307,11 @@ public class DailyQuestManager : MonoBehaviour
     /// ตรวจสอบว่าได้พูดคุยกับ NPC คนนี้แล้วหรือยังในวันนี้ (รองรับระบบคู่และชื่อแฝง)
     /// </summary>
     public bool IsNPCTalkedToday(string npcName, int today)
+    {
+        return IsNPCTalkedToday(npcName, today, FindSceneNPCs());
+    }
+
+    private bool IsNPCTalkedToday(string npcName, int today, NPCInteraction[] allNPCInteractions)
     {
         if (string.IsNullOrEmpty(npcName)) return true;
 
@@ -388,7 +403,6 @@ public class DailyQuestManager : MonoBehaviour
         }
 
         // ตรวจสอบกับ instance ในฉากปัจจุบัน
-        NPCInteraction[] allNPCInteractions = Object.FindObjectsByType<NPCInteraction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (NPCInteraction npc in allNPCInteractions)
         {
             if (npc == null) continue;
@@ -484,12 +498,13 @@ public class DailyQuestManager : MonoBehaviour
     /// </summary>
     public List<string> GetUnfinishedNPCsToday(int today)
     {
-        List<string> targetNPCsToday = GetTargetNPCsToday(today);
+        NPCInteraction[] sceneNPCs = FindSceneNPCs();
+        List<string> targetNPCsToday = GetTargetNPCsToday(today, sceneNPCs);
         List<string> availableNPCs = new List<string>();
 
         foreach (string npcName in targetNPCsToday)
         {
-            if (!IsNPCTalkedToday(npcName, today))
+            if (!IsNPCTalkedToday(npcName, today, sceneNPCs))
             {
                 availableNPCs.Add(npcName);
             }
@@ -619,7 +634,7 @@ public class DailyQuestManager : MonoBehaviour
             if (titleTmp == null) titleTmp = titleObjectToHide.GetComponentInChildren<TextMeshProUGUI>();
             if (titleTmp != null)
             {
-                titleTmp.text = ThaiTextAdjuster.Adjust("เป้าหมายวันนี้");
+                titleTmp.text = ThaiTextAdjuster.Adjust($"DAY {today:00}  /  เป้าหมายวันนี้");
             }
         }
 
@@ -633,7 +648,7 @@ public class DailyQuestManager : MonoBehaviour
             if (rowRt != null)
             {
                 rowRt.localScale = Vector3.one;
-                rowRt.sizeDelta = new Vector2(rowRt.sizeDelta.x, 36f);
+                rowRt.sizeDelta = new Vector2(rowRt.sizeDelta.x, 42f);
             }
 
             Image icon = row.transform.Find("StatusIcon")?.GetComponent<Image>();
@@ -649,6 +664,9 @@ public class DailyQuestManager : MonoBehaviour
             {
                 label.text = ThaiTextAdjuster.Adjust("พูดคุยครบตามเป้าหมายแล้ว");
                 label.fontStyle = FontStyles.Normal;
+                label.enableAutoSizing = true;
+                label.fontSizeMin = 16f;
+                label.fontSizeMax = 25f;
                 label.color = new Color(0.48f, 0.85f, 0.58f, 1f); // เขียวพาสเทลโมเดิร์น
             }
         }
@@ -669,7 +687,7 @@ public class DailyQuestManager : MonoBehaviour
                 if (rowRt != null)
                 {
                     rowRt.localScale = Vector3.one;
-                    rowRt.sizeDelta = new Vector2(rowRt.sizeDelta.x, 36f);
+                    rowRt.sizeDelta = new Vector2(rowRt.sizeDelta.x, 42f);
                 }
 
                 Image icon = row.transform.Find("StatusIcon")?.GetComponent<Image>();
@@ -685,7 +703,10 @@ public class DailyQuestManager : MonoBehaviour
                 {
                     label.text = desc;
                     label.fontStyle = FontStyles.Normal;
-                    label.color = new Color(0.89f, 0.92f, 0.96f, 1f); // ขาวนวล
+                    label.enableAutoSizing = true;
+                    label.fontSizeMin = 16f;
+                    label.fontSizeMax = 25f;
+                    label.color = GameplayUIPresentation.Cream;
                 }
 
                 if (activeRows.Count >= 6) break;
@@ -705,9 +726,9 @@ public class DailyQuestManager : MonoBehaviour
 
         if (panelRect != null)
         {
-            float topOffset = 46f;
+            float topOffset = 56f;
             float bottomPadding = 14f;
-            float rowHeight = 36f;
+            float rowHeight = 42f;
             float spacing = 8f;
             int count = Mathf.Max(1, activeRows.Count);
             float targetHeight = topOffset + (count * rowHeight) + ((count - 1) * spacing) + bottomPadding;
@@ -716,6 +737,7 @@ public class DailyQuestManager : MonoBehaviour
             RectTransform listRect = npcListContainer as RectTransform;
             if (listRect != null)
             {
+                listRect.anchoredPosition = new Vector2(listRect.anchoredPosition.x, -topOffset);
                 listRect.sizeDelta = new Vector2(listRect.sizeDelta.x, (count * rowHeight) + ((count - 1) * spacing));
             }
         }

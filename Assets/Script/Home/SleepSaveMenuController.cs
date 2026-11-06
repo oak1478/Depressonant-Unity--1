@@ -40,9 +40,11 @@ public class SleepSaveMenuController : MonoBehaviour
 
     private AudioSource audioSource;
     private bool isTransitioning = false;
+    private int menuClosedFrame = -1;
 
     public bool IsMenuOpen => saveMenuPanel != null && saveMenuPanel.activeSelf;
     public bool IsTransitioning => isTransitioning;
+    public bool BlocksGameplayMenus => IsMenuOpen || IsTransitioning || menuClosedFrame == Time.frameCount;
 
     private void Awake()
     {
@@ -250,6 +252,7 @@ public class SleepSaveMenuController : MonoBehaviour
         }
 
         if (saveMenuPanel != null) saveMenuPanel.SetActive(false);
+        menuClosedFrame = Time.frameCount;
 
         // ล็อกเมาส์กลับเข้าสู่มุมมองบุคคลที่หนึ่ง
         Cursor.lockState = CursorLockMode.Locked;
@@ -269,25 +272,8 @@ public class SleepSaveMenuController : MonoBehaviour
             int slotIdx = i + 1;
             if (slotTexts[i] == null) continue;
 
-            if (saveSys != null && saveSys.HasSaveFile(slotIdx))
-            {
-                SaveData data = saveSys.LoadGame(slotIdx);
-                if (data != null && data.currentDay > 0)
-                {
-                    string sceneName = GetSceneName(data.currentSceneIndex);
-                    string playTimeStr = FormatPlayTime(data.playTime);
-
-                    slotTexts[i].text = $"Nia\t\t\t\t{sceneName}\nDAY {data.currentDay}\t\t\t\tPlay Time {playTimeStr}";
-                }
-                else
-                {
-                    slotTexts[i].text = "";
-                }
-            }
-            else
-            {
-                slotTexts[i].text = "";
-            }
+            SaveData data = saveSys != null ? saveSys.ReadSlotPreview(slotIdx) : null;
+            slotTexts[i].text = data != null ? SaveSystem.FormatSlotSummary(data) : "";
 
             if (slotButtons[i] != null)
             {
@@ -475,20 +461,4 @@ public class SleepSaveMenuController : MonoBehaviour
         Debug.Log($"[SleepSaveMenu] ตื่นนอนรับวันใหม่เรียบร้อย! ตอนนี้คือวันที่ {nextDay}");
     }
 
-    private string GetSceneName(int sceneIndex)
-    {
-        switch (sceneIndex)
-        {
-            case 1: return "HOME TOWN";
-            case 2: return "MY ROOM";
-            case 3: return "SCHOOL";
-            default: return "MY ROOM";
-        }
-    }
-
-    private string FormatPlayTime(float seconds)
-    {
-        TimeSpan t = TimeSpan.FromSeconds(seconds);
-        return string.Format("{0:D2}:{1:D2}:{2:D2}", (int)t.TotalHours, t.Minutes, t.Seconds);
-    }
 }

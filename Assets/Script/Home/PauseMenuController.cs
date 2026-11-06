@@ -11,6 +11,7 @@ public class PauseMenuController : MonoBehaviour
     public GameObject settingsPanel;
 
     private bool isPaused = false;
+    private float previousTimeScale = 1f;
 
     void Awake()
     {
@@ -38,7 +39,6 @@ public class PauseMenuController : MonoBehaviour
         }
 
         isPaused = false;
-        Time.timeScale = 1f; // ปลดล็อกเวลาเริ่มต้น
     }
 
     void Update()
@@ -71,6 +71,9 @@ public class PauseMenuController : MonoBehaviour
 
         if (escPressed)
         {
+            SleepSaveMenuController sleepMenu = SleepSaveMenuController.Instance;
+            if (sleepMenu != null && sleepMenu.BlocksGameplayMenus) return;
+
             // หากกระเป๋าเป้เปิดอยู่ ให้ปิดกระเป๋าเป้ก่อน
             if (InventoryManager.Instance != null && InventoryManager.Instance.inventoryPanel != null && InventoryManager.Instance.inventoryPanel.activeSelf)
             {
@@ -80,7 +83,8 @@ public class PauseMenuController : MonoBehaviour
 
             if (isPaused)
             {
-                ResumeGame();
+                if (settingsPanel != null && settingsPanel.activeSelf) CloseSettings();
+                else ResumeGame();
             }
             else
             {
@@ -92,17 +96,16 @@ public class PauseMenuController : MonoBehaviour
     // หยุดเวลาและแสดงเมนู
     public void PauseGame()
     {
-        isPaused = true;
-        if (pauseMenuPanel != null)
-        {
-            pauseMenuPanel.SetActive(true);
-            Debug.Log("[PauseMenuController] ทำการเปิดหน้าจอเมนูหยุดเกม (SetActive = true)", this);
-        }
-        else
+        if (isPaused) return;
+        if (pauseMenuPanel == null)
         {
             Debug.LogError("[PauseMenuController] ไม่สามารถแสดงหน้าเมนูได้เนื่องจากตัวแปร pauseMenuPanel เป็น NULL ใน Inspector!", this);
+            return;
         }
 
+        previousTimeScale = Time.timeScale;
+        isPaused = true;
+        pauseMenuPanel.SetActive(true);
         Time.timeScale = 0f; // หยุดเวลาฟิสิกส์และการเคลื่อนไหวในเกม
         Debug.Log("[PauseMenuController] หยุดเวลาฟิสิกส์ของเกม (Time.timeScale = 0)", this);
 
@@ -114,11 +117,11 @@ public class PauseMenuController : MonoBehaviour
     // รันเวลาต่อและปิดเมนู
     public void ResumeGame()
     {
+        if (!isPaused) return;
         isPaused = false;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
-        Time.timeScale = 1f; // ปลดล็อกเวลาเป็นปกติ
-        Debug.Log("[PauseMenuController] กลับมาเล่นเกมต่อ ปลดล็อกเวลาฟิสิกส์เป็นปกติ (Time.timeScale = 1)", this);
+        Time.timeScale = previousTimeScale;
 
         // ตรวจสอบว่ามีบทสนทนากำลังเปิดอยู่หรือไม่
         bool isDialogueActive = false;
@@ -159,7 +162,8 @@ public class PauseMenuController : MonoBehaviour
     // เปิดหน้าตั้งค่า
     public void OpenSettings()
     {
-        if (settingsPanel != null) settingsPanel.SetActive(true);
+        if (!isPaused || settingsPanel == null) return;
+        settingsPanel.SetActive(true);
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
     }
 
@@ -180,6 +184,7 @@ public class PauseMenuController : MonoBehaviour
         {
             pauseMenuPanel.SetActive(false);
         }
+        if (settingsPanel != null) settingsPanel.SetActive(false);
         isPaused = false;
 
         // ซ่อนหน้าต่างเควส
