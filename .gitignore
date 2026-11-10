@@ -45,3 +45,10 @@ sysinfo.txt
 
 # บังคับรวมไฟล์เมตาเพื่อรักษาการอ้างอิง
 !/[Aa]ssets/**/*.meta
+AGENTS.md
+Assets/Temp.meta
+docs/MANUAL_QA_CHECKLIST.md
+docs/PDF_SPEC_REVIEW_2026-11-03.md
+docs/PROJECT_REVIEW_2026-11-03.md
+ProjectSettings/TimeManager.asset
+ProjectSettings/TimeManager.asset
